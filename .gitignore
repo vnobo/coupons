@@ -50,4 +50,3 @@ hs_err_pid*
 /.nb-gradle/
 
 #spring boot config file
-application.yml
