@@ -37,7 +37,6 @@ hs_err_pid*
 
 ### IntelliJ IDEA ###
 .idea
-.idea/*.xml
 *.iws
 *.iml
 *.ipr
@@ -49,3 +48,6 @@ hs_err_pid*
 /dist/
 /nbdist/
 /.nb-gradle/
+
+#spring boot config file
+application.yml

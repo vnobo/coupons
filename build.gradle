@@ -6,8 +6,8 @@ plugins {
 
 apply plugin: 'io.spring.dependency-management'
 
-version = '0.0.1-dev'
 group = 'com.alex'
+version = '0.0.1-dev'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
 configurations {
@@ -23,6 +23,7 @@ springBoot {
             name = '秦客优惠'
         }
     }
+    mainClassName= 'com.alex.QinKeApplication'
 }
 
 bootJar {
