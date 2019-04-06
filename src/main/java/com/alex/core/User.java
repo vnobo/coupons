@@ -10,6 +10,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * @author billb
+ *
+ */
 @Data
 @Entity
 public class User implements OAuth2User {

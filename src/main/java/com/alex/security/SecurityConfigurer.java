@@ -16,6 +16,10 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 
 import javax.sql.DataSource;
 
+/**
+ * @author billb
+ *
+ */
 @Configuration
 @Order(SecurityProperties.BASIC_AUTH_ORDER)
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
@@ -43,10 +47,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .antMatchers("/security/oauth2/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .oauth2Login()
-                    .userInfoEndpoint()
-                    .customUserType(User.class,"taobao");
-
+                .oauth2Login();
     }
 
 }

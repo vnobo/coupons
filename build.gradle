@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'idea'
-    id 'org.springframework.boot' version '2.1.3.RELEASE'
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
 }
 
 apply plugin: 'io.spring.dependency-management'
@@ -23,11 +23,13 @@ springBoot {
             name = '秦客优惠'
         }
     }
+
     mainClassName= 'com.alex.QinKeApplication'
 }
 
 bootJar {
     archivesBaseName = 'qinke-coupons'
+
     launchScript {
         properties 'logFilename': 'qinke-coupons.log'
     }
