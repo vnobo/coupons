@@ -1,15 +1,13 @@
-package com.alex;
+package com.alex.bootiful;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * @author billb
- *
- */
 @SpringBootApplication
-public class QinKeApplication {
+public class BootifulApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(QinKeApplication.class, args);
+        SpringApplication.run(BootifulApplication.class, args);
     }
+
 }

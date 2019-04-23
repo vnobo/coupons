@@ -1,14 +1,14 @@
 plugins {
+    id 'org.springframework.boot' version '2.1.4.RELEASE'
     id 'java'
     id 'idea'
-    id 'org.springframework.boot' version '2.1.4.RELEASE'
-    id 'io.franzbecker.gradle-lombok' version '2.1'
 }
 
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.alex'
 version = '0.0.1-dev'
+sourceCompatibility = '11'
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -21,19 +21,18 @@ configurations {
 springBoot {
     buildInfo {
         properties {
-            artifact = 'qinke-coupons'
+            artifact = 'bootiful'
             name = '秦客优惠'
         }
     }
 
-    mainClassName= 'com.alex.QinKeApplication'
+    mainClassName = 'com.alex.BootifulApplication'
 }
 
 bootJar {
-    archivesBaseName = 'qinke-coupons'
-
+    archivesBaseName = 'bootiful'
     launchScript {
-        properties 'logFilename': 'qinke-coupons.log'
+        properties 'logFilename': 'bootiful.log'
     }
 }
 
@@ -42,7 +41,6 @@ idea {
     module {
         outputDir = file("$buildDir/out/")
         testOutputDir = file("$buildDir/test")
-        name = 'qinke-coupons'
     }
 }
 
@@ -54,10 +52,10 @@ repositories {
 
 ext {
     hutoolVersion = "4.5.6"
-    hankcsHanlpVersion = "portable-1.7.2"
+    hankcsHanlpVersion = "portable-1.7.3"
     weixinVersion = "3.3.8.B"
     queryDslVersion = '4.2.1'
-    springCloudAlibabaVersion = '2.1.0.BUILD-SNAPSHOT'
+    springCloudAlibabaVersion = '0.9.1.BUILD-SNAPSHOT'
 }
 
 

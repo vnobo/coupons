@@ -1,7 +1,7 @@
 package com.alex.security.oauth2;
 
-        import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
-        import org.springframework.stereotype.Component;
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 /**
  * qinke-coupons com.alex.security.oauth2.OAuth2AuthenticationSuccessHandler
@@ -12,7 +12,5 @@ package com.alex.security.oauth2;
 @Component
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    public OAuth2AuthenticationSuccessHandler(String defaultTargetUrl) {
-        super(defaultTargetUrl);
-    }
+
 }
