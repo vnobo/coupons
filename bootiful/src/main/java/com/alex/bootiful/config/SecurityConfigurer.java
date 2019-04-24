@@ -1,15 +1,14 @@
-package com.alex.security;
+package com.alex.bootiful.config;
 
-import com.alex.security.oauth2.CustomOAuth2UserService;
+import com.alex.bootiful.security.oauth2.CustomOAuth2UserService;
+import com.alex.bootiful.security.oauth2.OAuth2AuthenticationSuccessHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
-import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 /**
@@ -17,6 +16,12 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
  */
 @Configuration
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private CustomOAuth2UserService customOAuth2UserService;
+
+    @Autowired
+    private OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -29,19 +34,15 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
                     .and()
                 .oauth2Login()
                     .userInfoEndpoint()
-                    .userService(this.taoBaoOAuth2UserService())
-                    .and();
+                    .userService(this.customOAuth2UserService)
+                    .and()
+                    .successHandler(this.oAuth2AuthenticationSuccessHandler);
     }
 
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
-
-    @Bean
-    public OAuth2UserService<OAuth2UserRequest, OAuth2User> taoBaoOAuth2UserService() {
-        return new CustomOAuth2UserService();
     }
 
 }

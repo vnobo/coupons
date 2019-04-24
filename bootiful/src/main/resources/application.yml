@@ -61,7 +61,7 @@ spring:
           taobao:
             client-id: 25666619
             client-secret: ee6c72c4b1d9bbcdba1f0793887ec8e4
-            redirect-uri-template: "http://127.0.0.1:4200/login/oauth2/code/taobao"
+            redirect-uri-template: "{baseUrl}/login/oauth2/code/{registrationId}"
             client-authentication-method: post
             authorization-grant-type: authorization_code
         provider:

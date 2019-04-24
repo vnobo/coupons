@@ -5,11 +5,13 @@ DROP TABLE IF EXISTS `users`;
 /**用户信息表**/
 CREATE TABLE `users`
 (
-    `username`     VARCHAR(64) PRIMARY KEY,
-    `password`     VARCHAR(512) NOT NULL,
-    `enabled`      CHAR(1)      NOT NULL DEFAULT 0,
-    `tao_bao_id`   VARCHAR(32)  NOT NULL DEFAULT 0,
-    `tao_bao_name` VARCHAR(32)  NOT NULL DEFAULT 0,
+    `id`           BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `username`     VARCHAR(64) NOT NULL UNIQUE,
+    `password`     VARCHAR(128),
+    `enabled`      CHAR(1)     NOT NULL DEFAULT 0,
+    `image_url`    VARCHAR(128),
+    `tao_bao_id`   VARCHAR(32),
+    `tao_bao_name` VARCHAR(32),
     `extend`       JSON
 );
 
