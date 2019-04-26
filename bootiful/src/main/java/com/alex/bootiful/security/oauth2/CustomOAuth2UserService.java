@@ -1,9 +1,12 @@
 package com.alex.bootiful.security.oauth2;
 
+import com.alex.bootiful.security.model.AuthProvider;
 import com.alex.bootiful.security.model.User;
 import com.alex.bootiful.security.model.UserPrincipal;
+import com.alex.bootiful.security.oauth2.user.OAuth2UserInfo;
+import com.alex.bootiful.security.oauth2.user.OAuth2UserInfoFactory;
 import com.alex.bootiful.security.repository.UserRepository;
-import com.alex.bootiful.security.oauth2.Oexception.OAuth2AuthenticationProcessingException;
+import com.alex.bootiful.security.oexception.OAuth2AuthenticationProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
@@ -62,36 +65,44 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private OAuth2User processOAuth2User(OAuth2UserRequest oAuth2UserRequest, OAuth2User oAuth2User) {
 
-        if (StringUtils.isEmpty(oAuth2User.getAttributes().get("username"))) {
+        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(oAuth2UserRequest.getClientRegistration().getRegistrationId(),
+                oAuth2User.getAttributes());
+
+        if (StringUtils.isEmpty(oAuth2UserInfo.getName())) {
             throw new OAuth2AuthenticationProcessingException("Username not found from OAuth2 provider");
         }
 
-        String username = oAuth2User.getAttributes().get("username").toString();
-        Optional<User> userOptional = userRepository.findByUsername(username);
-
+        Optional<User> userOptional = userRepository.findByUsername(oAuth2UserInfo.getName());
         User user;
 
         if (userOptional.isPresent()) {
             user = userOptional.get();
-            user = updateExistingUser(user,oAuth2UserRequest);
+            if (!user.getProvider().equals(AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId()))) {
+                throw new OAuth2AuthenticationProcessingException("Looks like you're signed up with " +
+                        user.getProvider() + " account. Please use your " + user.getProvider() +
+                        " account to login.");
+            }
+            user = updateExistingUser(user, oAuth2UserInfo);
         } else {
-            user = registerNewUser(oAuth2UserRequest);
+            user = registerNewUser(oAuth2UserRequest, oAuth2UserInfo);
         }
 
         return UserPrincipal.create(user, oAuth2User.getAttributes());
     }
 
-    private User registerNewUser(OAuth2UserRequest oAuth2UserRequest) {
+    private User registerNewUser(OAuth2UserRequest oAuth2UserRequest, OAuth2UserInfo oAuth2UserInfo) {
         User user = new User();
-        user.setUsername(oAuth2UserRequest.getAdditionalParameters().get("taobao_user_nick").toString());
-        user.setTaoBaoId(oAuth2UserRequest.getAdditionalParameters().get("taobao_user_id").toString());
-        user.setTaoBaoName(oAuth2UserRequest.getAdditionalParameters().get("taobao_user_nick").toString());
+        AuthProvider authProvider = AuthProvider.valueOf(oAuth2UserRequest.getClientRegistration().getRegistrationId());
+        user.setProvider(authProvider);
+        user.setProviderId(oAuth2UserInfo.getId());
+        user.setUsername(authProvider + "_" + oAuth2UserInfo.getName());
+        user.setEmail(oAuth2UserInfo.getEmail());
+        user.setImageUrl(oAuth2UserInfo.getImageUrl());
         return userRepository.save(user);
     }
 
-    private User updateExistingUser(User existingUser,OAuth2UserRequest oAuth2UserRequest) {
-        existingUser.setUsername(oAuth2UserRequest.getAdditionalParameters().get("taobao_user_nick").toString());
-        // existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
+    private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
+        existingUser.setImageUrl(oAuth2UserInfo.getImageUrl());
         return userRepository.save(existingUser);
     }
 }

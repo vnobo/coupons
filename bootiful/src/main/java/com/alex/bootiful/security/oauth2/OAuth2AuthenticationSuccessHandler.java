@@ -1,6 +1,5 @@
 package com.alex.bootiful.security.oauth2;
 
-import org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestResolver;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +13,6 @@ import org.springframework.stereotype.Component;
 public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     public OAuth2AuthenticationSuccessHandler(){
-        super.setTargetUrlParameter("redirect_url");
+        super.setDefaultTargetUrl("/api");
     }
 }

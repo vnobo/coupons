@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -23,13 +24,25 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String username;
 
-    private String imageUrl;
-
-    private String taoBaoId;
-
-    private String taoBaoName;
-
     @JsonIgnore
     private String password;
+
+    @Column(nullable = false)
+    private Boolean enabled = true;
+
+    private String email;
+
+    @Column(nullable = false)
+    private Boolean emailVerified = false;
+
+    private String imageUrl;
+
+    private String taoBaoRelationId;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private AuthProvider provider;
+
+    private String providerId;
 
 }
