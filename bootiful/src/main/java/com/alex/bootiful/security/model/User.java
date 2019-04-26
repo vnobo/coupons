@@ -37,7 +37,14 @@ public class User implements Serializable {
 
     private String imageUrl;
 
-    private String taoBaoRelationId;
+    /**
+     * 渠道关系ID是
+     * 这个渠道的唯一标识(举例合作方邀请了小方成为他的渠道，
+     * 小方会有一个唯一的关系id12345)，
+     * 后续为小方提供推广商品时，推广链接中要带上小方的关系id
+     * ，转链推广及数据效果跟踪均依赖此ID，务必保证正确。
+     */
+    private String relationId;
 
     @NotNull
     @Enumerated(EnumType.STRING)
