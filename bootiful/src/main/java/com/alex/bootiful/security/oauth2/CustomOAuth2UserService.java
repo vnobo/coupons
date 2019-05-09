@@ -1,5 +1,6 @@
 package com.alex.bootiful.security.oauth2;
 
+import cn.hutool.core.util.RandomUtil;
 import com.alex.bootiful.security.model.AuthProvider;
 import com.alex.bootiful.security.model.User;
 import com.alex.bootiful.security.model.UserPrincipal;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
@@ -20,10 +22,7 @@ import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * qinke-coupons com.alex.bootiful.security.oauth2.CustomOAuth2UserService
@@ -35,6 +34,9 @@ import java.util.Set;
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
     private static final String TAO_BAO_REGISTRATION_ID = "taobao";
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -96,6 +98,10 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         user.setProvider(authProvider);
         user.setProviderId(oAuth2UserInfo.getId());
         user.setUsername(authProvider + "_" + oAuth2UserInfo.getName());
+        user.setPassword(RandomUtil.randomString(8));
+
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+
         user.setEmail(oAuth2UserInfo.getEmail());
         user.setImageUrl(oAuth2UserInfo.getImageUrl());
         return userRepository.save(user);
