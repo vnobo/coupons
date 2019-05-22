@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.4.RELEASE'
+    id 'org.springframework.boot' version '2.1.5.RELEASE'
     id 'java'
     id 'idea'
 }
@@ -50,7 +50,7 @@ repositories {
 }
 
 ext {
-    hutoolVersion = "4.5.6"
+    hutoolVersion = "4.5.9"
     hankcsHanlpVersion = "portable-1.7.3"
     weixinVersion = "3.3.8.B"
     queryDslVersion = '4.2.1'
