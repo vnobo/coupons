@@ -1,0 +1,74 @@
+spring:
+  application.name: wx-bootful
+  #datasource
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/qinke_db?useSSL=NO&serverTimezone=Asia/Shanghai&&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    username: farmer
+    password: q1w2e3..
+    initialization-mode: never
+  #spring session
+  session:
+    store-type: redis
+    timeout: 30d
+  #redis
+  redis:
+    password: 123456
+
+  #jpa
+  jpa:
+    hibernate.ddl-auto: none
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: mysql
+    open-in-view: false
+    show-sql: true
+  #task
+  task.execution.pool:
+    max-size: 50
+    queue-capacity: 100
+    keep-alive: 30S
+  #Thymeleaf
+  thymeleaf.cache: false
+  #短信配置
+  cloud.alicloud:
+    access-key: LTAIrI1OfTFGaA43
+    secret-key: CFX0raMd7txvdo7EmqnQpDgZCWFmC5
+  #邮件地址配置
+  mail:
+    host: smtpdm.aliyun.com
+    port: 465
+    username: admin@support.nerchain.com
+    password: lB5GfZZBA8eZSbvG
+    test-connection: true
+    properties:
+      mail.smtp:
+        auth: true
+        socketFactory.class: javax.net.ssl.SSLSocketFactory
+    default-encoding: UTF-8
+    protocol: smtp
+# wei xin config
+wx.mp:
+  host: wx.alexbob.net
+  # 通知邮件地址
+  email: 5199840@qq.com
+  appName: 秦客优惠
+  appId: wx7bea3517d081b5ec
+  secret: 862cab7ded1019aa6e11a98ddf4a7c94
+  token: oNGnApx3efNaugxD5gSmVR7tBq9aidFh
+  aesKey: 7TLNh2yFis0wHb9hMgFbF5L6yZNdK4iUp3MOVsBhJvZ
+# tao bao config
+tb.ke:
+  appKey: 25666619
+  appSecret: ee6c72c4b1d9bbcdba1f0793887ec8e4
+  signMethod: hmac
+  apiUrl: https://eco.taobao.com/router/rest
+  highKey: 3e01d8ad5e4c46159d85524eae3e7fac
+  highUid: 348
+  highAPI: http://api.zhetaoke.com:10000/api/
+# jing dong  config
+jd.ke:
+  appKey: 8fbee034c0554f6bbf5c1e5048681a5a
+  appSecret: 673fbf26bfe9442996b0382c5e5ca9a2
+  signMethod: md5
+  apiUrl: https://router.jd.com/api

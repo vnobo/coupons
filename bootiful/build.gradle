@@ -8,7 +8,7 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.alex'
 version = '0.0.1-dev'
-sourceCompatibility = '11'
+sourceCompatibility = 11
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -31,13 +31,13 @@ springBoot {
 
 bootJar {
     archivesBaseName = 'bootiful'
+    
     launchScript {
         properties 'logFilename': 'bootiful.log'
     }
 }
 
 idea {
-
     module {
         outputDir = file("$buildDir/out/")
         testOutputDir = file("$buildDir/test")
@@ -50,20 +50,15 @@ repositories {
 }
 
 ext {
-    hutoolVersion = "4.5.9"
-    hankcsHanlpVersion = "portable-1.7.3"
-    weixinVersion = "3.3.8.B"
+    hutoolVersion = "4.5.10"
     queryDslVersion = '4.2.1'
-    springCloudAlibabaVersion = '0.9.0.RELEASE'
 }
 
 
 dependencies {
 
     implementation "cn.hutool:hutool-all:${hutoolVersion}"
-    implementation "com.hankcs:hanlp:${hankcsHanlpVersion}"
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-alicloud-sms'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -89,10 +84,4 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
     testImplementation 'org.springframework.security:spring-security-test'
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
-    }
 }

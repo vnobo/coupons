@@ -6,7 +6,7 @@ import com.alex.bootiful.security.model.User;
 import com.alex.bootiful.security.model.UserPrincipal;
 import com.alex.bootiful.security.oauth2.user.OAuth2UserInfo;
 import com.alex.bootiful.security.oauth2.user.OAuth2UserInfoFactory;
-import com.alex.bootiful.security.repository.UserRepository;
+import com.alex.bootiful.security.model.repository.UserRepository;
 import com.alex.bootiful.security.oexception.OAuth2AuthenticationProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;

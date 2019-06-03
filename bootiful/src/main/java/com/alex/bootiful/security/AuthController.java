@@ -2,14 +2,13 @@ package com.alex.bootiful.security;
 
 import com.alex.bootiful.security.model.AuthProvider;
 import com.alex.bootiful.security.model.User;
-import com.alex.bootiful.security.model.UserPrincipal;
 import com.alex.bootiful.security.oexception.BadRequestException;
 import com.alex.bootiful.security.oexception.ResourceNotFoundException;
 import com.alex.bootiful.security.payload.ApiResponse;
 import com.alex.bootiful.security.payload.AuthResponse;
 import com.alex.bootiful.security.payload.LoginRequest;
 import com.alex.bootiful.security.payload.SignUpRequest;
-import com.alex.bootiful.security.repository.UserRepository;
+import com.alex.bootiful.security.model.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -72,7 +71,6 @@ public class AuthController {
         if (userRepository.existsByUsername(signUpRequest.getName())) {
             throw new BadRequestException("Email address already in use.");
         }
-
         // Creating user's account
         User user = new User();
         user.setUsername(signUpRequest.getName());
