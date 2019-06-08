@@ -8,7 +8,6 @@ apply plugin: 'io.spring.dependency-management'
 
 group = 'com.alex'
 version = '0.0.1-dev'
-sourceCompatibility = 11
 
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
@@ -41,6 +40,7 @@ idea {
     module {
         outputDir = file("$buildDir/out/")
         testOutputDir = file("$buildDir/test")
+        sourceCompatibility = 11
     }
 }
 
