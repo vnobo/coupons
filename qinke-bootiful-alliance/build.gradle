@@ -53,6 +53,7 @@ repositories {
 }
 
 ext {
+    
     hutoolVersion = "4.5.10"
     queryDslVersion = '4.2.1'
 
