@@ -2,7 +2,6 @@ package com.alex.wxmp.core.order;
 
 import cn.hutool.core.util.ObjectUtil;
 import com.alex.wxmp.AbstractGenericService;
-import com.alex.wxmp.alliance.taobao.TaoBaoServer;
 import com.alex.wxmp.core.Customer.CustomerService;
 import com.alex.wxmp.core.Customer.beans.Customer;
 import com.alex.wxmp.core.order.beans.Order;
