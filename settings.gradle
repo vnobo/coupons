@@ -1,0 +1,10 @@
+pluginManagement {
+	repositories {
+		gradlePluginPortal()
+	}
+}
+rootProject.name = 'qinke-coupons'
+
+include 'qinke-wxmp-service'
+include 'qinke-aliance-taobao'
+include 'qinke-aliance-jd'
