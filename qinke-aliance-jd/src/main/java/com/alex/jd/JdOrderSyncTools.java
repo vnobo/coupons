@@ -43,7 +43,7 @@ public class JdOrderSyncTools extends AbstractGenericService {
     public void manualSyncOrder(LocalDateTime startTime, LocalDateTime endTime) {
 
         while (startTime.isBefore(endTime)) {
-            this.logger.info("manual sync order startTime: {},async order progress,endTime  {}", startTime, endTime);
+            this.logger.info("manual sync model startTime: {},async model progress,endTime  {}", startTime, endTime);
 
             this.asyncJDProgress(1, startTime, 1);
 

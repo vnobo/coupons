@@ -57,15 +57,7 @@ wx.mp:
   secret: 862cab7ded1019aa6e11a98ddf4a7c94
   token: oNGnApx3efNaugxD5gSmVR7tBq9aidFh
   aesKey: 7TLNh2yFis0wHb9hMgFbF5L6yZNdK4iUp3MOVsBhJvZ
-# tao bao config
-tb.ke:
-  appKey: 25666619
-  appSecret: ee6c72c4b1d9bbcdba1f0793887ec8e4
-  signMethod: hmac
-  apiUrl: https://eco.taobao.com/router/rest
-  highKey: 3e01d8ad5e4c46159d85524eae3e7fac
-  highUid: 348
-  highAPI: http://api.zhetaoke.com:10000/api/
+
 # jing dong  config
 jd.ke:
   appKey: 8fbee034c0554f6bbf5c1e5048681a5a

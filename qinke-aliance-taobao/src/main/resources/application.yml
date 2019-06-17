@@ -1,3 +1,19 @@
 spring:
   application:
     name: qinke-aliance-taobao
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/qinke_db?useSSL=NO&serverTimezone=Asia/Shanghai&&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    username: farmer
+    password: q1w2e3..
+    initialization-mode: always
+# tao bao config
+taobao.ke:
+  appKey: 25666619
+  appSecret: ee6c72c4b1d9bbcdba1f0793887ec8e4
+  signMethod: hmac
+  apiUrl: https://eco.taobao.com/router/rest
+  highKey: 3e01d8ad5e4c46159d85524eae3e7fac
+  highUid: 348
+  highAPI: http://api.zhetaoke.com:10000/api/

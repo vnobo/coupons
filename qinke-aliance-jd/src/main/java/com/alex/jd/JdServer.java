@@ -38,7 +38,7 @@ public class JdServer extends AbstractGenericService {
      */
     public JsonNode getOrders(int page, int type, LocalDateTime startTime) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-        params.set("method", "jd.union.open.order.query");
+        params.set("method", "jd.union.open.model.query");
         params.set("param_json", JSONUtil.toJsonStr(Map.of("orderReq",
                 Map.of("pageNo", page,
                         "pageSize", "500",

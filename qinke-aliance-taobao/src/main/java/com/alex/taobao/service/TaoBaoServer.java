@@ -1,10 +1,12 @@
-package com.alex.wxmp.alliance.taobao;
+package com.alex.taobao.service;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.alex.wxmp.AbstractGenericService;
-import com.alex.wxmp.config.RateType;
+import com.alex.taobao.TaoBaoRestException;
+import com.alex.taobao.client.TaobaoClient;
+import com.alex.taobao.model.RateType;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,8 +23,9 @@ import java.util.Map;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
+@Log4j2
 @Service
-public class TaoBaoServer extends AbstractGenericService {
+public class TaoBaoServer{
 
     private TaobaoClient taobaoClient;
 
@@ -42,7 +45,7 @@ public class TaoBaoServer extends AbstractGenericService {
         JsonNode tbData = this.taobaoClient.postForEntity(tbParams);
 
         if (ObjectUtil.isNotNull(tbData.get("error_response"))) {
-            this.logger.error("get tao bao goods info error. msg: {}", tbData.findPath("msg").asText());
+            log.error("get tao bao goods info error. msg: {}", tbData.findPath("msg").asText());
             return null;
         }
 
@@ -75,7 +78,7 @@ public class TaoBaoServer extends AbstractGenericService {
         JsonNode tbData = this.superSearch(params);
         Iterator<JsonNode> elements = tbData.findPath("map_data").elements();
         if (!elements.hasNext()) {
-            throw new TaobaoRestExcetion(500, "获取淘宝商品信息错误!");
+            throw new TaoBaoRestException(500, "获取淘宝商品信息错误!");
         }
 
         JsonNode tbGoods = elements.next();
@@ -140,7 +143,7 @@ public class TaoBaoServer extends AbstractGenericService {
         JsonNode tbData = this.taobaoClient.postForEntity(tbParams);
 
         if (ObjectUtil.isNotNull(tbData.get("error_response"))) {
-            this.logger.error("create tao bao goods pwd error. msg: {}", tbData.findPath("msg").asText());
+            log.error("create tao bao goods pwd error. msg: {}", tbData.findPath("msg").asText());
             return null;
         }
         return tbData.findPath("model").asText();
@@ -148,7 +151,7 @@ public class TaoBaoServer extends AbstractGenericService {
 
 
     /**
-     * taobao.tbk.order.get( 淘宝客订单查询 )
+     * taobao.tbk.model.get( 淘宝客订单查询 )
      * <p>
      * fields	String	true	tb_trade_parent_id,tb_trade_id,num_iid,item_title,item_num,price,pay_price,seller_nick,
      * seller_shop_title,commission,commission_rate,unid,create_time,earning_time,tk3rd_pub_id,
@@ -196,7 +199,7 @@ public class TaoBaoServer extends AbstractGenericService {
         JsonNode tbData = this.taobaoClient.postForEntity(tbParams);
 
         if (ObjectUtil.isNotNull(tbData.get("error_response"))) {
-            throw new TaobaoRestExcetion(500, tbData.findPath("error_response").toString());
+            throw new TaoBaoRestException(500, tbData.findPath("error_response").toString());
         }
 
         return tbData.findPath("n_tbk_order");

@@ -1,7 +1,9 @@
-package com.alex.wxmp.alliance.taobao;
+package com.alex.taobao;
 
-import com.alex.wxmp.AbstractGenericService;
-import com.alex.wxmp.core.order.OrderService;
+import com.alex.taobao.service.OrderService;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -14,18 +16,17 @@ import java.time.LocalDateTime;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
+@Log4j2
 @Component
-public class TaoBaoOrderSyncTools extends AbstractGenericService {
+public class TaoBaoOrderSyncTools{
 
-
-    private OrderService orderService;
-
+    private final OrderService orderService;
 
     public TaoBaoOrderSyncTools(OrderService orderService) {
         this.orderService = orderService;
     }
 
-    //@EventListener(ApplicationReadyEvent.class)
+    @EventListener(ApplicationReadyEvent.class)
     @Async
     public void manualSyncOrder() {
         this.manualSyncOrder(LocalDateTime.of(2019, 3, 29, 0, 0), LocalDateTime.now());
@@ -41,7 +42,7 @@ public class TaoBaoOrderSyncTools extends AbstractGenericService {
 
         while (startTime.isBefore(endTime)) {
 
-            this.logger.info("manual sync order startTime: {},async order progress,endTime  {}", startTime, endTime);
+            log.info("manual sync model startTime: {},async model progress,endTime  {}", startTime, endTime);
 
             this.orderService.asyncProgress(1, startTime, "create_time", 20 * 60);
 

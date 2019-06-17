@@ -1,14 +1,12 @@
-package com.alex.wxmp.core.order;
+package com.alex.taobao.service;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.alex.wxmp.AbstractGenericService;
-import com.alex.wxmp.core.Customer.CustomerService;
-import com.alex.wxmp.core.Customer.beans.Customer;
-import com.alex.wxmp.core.order.beans.Order;
-import com.alex.wxmp.core.order.beans.OrderRepository;
-import com.alex.wxmp.core.wallet.WalletService;
+import com.alex.taobao.model.Order;
+import com.alex.taobao.model.OrderRepository;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.querydsl.core.types.Predicate;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Async;
@@ -26,23 +24,20 @@ import java.util.concurrent.Future;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
+@Log4j2
 @Service
-public class OrderService extends AbstractGenericService {
+public class OrderService {
 
-    private OrderRepository orderRepository;
+    private final ObjectMapper objectMapper;
+    private final OrderRepository orderRepository;
+    private final TaoBaoServer taoBaoServer;
 
-    private TaoBaoServer taoBaoServer;
-    private WalletService walletService;
-    private CustomerService customerService;
-
-    public OrderService(OrderRepository orderRepository,
-                        TaoBaoServer taoBaoServer,
-                        WalletService walletService,
-                        CustomerService customerService) {
+    public OrderService(ObjectMapper objectMapper,
+                        OrderRepository orderRepository,
+                        TaoBaoServer taoBaoServer) {
+        this.objectMapper = objectMapper;
         this.orderRepository = orderRepository;
         this.taoBaoServer = taoBaoServer;
-        this.walletService = walletService;
-        this.customerService = customerService;
     }
 
     public Order loadByTidAndType(String tid, int type) {
@@ -93,7 +88,7 @@ public class OrderService extends AbstractGenericService {
 
             totalNum++;
 
-            this.logger.info("淘宝 {} 订单同步,同步编号 {} ,订单内容 {}", queryType, totalNum, node);
+            log.info("淘宝 {} 订单同步,同步编号 {} ,订单内容 {}", queryType, totalNum, node);
 
             Order order = this.objectMapper.convertValue(node, Order.class);
             if (queryType.equalsIgnoreCase("settle_time")) {
@@ -103,18 +98,18 @@ public class OrderService extends AbstractGenericService {
                     order.setOpenId(dbOrder.getOpenId());
                     // 结算订单同步
                     if (order.getTkStatus() == 3 && dbOrder.getTkStatus() != 3) {
-                        this.walletService.plusBalance(order.getTradeId(), order.getOpenId(), order.getTotalCommissionFee());
+                       //  this.walletService.plusBalance(order.getTradeId(), order.getOpenId(), order.getTotalCommissionFee());
                     }
                 } else {
-                    this.logger.error("同步结算订单失败,原订单不存在,无法结算,订单详细信息: {}", order);
+                    log.error("同步结算订单失败,原订单不存在,无法结算,订单详细信息: {}", order);
                 }
             } else {
-                Customer customer = this.customerService.loadByPid(order.getAdzoneId());
-                if (ObjectUtil.isNotNull(customer)) {
-                    order.setOpenId(customer.getOpenId());
-                } else {
-                    this.logger.error("model adZone id is error ,adZoneId is {}.this system not build user!", order.getAdzoneId());
-                }
+               // Customer customer = this.customerService.loadByPid(order.getAdzoneId());
+               // if (ObjectUtil.isNotNull(customer)) {
+               //    // order.setOpenId(customer.getOpenId());
+               // } else {
+               //     log.error("model adZone id is error ,adZoneId is {}.this system not build user!", order.getAdzoneId());
+               // }
             }
             order.setAsyncTime(LocalDateTime.now());
             order.setType(1);

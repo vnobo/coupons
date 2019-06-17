@@ -16,6 +16,14 @@ bootJar {
     launchScript()
 }
 
+ext {
+    queryDslVersion = '4.2.1'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jpa"
+    annotationProcessor 'org.springframework.boot:spring-boot-starter-data-jpa'
 }

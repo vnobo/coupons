@@ -1,9 +1,11 @@
-package com.alex.wxmp.alliance.taobao;
+package com.alex.taobao.client;
 
 import cn.hutool.json.JSONUtil;
-import com.alex.wxmp.alliance.AbstractGenericClient;
+import com.alex.taobao.config.TaoBaoProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,20 +18,20 @@ import java.io.IOException;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
+@Log4j2
+@Service
 public class HighComClient extends AbstractGenericClient {
 
     private final String appKey;
     private final String sid;
-    private WebClient webClient;
 
     public HighComClient(WebClient.Builder builder,
                          ObjectMapper objectMapper,
-                         String appKey, String sid) {
+                         TaoBaoProperties taoBaoProperties) {
         // webClient设置
-        super(builder.build(), objectMapper);
-        this.webClient = builder.build();
-        this.appKey = appKey;
-        this.sid = sid;
+        super(builder.baseUrl(taoBaoProperties.getHighAPI()), objectMapper);
+        this.appKey = taoBaoProperties.getHighKey();
+        this.sid = taoBaoProperties.getHighUid();
     }
 
     /**
@@ -53,7 +55,7 @@ public class HighComClient extends AbstractGenericClient {
             return this.objectMapper.readValue(result, JsonNode.class).findPath("item_id").asText();
 
         } catch (IOException e) {
-            this.logger.error("Get goods id response getTBPwd body convert to json error, msg " + e.getMessage());
+            log.error("Get goods id response getTBPwd body convert to json error, msg " + e.getMessage());
             return null;
         }
     }

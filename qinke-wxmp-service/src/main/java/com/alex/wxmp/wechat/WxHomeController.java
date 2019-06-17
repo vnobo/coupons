@@ -60,7 +60,7 @@ public class WxHomeController extends AbstractGenericController {
     @PostMapping("order-commit")
     public Object commitOrderId(@RequestBody Map<String, String> params) {
         this.wxHomeService.commitOrder(params);
-        return Collections.singletonMap("success", "commit order success.");
+        return Collections.singletonMap("success", "commit model success.");
     }
 
     /**

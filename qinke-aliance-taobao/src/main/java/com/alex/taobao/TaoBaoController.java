@@ -1,13 +1,14 @@
-package com.alex.wxmp.alliance.taobao;
+package com.alex.taobao;
 
 import cn.hutool.core.img.ImgUtil;
-import com.alex.wxmp.AbstractGenericController;
+import com.alex.taobao.service.TaoBaoServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -23,7 +24,7 @@ import java.nio.file.Paths;
  */
 @RestController
 @RequestMapping("tb")
-public class TaoBaoController extends AbstractGenericController {
+public class TaoBaoController {
 
     @Autowired
     private TaoBaoServer taoBaoServer;
@@ -67,7 +68,7 @@ public class TaoBaoController extends AbstractGenericController {
 
         image =ImgUtil.pressImage(image,canvas, 210-320+213, 50+370, 1);
 
-        ImageIO.write(image, "jpg", rootLocation.resolve("yulogo.jpg").toFile());
+        //ImageIO.write(image, "jpg", rootLocation.resolve("yulogo.jpg").toFile());
         return "成功";
     }
 }

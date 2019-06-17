@@ -1,4 +1,4 @@
-package com.alex.wxmp.alliance.taobao.config;
+package com.alex.taobao.config;
 
 import cn.hutool.json.JSONUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,8 +9,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
-@ConfigurationProperties(prefix = "tb.ke")
-public class TbKeProperties {
+@ConfigurationProperties(prefix = "taobao.ke")
+public class TaoBaoProperties {
 
     /**
      * 设置淘宝联盟的appid

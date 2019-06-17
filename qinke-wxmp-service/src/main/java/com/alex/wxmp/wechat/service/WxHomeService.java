@@ -113,11 +113,11 @@ public class WxHomeService extends AbstractGenericService {
             if (StringUtils.isBlank(order.getOpenId()) || order.getTotalCommissionFee() == 0) {
                 order.setOpenId(openId);
             } else {
-                throw new OrderArgumentsException(500, "this order openId is build user id " + order.getOpenId());
+                throw new OrderArgumentsException(500, "this model openId is build user id " + order.getOpenId());
             }
             this.orderService.asyncSave(order);
         } else {
-            throw new OrderArgumentsException(501, "this order is null,wait 2 minute build");
+            throw new OrderArgumentsException(501, "this model is null,wait 2 minute build");
         }
 
     }

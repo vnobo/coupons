@@ -1,12 +1,15 @@
-package com.alex.wxmp.alliance.taobao;
+package com.alex.taobao.client;
 
 import cn.hutool.json.JSONUtil;
-import com.alex.wxmp.RestServerException;
-import com.alex.wxmp.alliance.AbstractGenericClient;
+import com.alex.taobao.SignRequestUtils;
+import com.alex.taobao.TaoBaoRestException;
+import com.alex.taobao.config.TaoBaoProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -21,32 +24,34 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
+@Log4j2
+@Service
 public class TaobaoClient extends AbstractGenericClient {
 
     private final String appKey;
     private final String appSecret;
     private final String signMethod;
 
+    public TaobaoClient(WebClient.Builder clientBuilder,
+                        ObjectMapper objectMapper,
+                        TaoBaoProperties taoBaoProperties) {
+        super(clientBuilder.baseUrl(taoBaoProperties.getApiUrl()), objectMapper);
+        this.appKey = taoBaoProperties.getAppKey();
+        this.appSecret = taoBaoProperties.getAppSecret();
+        this.signMethod = taoBaoProperties.getSignMethod();
 
-    public TaobaoClient(WebClient webClient, ObjectMapper objectMapper, String appKey, String appSecret, String signMethod) {
-        super(webClient, objectMapper);
-        this.appKey = appKey;
-        this.appSecret = appSecret;
-        this.signMethod = signMethod;
     }
 
     public JsonNode postForEntity(MultiValueMap<String, String> params) {
-
         params.set("app_key", this.appKey);
         params.set("v", "2.0");
         params.set("timestamp", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         params.set("format", "json");
-
-        logger.debug("sign request params,params json is: " + params.toString());
+        log.debug("sign request params,params json is: " + params.toString());
         params.set("sign_method", this.signMethod);
         params.remove("sign");
         String sign = SignRequestUtils.signTopRequest(params, this.appSecret, this.signMethod);
-        logger.debug("sign request params,sign str is: " + sign);
+        log.debug("sign request params,sign str is: " + sign);
         params.set("sign", sign);
 
         String result = this.webClient.post()
@@ -61,17 +66,17 @@ public class TaobaoClient extends AbstractGenericClient {
         try {
 
             if (!JSONUtil.isJson(result)) {
-                this.logger.error("Get response body type no json format.");
+                log.error("Get response body type no json format.");
                 return null;
             }
             return this.objectMapper.readValue(result, JsonNode.class);
         } catch (IOException e) {
-            this.logger.error("Get response body convert to json error, msg " + e.getMessage());
+            log.error("Get response body convert to json error, msg " + e.getMessage());
             return null;
         }
     }
 
-    public class TaobaoRequestException extends RestServerException {
+    public class TaobaoRequestException extends TaoBaoRestException {
         TaobaoRequestException(int code, String msg) {
             super(code, msg);
         }

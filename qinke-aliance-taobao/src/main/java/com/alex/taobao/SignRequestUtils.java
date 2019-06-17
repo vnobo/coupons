@@ -1,4 +1,4 @@
-package com.alex.wxmp.alliance.taobao;
+package com.alex.taobao;
 
 import cn.hutool.crypto.digest.HMac;
 import cn.hutool.crypto.digest.HmacAlgorithm;
