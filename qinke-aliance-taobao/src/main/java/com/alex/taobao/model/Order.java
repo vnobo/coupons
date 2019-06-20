@@ -4,6 +4,7 @@ import com.alex.taobao.ObjectNodeConverterJson;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.Data;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.util.ObjectUtils;
@@ -23,6 +24,7 @@ import java.time.ZoneId;
 @Entity
 @Table(name = "orders")
 @EntityListeners(AuditingEntityListener.class)
+@Data
 public class Order implements Serializable {
 
     @Id
@@ -139,149 +141,39 @@ public class Order implements Serializable {
         return order;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
 
     public void setExt1(String openId) {
         this.openId = openId;
-    }
-
-    public String getTradeId() {
-        return tradeId;
-    }
-
-    public void setTradeId(String tradeId) {
-        this.tradeId = tradeId;
     }
 
     public void setTrade_id(String tradeId) {
         this.tradeId = tradeId;
     }
 
-    public void setOrderId(String tradeId) {
-        this.tradeId = tradeId;
-    }
-
-    public long getNumIid() {
-        return numIid;
-    }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
-    public void setNumIid(long numIid) {
-        this.numIid = numIid;
-    }
-
     public void setNum_iid(long numIid) {
         this.numIid = numIid;
-    }
-
-    public String getItemTitle() {
-        return itemTitle;
-    }
-
-    public void setItemTitle(String itemTitle) {
-        this.itemTitle = itemTitle;
     }
 
     public void setItem_title(String itemTitle) {
         this.itemTitle = itemTitle;
     }
 
-    public int getItemNum() {
-        return itemNum;
-    }
-
-    public void setItemNum(int itemNum) {
-        this.itemNum = itemNum;
-    }
-
     public void setItem_num(int itemNum) {
         this.itemNum = itemNum;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public double getPayPrice() {
-        return payPrice;
-    }
-
-    public void setPayPrice(double payPrice) {
-        this.payPrice = payPrice;
     }
 
     public void setPay_price(double payPrice) {
         this.payPrice = payPrice;
     }
 
-    public double getCommission() {
-        return commission;
-    }
-
-    public void setCommission(double commission) {
-        this.commission = commission;
-    }
-
-    public double getCommissionRate() {
-        return commissionRate;
-    }
-
-    public void setCommissionRate(double commissionRate) {
-        this.commissionRate = commissionRate;
-    }
 
     public void setCommission_rate(double commissionRate) {
         this.commissionRate = commissionRate;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
     @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     public void setCreate_time(LocalDateTime createTime) {
         this.createTime = createTime;
-    }
-
-    public void setOrderTime(long createTime) {
-        this.createTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(createTime), ZoneId.systemDefault());
-    }
-
-    public LocalDateTime getEarningTime() {
-        return earningTime;
-    }
-
-    public void setEarningTime(LocalDateTime earningTime) {
-        this.earningTime = earningTime;
     }
 
     @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
@@ -295,13 +187,6 @@ public class Order implements Serializable {
         }
     }
 
-    public int getTkStatus() {
-        return tkStatus;
-    }
-
-    public void setTkStatus(int tkStatus) {
-        this.tkStatus = tkStatus;
-    }
 
     public void setTk_status(int tkStatus) {
         this.tkStatus = tkStatus;
@@ -323,120 +208,45 @@ public class Order implements Serializable {
         }
     }
 
-    public String getOrderType() {
-        return orderType;
-    }
-
-    public void setOrderType(String orderType) {
-        this.orderType = orderType;
-    }
-
     public void setOrder_type(String orderType) {
         this.orderType = orderType;
-    }
-
-    public double getIncomeRate() {
-        return incomeRate;
-    }
-
-    public void setIncomeRate(double incomePate) {
-        this.incomeRate = incomePate;
     }
 
     public void setIncome_rate(double incomePate) {
         this.incomeRate = incomePate;
     }
 
-    public double getPubSharePreFee() {
-        return pubSharePreFee;
-    }
-
-    public void setPubSharePreFee(double pubSharePreFee) {
-        this.pubSharePreFee = pubSharePreFee;
-    }
-
     public void setPub_share_pre_fee(double pubSharePreFee) {
         this.pubSharePreFee = pubSharePreFee;
     }
 
-    public double getSubsidyRate() {
-        return subsidyRate;
-    }
-
-    public void setSubsidyRate(double subsidyRate) {
-        this.subsidyRate = subsidyRate;
-    }
 
     public void setSubsidy_rate(double subsidyRate) {
         this.subsidyRate = subsidyRate;
     }
 
-    public String getAdzoneId() {
-        return adzoneId;
-    }
-
-    public void setAdzoneId(String adzoneId) {
-        this.adzoneId = adzoneId;
-    }
 
     public void setAdzone_id(String adzoneId) {
         this.adzoneId = adzoneId;
-    }
-
-    public String getAdzoneName() {
-        return adzoneName;
-    }
-
-    public void setAdzoneName(String adzoneName) {
-        this.adzoneName = adzoneName;
     }
 
     public void setAdzone_name(String adzoneName) {
         this.adzoneName = adzoneName;
     }
 
-    public double getAlipayTotalPrice() {
-        return alipayTotalPrice;
-    }
-
-    public void setAlipayTotalPrice(double alipayTotalPrice) {
-        this.alipayTotalPrice = alipayTotalPrice;
-    }
 
     public void setAlipay_total_price(double alipayTotalPrice) {
         this.alipayTotalPrice = alipayTotalPrice;
     }
 
-    public double getTotalCommissionRate() {
-        return totalCommissionRate;
-    }
-
-    public void setTotalCommissionRate(double totalCommissionRate) {
-        this.totalCommissionRate = totalCommissionRate;
-    }
 
     public void setTotal_commission_rate(double totalCommissionRate) {
         this.totalCommissionRate = totalCommissionRate;
     }
 
-    public double getTotalCommissionFee() {
-        return totalCommissionFee;
-    }
-
-    public void setTotalCommissionFee(double totalCommissionFee) {
-        this.totalCommissionFee = totalCommissionFee;
-    }
 
     public void setTotal_commission_fee(double totalCommissionFee) {
         this.totalCommissionFee = totalCommissionFee;
-    }
-
-    public LocalDateTime getAsyncTime() {
-        return asyncTime;
-    }
-
-    public void setAsyncTime(LocalDateTime asyncTime) {
-        this.asyncTime = asyncTime;
     }
 
     public ObjectNode getExtend() {
@@ -444,9 +254,5 @@ public class Order implements Serializable {
             this.extend = new ObjectMapper().createObjectNode();
         }
         return extend;
-    }
-
-    public void setExtend(ObjectNode extend) {
-        this.extend = extend;
     }
 }

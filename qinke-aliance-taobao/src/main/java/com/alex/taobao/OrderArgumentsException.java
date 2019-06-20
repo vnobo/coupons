@@ -1,8 +1,5 @@
 package com.alex.taobao;
 
-
-import com.alex.taobao.TaoBaoRestException;
-
 /**
  * rebate-alliance OrderArgumentsException
  * Created by 2019-02-26

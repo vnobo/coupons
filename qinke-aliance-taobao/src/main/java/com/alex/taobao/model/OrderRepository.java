@@ -19,6 +19,7 @@ public interface OrderRepository extends JpaRepository<Order, Long>,
 
     Optional<Order> findByTradeIdAndType(String tid, int type);
 
+    @Override
     @SuppressWarnings("NullableProblems")
     default void customize(QuerydslBindings bindings, QOrder root) {
         bindings.bind(root.itemTitle).first(StringExpression::containsIgnoreCase);

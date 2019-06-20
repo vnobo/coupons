@@ -14,49 +14,49 @@ public interface OrderProjection {
 
     public String getId();
 
-    public String getOpenId();
+    String getOpenId();
 
-    public long getTradeId();
+    long getTradeId();
 
-    public long getNumIid();
+    long getNumIid();
 
-    public String getItemTitle();
+    String getItemTitle();
 
-    public int getItemNum();
+    int getItemNum();
 
-    public double getPrice();
+    double getPrice();
 
-    public double getPayPrice();
+    double getPayPrice();
 
-    public double getCommission();
+    double getCommission();
 
-    public double getCommissionRate();
+    double getCommissionRate();
 
-    public LocalDateTime getCreateTime();
+    LocalDateTime getCreateTime();
 
-    public LocalDateTime getEarningTime();
+    LocalDateTime getEarningTime();
 
-    public int getTkStatus();
+    int getTkStatus();
 
-    public String getOrderType();
+    String getOrderType();
 
-    public double getIncomeRate();
+    double getIncomeRate();
 
-    public double getPubSharePreFee();
+    double getPubSharePreFee();
 
-    public double getSubsidyRate();
+    double getSubsidyRate();
 
-    public String getAdzoneId();
+    String getAdzoneId();
 
-    public String getAdzoneName();
+    String getAdzoneName();
 
-    public double getAlipayTotalPrice();
+    double getAlipayTotalPrice();
 
-    public double getTotalCommissionRate();
+    double getTotalCommissionRate();
 
-    public double getTotalCommissionFee();
+    double getTotalCommissionFee();
 
-    public LocalDateTime getAsyncTime();
+    LocalDateTime getAsyncTime();
 
-    public ObjectNode getExtend();
+    ObjectNode getExtend();
 }
