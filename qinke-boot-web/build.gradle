@@ -1,0 +1,14 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpring}"
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
+    implementation 'org.springframework.cloud:spring-cloud-starter-security'
+    implementation 'org.springframework.session:spring-session-data-redis'
+
+}

@@ -39,7 +39,9 @@ subprojects {
     }
 
     ext {
-        hutoolVersion = "4.5.12"
+        set('springCloudVersion', "Greenwich.SR1")
+        set('hutoolVersion', "4.5.16")
+        set('mybatisSpring', "2.0.1")
     }
 
     dependencies {
@@ -62,6 +64,7 @@ subprojects {
     dependencyManagement {
         imports {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
         }
     }
 

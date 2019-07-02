@@ -4,7 +4,7 @@ springBoot {
 
     buildInfo {
         properties {
-            artifact = 'wxmp-qinke-service'
+            artifact = 'qinke-boot-wxmp'
             name = '秦客优惠公众号服务'
         }
     }
@@ -12,7 +12,7 @@ springBoot {
 }
 
 bootJar {
-    archivesBaseName = 'wxmp-qinke-service'
+    archivesBaseName = 'qinke-boot-wxmp'
     launchScript()
 }
 

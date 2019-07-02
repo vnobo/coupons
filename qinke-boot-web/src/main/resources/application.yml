@@ -1,0 +1,13 @@
+spring:
+  application.name: web-bootful
+  #datasource
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/qinke_db?useSSL=NO&serverTimezone=Asia/Shanghai&&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    username: farmer
+    password: q1w2e3..
+    initialization-mode: never
+  #redis
+  redis:
+    password: 123456

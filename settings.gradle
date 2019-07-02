@@ -5,6 +5,7 @@ pluginManagement {
 }
 rootProject.name = 'qinke-coupons'
 
-include 'qinke-wxmp-service'
-include 'qinke-aliance-taobao'
-include 'qinke-aliance-jd'
+include 'qinke-boot-wxmp'
+include 'qinke-boot-taobao'
+include 'qinke-boot-jd'
+include 'qinke-boot-web'
