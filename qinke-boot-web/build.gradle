@@ -1,10 +1,12 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
+
+
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     
     implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
 
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringVersion}"
     implementation "com.baomidou:mybatis-plus:${mybatisPlusVersion}"
