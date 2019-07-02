@@ -1,5 +1,5 @@
 spring:
-  application.name: web-bootful
+  application.name: web-bootful-zuul
   #datasource
   datasource:
     platform: mysql
@@ -11,5 +11,18 @@ spring:
   #redis
   redis:
     password: 123456
+  devtools:
+    add-properties: false
+zuul:
+  routes:
+    resource:
+      path: /resource/**
+      url: http://localhost:9000
+    user:
+      path: /user/**
+      url: http://localhost:9999/uaa/user
+
 mybatis-plus:
-  mapper-locations: mybatis-mapper
+  mapper-locations: mybatis-mapper/*.xml
+  configuration:
+    auto-mapping-unknown-column-behavior: failing
