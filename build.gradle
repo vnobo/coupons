@@ -8,7 +8,7 @@ subprojects {
     apply plugin: "idea"
     apply plugin: 'io.spring.dependency-management'
 
-    group = 'com.qinke'
+    group = 'com.alexbob'
     version = '0.0.1-dev'
     sourceCompatibility = '11'
 
@@ -41,8 +41,6 @@ subprojects {
     ext {
         set('springCloudVersion', "Greenwich.SR1")
         set('hutoolVersion', "4.5.16")
-        set('mybatisSpringVersion', "2.0.1")
-        set('mybatisPlusVersion', "3.1.2")
     }
 
     dependencies {

@@ -3,9 +3,9 @@ pluginManagement {
 		gradlePluginPortal()
 	}
 }
-rootProject.name = 'qinke-coupons'
+rootProject.name = 'coupons'
 
-include 'qinke-boot-wxmp'
-include 'qinke-boot-taobao'
-include 'qinke-boot-jd'
-include 'qinke-boot-web'
+include 'bootiful-wxmp'
+include 'bootiful-taobao'
+include 'bootiful-jd'
+include 'bootiful-web'

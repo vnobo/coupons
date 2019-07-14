@@ -1,0 +1,21 @@
+spring:
+  application.name: bootful-web
+  #datasource
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/coupons?serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false
+    username: farmer
+    password: q1w2e3..
+    initialization-mode: always
+  #redis
+  devtools:
+    add-properties: false
+zuul:
+  routes:
+    resource:
+      path: /resource/**
+      url: http://localhost:9000
+    user:
+      path: /user/**
+      url: http://localhost:9999/uaa/user
