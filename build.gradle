@@ -39,7 +39,7 @@ subprojects {
     }
 
     ext {
-        set('springCloudVersion', "Greenwich.SR1")
+        set('springCloudVersion', "Greenwich.SR2")
         set('hutoolVersion', "4.5.16")
     }
 

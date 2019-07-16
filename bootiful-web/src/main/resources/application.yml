@@ -13,9 +13,6 @@ spring:
     add-properties: false
 zuul:
   routes:
-    resource:
+    api:
       path: /resource/**
       url: http://localhost:9000
-    user:
-      path: /user/**
-      url: http://localhost:9999/uaa/user
