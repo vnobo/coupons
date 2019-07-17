@@ -6,11 +6,13 @@ import com.alex.taobao.TaoBaoRestException;
 import com.alex.taobao.client.TaobaoClient;
 import com.alex.taobao.model.RateType;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,11 +27,12 @@ import java.util.Map;
  */
 @Log4j2
 @Service
-public class TaoBaoServer{
+public class TaoBaoServer {
+    private final ObjectMapper objectMapper;
+    private final TaobaoClient taobaoClient;
 
-    private TaobaoClient taobaoClient;
-
-    public TaoBaoServer(TaobaoClient taobaoClient) {
+    public TaoBaoServer(ObjectMapper objectMapper, TaobaoClient taobaoClient) {
+        this.objectMapper = objectMapper;
         this.taobaoClient = taobaoClient;
     }
 
@@ -42,7 +45,8 @@ public class TaoBaoServer{
         tbParams.set("method", "taobao.tbk.item.info.get");
         tbParams.set("num_iids", itemId);
         tbParams.set("platform", "2");
-        JsonNode tbData = this.taobaoClient.postForEntity(tbParams);
+        Mono<JsonNode> jsonNodeMono = this.taobaoClient.postForEntity(tbParams);
+        JsonNode tbData = jsonNodeMono.block();
 
         if (ObjectUtil.isNotNull(tbData.get("error_response"))) {
             log.error("get tao bao goods info error. msg: {}", tbData.findPath("msg").asText());
@@ -61,7 +65,7 @@ public class TaoBaoServer{
         tbParams.set("num_iid", itemId);
         tbParams.set("fields", "volume,num_iid,title,pict_url,small_images," +
                 "reserve_price,zk_final_price,user_type,provcity,item_url,nick");
-        return this.taobaoClient.postForEntity(tbParams).findPath("n_tbk_item");
+        return this.taobaoClient.postForEntity(tbParams).block().findPath("n_tbk_item");
     }
 
 
@@ -75,7 +79,8 @@ public class TaoBaoServer{
         params.set("q", "https://detail.tmall.com/item.htm?id=" + itemId);
         params.set("adzone_id", adzoneId);
 
-        JsonNode tbData = this.superSearch(params);
+        Mono<JsonNode> jsonNodeMono = this.superSearch(params);
+        JsonNode tbData = jsonNodeMono.block();
         Iterator<JsonNode> elements = tbData.findPath("map_data").elements();
         if (!elements.hasNext()) {
             throw new TaoBaoRestException(500, "获取淘宝商品信息错误!");
@@ -109,7 +114,7 @@ public class TaoBaoServer{
      * @param tbParams 搜索条件
      * @link https://open.taobao.com/api.htm?docId=33947&docType=2
      */
-    public JsonNode materialSearch(MultiValueMap<String, String> tbParams) {
+    public Mono<JsonNode> materialSearch(MultiValueMap<String, String> tbParams) {
         tbParams.set("method", "taobao.tbk.dg.optimus.material");
         tbParams.set("page_size", "100");
         return this.taobaoClient.postForEntity(tbParams);
@@ -121,7 +126,7 @@ public class TaoBaoServer{
      * @param tbParams 搜索条件
      * @link https://open.taobao.com/api.htm?docId=35896&docType=2
      */
-    public JsonNode superSearch(MultiValueMap<String, String> tbParams) {
+    public Mono<JsonNode> superSearch(MultiValueMap<String, String> tbParams) {
         tbParams.set("method", "taobao.tbk.dg.material.optional");
         tbParams.set("platform", "2");
         return this.taobaoClient.postForEntity(tbParams);
@@ -140,7 +145,9 @@ public class TaoBaoServer{
         tbParams.set("method", "taobao.tbk.tpwd.create");
         tbParams.set("text", title);
         tbParams.set("url", url.contains("http") ? url : "https:" + url);
-        JsonNode tbData = this.taobaoClient.postForEntity(tbParams);
+        Mono<JsonNode> jsonNodeMono = this.taobaoClient.postForEntity(tbParams);
+
+        JsonNode tbData = jsonNodeMono.block();
 
         if (ObjectUtil.isNotNull(tbData.get("error_response"))) {
             log.error("create tao bao goods pwd error. msg: {}", tbData.findPath("msg").asText());
@@ -181,27 +188,28 @@ public class TaoBaoServer{
      *
      * @link https://open.taobao.com/api.htm?docId=24527&docType=2
      */
-    public JsonNode syncOrders(LocalDateTime startTime, int page, int status, String queryType,int span) {
+    public JsonNode syncOrders(LocalDateTime startTime, int page, int status, String queryType) {
         MultiValueMap<String, String> tbParams = new LinkedMultiValueMap<>();
-        tbParams.set("method", "taobao.tbk.order.get");
-        tbParams.set("fields", "tb_trade_parent_id,tb_trade_id,num_iid,item_title,item_num,price,pay_price," +
-                "seller_nick,seller_shop_title,commission,commission_rate,unid,create_time,earning_time," +
-                "tk3rd_pub_id,tk3rd_site_id,tk3rd_adzone_id,relation_id,tb_trade_parent_id,tb_trade_id," +
-                "num_iid,item_title,item_num,price,pay_price,seller_nick,seller_shop_title,tk_status," +
-                "commission,commission_rate,unid,create_time,earning_time,tk3rd_pub_id,tk3rd_site_id," +
-                "tk3rd_adzone_id,special_id,click_time");
-        tbParams.set("start_time", startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:00")));
+        tbParams.set("method", "taobao.tbk.order.details.get");
+        tbParams.set("start_time", startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        tbParams.set("end_time", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         tbParams.set("page_no", String.valueOf(page));
-        tbParams.set("span", String.valueOf(span));
         tbParams.set("tk_status", String.valueOf(status));
-        tbParams.set("order_query_type", queryType);
+        tbParams.set("query_type", queryType);
 
-        JsonNode tbData = this.taobaoClient.postForEntity(tbParams);
+        Mono<JsonNode> tbData = this.taobaoClient.postForEntity(tbParams);
 
-        if (ObjectUtil.isNotNull(tbData.get("error_response"))) {
-            throw new TaoBaoRestException(500, tbData.findPath("error_response").toString());
+        try {
+            JsonNode tbJsonNode = tbData.blockOptional().orElse(this.objectMapper.createObjectNode());
+
+            if (ObjectUtil.isNotNull(tbJsonNode.get("error_response"))) {
+                throw new TaoBaoRestException(500, tbJsonNode.findPath("error_response").toString());
+            }
+
+            return tbJsonNode.findPath("n_tbk_order");
+
+        } catch (Exception e) {
+            throw new TaoBaoRestException(500, e.getMessage());
         }
-
-        return tbData.findPath("n_tbk_order");
     }
 }

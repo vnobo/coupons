@@ -5,7 +5,7 @@ pluginManagement {
 }
 rootProject.name = 'coupons'
 
-include 'bootiful-wxmp'
+include 'bootiful-wx'
 include 'bootiful-taobao'
 include 'bootiful-jd'
 include 'bootiful-web'

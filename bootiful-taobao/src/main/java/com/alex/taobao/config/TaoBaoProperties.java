@@ -1,6 +1,6 @@
 package com.alex.taobao.config;
 
-import cn.hutool.json.JSONUtil;
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -9,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
+@Data
 @ConfigurationProperties(prefix = "taobao.ke")
 public class TaoBaoProperties {
 
@@ -40,72 +41,12 @@ public class TaoBaoProperties {
     /**
      * 高佣转链接API地址
      */
-    private String highAPI;
+    private String highApi;
 
     /**
      * 高佣授权UID
      */
     private String highUid;
 
-    public String getAppKey() {
-        return appKey;
-    }
-
-    public void setAppKey(String appKey) {
-        this.appKey = appKey;
-    }
-
-    public String getAppSecret() {
-        return appSecret;
-    }
-
-    public void setAppSecret(String appSecret) {
-        this.appSecret = appSecret;
-    }
-
-    public String getSignMethod() {
-        return signMethod;
-    }
-
-    public void setSignMethod(String signMethod) {
-        this.signMethod = signMethod;
-    }
-
-    public String getApiUrl() {
-        return apiUrl;
-    }
-
-    public void setApiUrl(String apiUrl) {
-        this.apiUrl = apiUrl;
-    }
-
-    public String getHighKey() {
-        return highKey;
-    }
-
-    public void setHighKey(String highKey) {
-        this.highKey = highKey;
-    }
-
-    public String getHighAPI() {
-        return highAPI;
-    }
-
-    public void setHighAPI(String highAPI) {
-        this.highAPI = highAPI;
-    }
-
-    public String getHighUid() {
-        return highUid;
-    }
-
-    public void setHighUid(String highUid) {
-        this.highUid = highUid;
-    }
-
-    @Override
-    public String toString() {
-        return JSONUtil.toJsonStr(this);
-    }
 
 }

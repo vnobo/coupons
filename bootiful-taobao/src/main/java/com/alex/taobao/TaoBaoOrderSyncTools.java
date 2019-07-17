@@ -44,9 +44,9 @@ public class TaoBaoOrderSyncTools{
 
             log.info("manual sync model startTime: {},async model progress,endTime  {}", startTime, endTime);
 
-            this.orderService.asyncProgress(1, startTime, "create_time", 20 * 60);
+            this.orderService.asyncProgress(1, startTime, "create_time");
 
-            this.orderService.asyncProgress(1, startTime, "settle_time", 20 * 60);
+            this.orderService.asyncProgress(1, startTime, "settle_time");
 
 
             try {
@@ -63,9 +63,9 @@ public class TaoBaoOrderSyncTools{
 
         LocalDateTime startTime = LocalDateTime.now().minusMinutes(3);
 
-        this.orderService.asyncProgress(1, startTime, "create_time", 60 * 2);
+        this.orderService.asyncProgress(1, startTime, "create_time");
 
-        this.orderService.asyncProgress(1, startTime, "settle_time", 60 * 2);
+        this.orderService.asyncProgress(1, startTime, "settle_time");
 
     }
 

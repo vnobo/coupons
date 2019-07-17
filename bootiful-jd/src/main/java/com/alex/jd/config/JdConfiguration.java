@@ -1,6 +1,6 @@
-package com.alex.wxmp.alliance.jd.config;
+package com.alex.wx.alliance.jd.config;
 
-import com.alex.wxmp.alliance.jd.JdClient;
+import com.alex.wx.alliance.jd.JdClient;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

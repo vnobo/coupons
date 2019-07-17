@@ -21,10 +21,10 @@ import java.time.ZoneId;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
+@Data
 @Entity
 @Table(name = "orders")
 @EntityListeners(AuditingEntityListener.class)
-@Data
 public class Order implements Serializable {
 
     @Id

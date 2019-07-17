@@ -74,11 +74,11 @@ public class OrderService {
      * 订单查询类型，创建时间“create_time”，或结算时间“settle_time”
      */
     @Async
-    public void asyncProgress(int page, LocalDateTime startTime, String queryType, int span) {
+    public void asyncProgress(int page, LocalDateTime startTime, String queryType) {
 
         int totalNum = 0;
 
-        JsonNode jsonNode = this.taoBaoServer.syncOrders(startTime, page, 1, queryType, span);
+        JsonNode jsonNode = this.taoBaoServer.syncOrders(startTime, page, 1, queryType);
 
         Iterator<JsonNode> orders = jsonNode.elements();
 
@@ -118,7 +118,7 @@ public class OrderService {
         }
 
         if (totalNum == 100) {
-            this.asyncProgress(page + 1, startTime, queryType, span);
+            this.asyncProgress(page + 1, startTime, queryType);
         }
     }
 

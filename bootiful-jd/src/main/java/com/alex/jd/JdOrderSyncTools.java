@@ -1,10 +1,10 @@
-package com.alex.wxmp.alliance.jd;
+package com.alex.wx.alliance.jd;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.alex.wxmp.AbstractGenericService;
-import com.alex.wxmp.core.order.OrderService;
-import com.alex.wxmp.core.order.beans.Order;
-import com.alex.wxmp.core.wallet.WalletService;
+import com.alex.wx.AbstractGenericService;
+import com.alex.wx.core.order.OrderService;
+import com.alex.wx.core.order.beans.Order;
+import com.alex.wx.core.wallet.WalletService;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;

@@ -1,4 +1,4 @@
-package com.alex.wxmp.alliance.jd;
+package com.alex.wx.alliance.jd;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

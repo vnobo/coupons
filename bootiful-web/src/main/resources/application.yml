@@ -1,3 +1,5 @@
+logging.level.web: debug
+
 spring:
   application.name: bootful-web
   #datasource
@@ -11,8 +13,40 @@ spring:
   #redis
   devtools:
     add-properties: false
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate.ddl-auto: none
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+  #task
+  task.execution.pool:
+    max-size: 50
+    queue-capacity: 100
+    keep-alive: 30S
+
+  #Thymeleaf
+  thymeleaf.cache: false
+
+  #短信配置
+  cloud.alicloud:
+    access-key: LTAIrI1OfTFGaA43
+    secret-key: CFX0raMd7txvdo7EmqnQpDgZCWFmC5
+  #邮件地址配置
+  mail:
+    host: smtpdm.aliyun.com
+    port: 465
+    username: admin@support.nerchain.com
+    password: lB5GfZZBA8eZSbvG
+    test-connection: true
+    properties:
+      mail.smtp:
+        auth: true
+        socketFactory.class: javax.net.ssl.SSLSocketFactory
+    default-encoding: UTF-8
+    protocol: smtp
 zuul:
   routes:
     api:
-      path: /resource/**
+      path: /api/**
       url: http://localhost:9000

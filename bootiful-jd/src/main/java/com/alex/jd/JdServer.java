@@ -1,8 +1,8 @@
-package com.alex.wxmp.alliance.jd;
+package com.alex.wx.alliance.jd;
 
 import cn.hutool.json.JSONUtil;
-import com.alex.wxmp.AbstractGenericService;
-import com.alex.wxmp.RestServerException;
+import com.alex.wx.AbstractGenericService;
+import com.alex.wx.RestServerException;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;

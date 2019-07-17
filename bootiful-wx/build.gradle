@@ -1,28 +1,5 @@
 apply plugin: 'org.springframework.boot'
 
-springBoot {
-
-    buildInfo {
-        properties {
-            artifact = 'qinke-boot-wxmp'
-            name = '秦客优惠公众号服务'
-        }
-    }
-    mainClassName = 'com.alex.WxMpApplication'
-}
-
-bootJar {
-    archivesBaseName = 'qinke-boot-wxmp'
-    launchScript()
-}
-
-ext {
-    queryDslVersion = '4.2.1'
-    weixinVersion = "3.4.4.B"
-    hanlpVersion = "portable-1.7.3"
-    springCloudAlibabaVersion = '0.9.0.RELEASE'
-}
-
 dependencies {
 
     // 微信公众号API包

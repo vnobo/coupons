@@ -1,4 +1,4 @@
-package com.alex.wxmp.alliance.jd.config;
+package com.alex.wx.alliance.jd.config;
 
 import cn.hutool.json.JSONUtil;
 import org.springframework.boot.context.properties.ConfigurationProperties;

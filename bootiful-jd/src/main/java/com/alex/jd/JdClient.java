@@ -1,9 +1,9 @@
-package com.alex.wxmp.alliance.jd;
+package com.alex.wx.alliance.jd;
 
 import cn.hutool.json.JSONUtil;
-import com.alex.wxmp.RestServerException;
-import com.alex.wxmp.alliance.AbstractGenericClient;
-import com.alex.wxmp.alliance.taobao.SignRequestUtils;
+import com.alex.wx.RestServerException;
+import com.alex.wx.alliance.AbstractGenericClient;
+import com.alex.wx.alliance.taobao.SignRequestUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.HttpStatus;

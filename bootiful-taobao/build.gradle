@@ -1,29 +1,9 @@
 apply plugin: 'org.springframework.boot'
 
-springBoot {
-
-    buildInfo {
-        properties {
-            artifact = 'taobao-qinke-service'
-            name = '淘宝联盟数据同步服务'
-        }
-    }
-    mainClassName = 'com.alex.TaoBaoApplication'
-}
-
-bootJar {
-    archivesBaseName = 'taobao-qinke-service'
-    launchScript()
-}
-
-ext {
-    queryDslVersion = '4.2.1'
-}
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-
     annotationProcessor "com.querydsl:querydsl-apt:${queryDslVersion}:jpa"
     annotationProcessor 'org.springframework.boot:spring-boot-starter-data-jpa'
 }

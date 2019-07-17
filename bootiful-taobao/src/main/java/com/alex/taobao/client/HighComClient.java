@@ -29,7 +29,7 @@ public class HighComClient extends AbstractGenericClient {
                          ObjectMapper objectMapper,
                          TaoBaoProperties taoBaoProperties) {
         // webClient设置
-        super(builder.baseUrl(taoBaoProperties.getHighAPI()), objectMapper);
+        super(builder.baseUrl(taoBaoProperties.getHighApi()), objectMapper);
         this.appKey = taoBaoProperties.getHighKey();
         this.sid = taoBaoProperties.getHighUid();
     }

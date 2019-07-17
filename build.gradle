@@ -3,7 +3,7 @@ plugins {
 }
 
 subprojects {
-    
+
     apply plugin: "java"
     apply plugin: "idea"
     apply plugin: 'io.spring.dependency-management'
@@ -39,8 +39,12 @@ subprojects {
     }
 
     ext {
-        set('springCloudVersion', "Greenwich.SR2")
-        set('hutoolVersion', "4.5.16")
+        springCloudVersion = 'Greenwich.SR2'
+        hutoolVersion = '4.5.16'
+        queryDslVersion = '4.2.1'
+        weixinVersion = "3.4.7.B"
+        hanlpVersion = "portable-1.7.4"
+        springCloudAlibabaVersion = '0.9.0.RELEASE'
     }
 
     dependencies {
