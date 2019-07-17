@@ -18,54 +18,40 @@ import java.time.LocalDateTime;
  */
 @Log4j2
 @Component
-public class TaoBaoOrderSyncTools{
+public class OrdersSyncScheduled {
 
     private final OrderService orderService;
 
-    public TaoBaoOrderSyncTools(OrderService orderService) {
+    public OrdersSyncScheduled(OrderService orderService) {
         this.orderService = orderService;
     }
 
     @EventListener(ApplicationReadyEvent.class)
-    @Async
     public void manualSyncOrder() {
-        this.manualSyncOrder(LocalDateTime.of(2019, 3, 29, 0, 0), LocalDateTime.now());
+        LocalDateTime startTime = LocalDateTime.of(2019, 4, 23, 0, 0);
+        this.manualSyncOrder(startTime);
     }
 
     /**
      * 手动同步订单
      *
      * @param startTime 开始时间
-     * @param endTime   到结束时间
      */
-    public void manualSyncOrder(LocalDateTime startTime, LocalDateTime endTime) {
+    @Async
+    public void manualSyncOrder(LocalDateTime startTime) {
 
-        while (startTime.isBefore(endTime)) {
-
-            log.info("manual sync model startTime: {},async model progress,endTime  {}", startTime, endTime);
-
-            this.orderService.asyncProgress(1, startTime, "create_time");
-
-            this.orderService.asyncProgress(1, startTime, "settle_time");
-
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        while (startTime.isBefore(LocalDateTime.now())) {
+            this.orderService.asyncProgress(1, startTime,20, 2);
+            this.orderService.asyncProgress(1, startTime, 20,3);
             startTime = startTime.plusMinutes(20);
         }
     }
 
     @Scheduled(cron = "0 */2 * * * ?")
     public void asyncOrder() {
-
-        LocalDateTime startTime = LocalDateTime.now().minusMinutes(3);
-
-        this.orderService.asyncProgress(1, startTime, "create_time");
-
-        this.orderService.asyncProgress(1, startTime, "settle_time");
+        LocalDateTime startTime = LocalDateTime.now().minusMinutes(4);
+        this.orderService.asyncProgress(1, startTime,2, 2);
+        this.orderService.asyncProgress(1, startTime, 2,3);
 
     }
 

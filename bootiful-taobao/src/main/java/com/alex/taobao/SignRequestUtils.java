@@ -18,7 +18,7 @@ public class SignRequestUtils {
     /**
      * 请求数据参数加密
      */
-    public static String signTopRequest(MultiValueMap<String, String> params, String secret, String signMethod) {
+    public static String signTopRequest(MultiValueMap<String, Object> params, String secret, String signMethod) {
 
         // 第一步：检查参数是否已经排序
         String[] keys = params.keySet().toArray(new String[0]);

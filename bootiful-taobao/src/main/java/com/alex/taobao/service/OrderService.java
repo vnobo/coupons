@@ -40,17 +40,8 @@ public class OrderService {
         this.taoBaoServer = taoBaoServer;
     }
 
-    public Order loadByTidAndType(String tid, int type) {
-        Optional<Order> optionalOrder = this.orderRepository.findByTradeIdAndType(tid, type);
-        return optionalOrder.orElse(null);
-    }
-
-    public Page<Order> loadPageOrder(Predicate predicate, Pageable pageable) {
-        return this.orderRepository.findAll(predicate, pageable);
-    }
-
     public Order save(Order order) {
-        return orderRepository.saveAndFlush(order);
+        return orderRepository.save(order);
     }
 
     @Async
@@ -73,52 +64,32 @@ public class OrderService {
      * <p>
      * 订单查询类型，创建时间“create_time”，或结算时间“settle_time”
      */
-    @Async
-    public void asyncProgress(int page, LocalDateTime startTime, String queryType) {
+    public void asyncProgress(int page, LocalDateTime startTime, int span, int queryType) {
 
-        int totalNum = 0;
+        JsonNode jsonNode = this.taoBaoServer.syncOrders(page, startTime, span, queryType);
 
-        JsonNode jsonNode = this.taoBaoServer.syncOrders(startTime, page, 1, queryType);
+        JsonNode results = jsonNode.findPath("results");
 
-        Iterator<JsonNode> orders = jsonNode.elements();
+        if (results.size() == 0) {
+            return;
+        }
+        Iterator<JsonNode> orders = results.findValue("publisher_order_dto").elements();
 
         while (orders.hasNext()) {
 
             JsonNode node = orders.next();
 
-            totalNum++;
-
-            log.info("淘宝 {} 订单同步,同步编号 {} ,订单内容 {}", queryType, totalNum, node);
+            log.info("淘宝 {} 订单同步,订单内容 {}", queryType, node);
 
             Order order = this.objectMapper.convertValue(node, Order.class);
-            if (queryType.equalsIgnoreCase("settle_time")) {
-                Order dbOrder = this.loadByTidAndType(order.getTradeId(), 1);
-                if (ObjectUtil.isNotNull(dbOrder)) {
-                    order.setId(dbOrder.getId());
-                    order.setOpenId(dbOrder.getOpenId());
-                    // 结算订单同步
-                    if (order.getTkStatus() == 3 && dbOrder.getTkStatus() != 3) {
-                       //  this.walletService.plusBalance(order.getTradeId(), order.getOpenId(), order.getTotalCommissionFee());
-                    }
-                } else {
-                    log.error("同步结算订单失败,原订单不存在,无法结算,订单详细信息: {}", order);
-                }
-            } else {
-               // Customer customer = this.customerService.loadByPid(order.getAdzoneId());
-               // if (ObjectUtil.isNotNull(customer)) {
-               //    // order.setOpenId(customer.getOpenId());
-               // } else {
-               //     log.error("model adZone id is error ,adZoneId is {}.this system not build user!", order.getAdzoneId());
-               // }
-            }
             order.setAsyncTime(LocalDateTime.now());
             order.setType(1);
-            order.getExtend().withArray("nodes").insert(0, node.deepCopy());
+            order.getExtend().set("trade", node);
             this.asyncSave(order);
         }
 
-        if (totalNum == 100) {
-            this.asyncProgress(page + 1, startTime, queryType);
+        if (jsonNode.findValue("has_next").asBoolean()) {
+            this.asyncProgress(page + 1, startTime, span, queryType);
         }
     }
 

@@ -2,6 +2,7 @@ package com.alex.taobao.model;
 
 import com.alex.taobao.ObjectNodeConverterJson;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Data;
@@ -27,18 +28,18 @@ import java.time.ZoneId;
 @EntityListeners(AuditingEntityListener.class)
 public class Order implements Serializable {
 
+    /**
+     * 订单ID
+     */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private String id;
+
     /**
      * 微信用户id
      */
     @Column(name = "openid")
     private String openId;
-    /**
-     * 订单ID
-     */
-    private String tradeId;
+
 
     private String adzoneId;
 
@@ -133,23 +134,17 @@ public class Order implements Serializable {
     @Convert(converter = ObjectNodeConverterJson.class)
     private ObjectNode extend;
 
-    public static Order of(String openid, String tradeId, int type) {
-        Order order = new Order();
-        order.setOpenId(openid);
-        order.setTradeId(tradeId);
-        order.setType(type);
-        return order;
+    @JsonProperty("item_price")
+    public void setPrice(double price) {
+        this.price = price;
     }
 
-
-    public void setExt1(String openId) {
-        this.openId = openId;
-    }
-
+    @JsonProperty("trade_id")
     public void setTrade_id(String tradeId) {
-        this.tradeId = tradeId;
+        this.id = tradeId;
     }
 
+    @JsonProperty("item_id")
     public void setNum_iid(long numIid) {
         this.numIid = numIid;
     }
@@ -166,17 +161,24 @@ public class Order implements Serializable {
         this.payPrice = payPrice;
     }
 
-
+    @JsonProperty("pub_share_rate")
     public void setCommission_rate(double commissionRate) {
         this.commissionRate = commissionRate;
     }
 
+    @JsonProperty("pub_share_fee")
+    public void setCommission(double commission) {
+        this.commission = commission;
+    }
+
     @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("tk_create_time")
     public void setCreate_time(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
     @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonProperty("tk_earning_time")
     public void setEarning_time(LocalDateTime earningTime) {
         this.earningTime = earningTime;
     }
@@ -190,22 +192,6 @@ public class Order implements Serializable {
 
     public void setTk_status(int tkStatus) {
         this.tkStatus = tkStatus;
-    }
-
-    /**
-     * 订单维度的有效码（-1：未知,2.无效-拆单,3.无效-取消,4.无效-京东帮帮主订单,5.无效-账号异常,6.无效-赠品类目不返佣,7.无效-校园订单,8.无效-企业订单,9.无效-团购订单,10.无效-开增值税专用发票订单,11.无效-乡村推广员下单,12.无效-自己推广自己下单,13.无效-违规订单,14.无效-来源与备案网址不符,15.待付款,16.已付款,17.已完成,18.已结算）注：自2018/7/13起，自己推广自己下单已经允许返佣，故12无效码仅针对历史数据有效
-     */
-    public void setValidCode(int tkStatus) {
-
-        if (18 == tkStatus) {
-            this.tkStatus = 3;
-        } else if (16 == tkStatus) {
-            this.tkStatus = 12;
-        } else if (17 == tkStatus) {
-            this.tkStatus = 14;
-        } else {
-            this.tkStatus = tkStatus;
-        }
     }
 
     public void setOrder_type(String orderType) {
@@ -239,12 +225,13 @@ public class Order implements Serializable {
         this.alipayTotalPrice = alipayTotalPrice;
     }
 
-
+    @JsonProperty("total_commission_rate")
     public void setTotal_commission_rate(double totalCommissionRate) {
         this.totalCommissionRate = totalCommissionRate;
     }
 
 
+    @JsonProperty("total_commission_fee")
     public void setTotal_commission_fee(double totalCommissionFee) {
         this.totalCommissionFee = totalCommissionFee;
     }

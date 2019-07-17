@@ -1,9 +1,8 @@
 DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders`
 (
-    `id`                    bigint AUTO_INCREMENT PRIMARY KEY,
+    `id`                    VARCHAR(64)  PRIMARY KEY COMMENT '订单号',
     `openid`                VARCHAR(64),
-    `trade_id`              VARCHAR(128) NOT NULL COMMENT '订单号',
     `type`                  char(1)      NOT NULL DEFAULT 1 COMMENT '订单类型1,淘宝.2,京东.3,拼多多',
     `num_iid`               VARCHAR(64)  NOT NULL COMMENT '商品ID',
     `item_title`            varchar(128) COMMENT '商品名称',
@@ -25,6 +24,5 @@ CREATE TABLE `orders`
     `total_commission_rate` double                DEFAULT 0 COMMENT '佣金比率',
     `total_commission_fee`  double                DEFAULT 0 COMMENT '佣金金额',
     `async_time`            timestamp             DEFAULT current_timestamp COMMENT '默认同步时间',
-    `extend`                JSON COMMENT '账户扩展信息',
-    UNIQUE (`trade_id`, `type`)
+    `extend`                JSON COMMENT '账户扩展信息'
 ) COMMENT '返利订单';

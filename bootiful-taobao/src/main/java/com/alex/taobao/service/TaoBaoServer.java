@@ -41,7 +41,7 @@ public class TaoBaoServer {
      */
     public JsonNode getItemById(String itemId) {
 
-        MultiValueMap<String, String> tbParams = new LinkedMultiValueMap<>();
+        MultiValueMap<String, Object> tbParams = new LinkedMultiValueMap<>();
         tbParams.set("method", "taobao.tbk.item.info.get");
         tbParams.set("num_iids", itemId);
         tbParams.set("platform", "2");
@@ -60,7 +60,7 @@ public class TaoBaoServer {
      * 根据商品ID 获取智能推荐商品详情
      */
     public JsonNode getRecommend(String itemId) {
-        MultiValueMap<String, String> tbParams = new LinkedMultiValueMap<>();
+        MultiValueMap<String, Object> tbParams = new LinkedMultiValueMap<>();
         tbParams.set("method", "taobao.tbk.item.recommend.get");
         tbParams.set("num_iid", itemId);
         tbParams.set("fields", "volume,num_iid,title,pict_url,small_images," +
@@ -75,7 +75,7 @@ public class TaoBaoServer {
     public Map<String, Object> getGoodsPwd(String adzoneId, String itemId) {
         Assert.notNull(adzoneId, "adzoneId 不能为空!");
         Assert.notNull(itemId, "商品ID 不能为空!");
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        MultiValueMap<String, Object> params = new LinkedMultiValueMap<>();
         params.set("q", "https://detail.tmall.com/item.htm?id=" + itemId);
         params.set("adzone_id", adzoneId);
 
@@ -114,7 +114,7 @@ public class TaoBaoServer {
      * @param tbParams 搜索条件
      * @link https://open.taobao.com/api.htm?docId=33947&docType=2
      */
-    public Mono<JsonNode> materialSearch(MultiValueMap<String, String> tbParams) {
+    public Mono<JsonNode> materialSearch(MultiValueMap<String, Object> tbParams) {
         tbParams.set("method", "taobao.tbk.dg.optimus.material");
         tbParams.set("page_size", "100");
         return this.taobaoClient.postForEntity(tbParams);
@@ -126,7 +126,7 @@ public class TaoBaoServer {
      * @param tbParams 搜索条件
      * @link https://open.taobao.com/api.htm?docId=35896&docType=2
      */
-    public Mono<JsonNode> superSearch(MultiValueMap<String, String> tbParams) {
+    public Mono<JsonNode> superSearch(MultiValueMap<String, Object> tbParams) {
         tbParams.set("method", "taobao.tbk.dg.material.optional");
         tbParams.set("platform", "2");
         return this.taobaoClient.postForEntity(tbParams);
@@ -141,7 +141,7 @@ public class TaoBaoServer {
      * @return
      */
     public String createTBPwd(String title, String url) {
-        MultiValueMap<String, String> tbParams = new LinkedMultiValueMap<>();
+        MultiValueMap<String, Object> tbParams = new LinkedMultiValueMap<>();
         tbParams.set("method", "taobao.tbk.tpwd.create");
         tbParams.set("text", title);
         tbParams.set("url", url.contains("http") ? url : "https:" + url);
@@ -188,28 +188,29 @@ public class TaoBaoServer {
      *
      * @link https://open.taobao.com/api.htm?docId=24527&docType=2
      */
-    public JsonNode syncOrders(LocalDateTime startTime, int page, int status, String queryType) {
-        MultiValueMap<String, String> tbParams = new LinkedMultiValueMap<>();
+    public JsonNode syncOrders( int page,LocalDateTime startTime,int span,int queryType) {
+        MultiValueMap<String, Object> tbParams = new LinkedMultiValueMap<>();
         tbParams.set("method", "taobao.tbk.order.details.get");
         tbParams.set("start_time", startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        tbParams.set("end_time", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        tbParams.set("end_time", startTime.plusMinutes(span).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         tbParams.set("page_no", String.valueOf(page));
-        tbParams.set("tk_status", String.valueOf(status));
-        tbParams.set("query_type", queryType);
+        tbParams.set("query_type", String.valueOf(queryType));
+
+        log.info("params is {}", tbParams);
 
         Mono<JsonNode> tbData = this.taobaoClient.postForEntity(tbParams);
-
+        JsonNode tbJsonNode;
         try {
-            JsonNode tbJsonNode = tbData.blockOptional().orElse(this.objectMapper.createObjectNode());
-
-            if (ObjectUtil.isNotNull(tbJsonNode.get("error_response"))) {
-                throw new TaoBaoRestException(500, tbJsonNode.findPath("error_response").toString());
-            }
-
-            return tbJsonNode.findPath("n_tbk_order");
-
+            tbJsonNode = tbData.blockOptional().orElse(this.objectMapper.createObjectNode());
         } catch (Exception e) {
             throw new TaoBaoRestException(500, e.getMessage());
         }
+
+        if (ObjectUtil.isNotNull(tbJsonNode.get("error_response"))) {
+            throw new TaoBaoRestException(500, tbJsonNode.findPath("error_response").toString());
+        }
+
+        return tbJsonNode.findPath("data");
+
     }
 }

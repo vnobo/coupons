@@ -4,7 +4,7 @@ spring:
   datasource:
     platform: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/qinke_db?useSSL=NO&serverTimezone=Asia/Shanghai&&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:3306/coupons?useSSL=NO&serverTimezone=Asia/Shanghai&&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
     username: farmer
     password: q1w2e3..
     initialization-mode: always

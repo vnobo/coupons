@@ -39,19 +39,14 @@ public class TaobaoClient extends AbstractGenericClient {
     public TaobaoClient(WebClient.Builder clientBuilder,
                         ObjectMapper objectMapper,
                         TaoBaoProperties taoBaoProperties) {
-        super(clientBuilder.baseUrl(taoBaoProperties.getApiUrl())
-                .exchangeStrategies((ExchangeStrategies) ExchangeStrategies.builder()
-                .codecs(clientCodecConfigurer->{
-                    clientCodecConfigurer.customCodecs().encoder(new Jackson2JsonEncoder(objectMapper, ALL));
-                    clientCodecConfigurer.customCodecs().decoder(new Jackson2JsonDecoder(objectMapper, ALL));
-                })), objectMapper);
+        super(clientBuilder.baseUrl(taoBaoProperties.getApiUrl()), objectMapper);
         this.appKey = taoBaoProperties.getAppKey();
         this.appSecret = taoBaoProperties.getAppSecret();
         this.signMethod = taoBaoProperties.getSignMethod();
 
     }
 
-    public Mono<JsonNode> postForEntity(MultiValueMap<String, String> params) {
+    public Mono<JsonNode> postForEntity(MultiValueMap<String, Object> params) {
 
         params.set("app_key", this.appKey);
         params.set("v", "2.0");

@@ -5,6 +5,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.codec.ClientCodecConfigurer;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
+import org.springframework.http.codec.json.Jackson2SmileDecoder;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -23,7 +24,14 @@ public abstract class AbstractGenericClient {
     protected ObjectMapper objectMapper;
 
     protected AbstractGenericClient(WebClient.Builder clientBuilder, ObjectMapper objectmapper) {
-        this.webClient = clientBuilder.build();
+
+        ExchangeStrategies strategies = ExchangeStrategies.builder()
+                .codecs(configurer -> {
+                    configurer.customCodecs().decoder(new Jackson2JsonDecoder(objectmapper,ALL));
+                    configurer.customCodecs().encoder(new Jackson2JsonEncoder(objectmapper,ALL));
+                })
+                .build();
+        this.webClient = clientBuilder.exchangeStrategies(strategies).build();
 
         this.objectMapper = objectmapper;
     }
