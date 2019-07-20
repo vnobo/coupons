@@ -1,4 +1,4 @@
-package com.alex.taobao;
+package com.alex.taobao.exceptions;
 
 
 import lombok.Data;

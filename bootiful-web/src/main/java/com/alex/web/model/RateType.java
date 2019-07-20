@@ -1,4 +1,4 @@
-package com.alex.taobao.model;
+package com.alex.web.model;
 
 /**
  * rebate-alliance Commission

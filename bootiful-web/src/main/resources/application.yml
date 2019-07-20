@@ -10,9 +10,7 @@ spring:
     username: farmer
     password: q1w2e3..
     initialization-mode: always
-  #redis
-  devtools:
-    add-properties: false
+  #jpa
   jpa:
     open-in-view: true
     show-sql: true
@@ -24,10 +22,16 @@ spring:
     max-size: 50
     queue-capacity: 100
     keep-alive: 30S
-
   #Thymeleaf
   thymeleaf.cache: false
-
+  #rabbitmq
+  rabbitmq:
+    host: localhost
+    username: farmer
+    password: q1w2e3..
+    template.retry:
+      enabled: true
+      initial-interval: 2s
   #短信配置
   cloud.alicloud:
     access-key: LTAIrI1OfTFGaA43
@@ -45,8 +49,11 @@ spring:
         socketFactory.class: javax.net.ssl.SSLSocketFactory
     default-encoding: UTF-8
     protocol: smtp
+  #devtools
+  devtools:
+    add-properties: false
 zuul:
   routes:
-    api:
-      path: /api/**
-      url: http://localhost:9000
+    tb:
+      path: /tb/**
+      url: http://localhost:8081

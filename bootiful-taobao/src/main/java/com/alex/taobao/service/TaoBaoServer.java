@@ -2,9 +2,9 @@ package com.alex.taobao.service;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.alex.taobao.TaoBaoRestException;
+import com.alex.taobao.exceptions.OrderSyncProgressException;
+import com.alex.taobao.exceptions.TaoBaoRestException;
 import com.alex.taobao.client.TaobaoClient;
-import com.alex.taobao.model.RateType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.util.ObjectUtils;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,9 @@ import java.util.Map;
 @Log4j2
 @Service
 public class TaoBaoServer {
+
     private final ObjectMapper objectMapper;
+
     private final TaobaoClient taobaoClient;
 
     public TaoBaoServer(ObjectMapper objectMapper, TaobaoClient taobaoClient) {
@@ -94,7 +97,7 @@ public class TaoBaoServer {
         }
         //预估返利价
         double commission = price * tbGoods.findPath("commission_rate").asDouble() / 10000;
-        commission = NumberUtil.round(commission * RateType.USER_COMMISSION_RATE.value(), 2).doubleValue();
+        commission = 0.7;// NumberUtil.round(commission * RateType.USER_COMMISSION_RATE.value(), 2).doubleValue();
 
         String url = tbGoods.findPath("coupon_remain_count").asInt() > 0 ?
                 tbGoods.findPath("coupon_share_url").asText() : tbGoods.findPath("url").asText();
@@ -188,7 +191,7 @@ public class TaoBaoServer {
      *
      * @link https://open.taobao.com/api.htm?docId=24527&docType=2
      */
-    public JsonNode syncOrders( int page,LocalDateTime startTime,int span,int queryType) {
+    public Mono<JsonNode> syncOrders(int page, LocalDateTime startTime, int span, int queryType) {
         MultiValueMap<String, Object> tbParams = new LinkedMultiValueMap<>();
         tbParams.set("method", "taobao.tbk.order.details.get");
         tbParams.set("start_time", startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
@@ -196,21 +199,18 @@ public class TaoBaoServer {
         tbParams.set("page_no", String.valueOf(page));
         tbParams.set("query_type", String.valueOf(queryType));
 
-        log.info("params is {}", tbParams);
+        log.info("sync orders params is {}", tbParams);
 
-        Mono<JsonNode> tbData = this.taobaoClient.postForEntity(tbParams);
-        JsonNode tbJsonNode;
-        try {
-            tbJsonNode = tbData.blockOptional().orElse(this.objectMapper.createObjectNode());
-        } catch (Exception e) {
-            throw new TaoBaoRestException(500, e.getMessage());
-        }
+        Mono<JsonNode> jsonNodeMono = this.taobaoClient.postForEntity(tbParams);
 
-        if (ObjectUtil.isNotNull(tbJsonNode.get("error_response"))) {
-            throw new TaoBaoRestException(500, tbJsonNode.findPath("error_response").toString());
-        }
-
-        return tbJsonNode.findPath("data");
+        return jsonNodeMono
+                .doOnSuccess(data->{
+                    JsonNode errorNode = data.findValue("error_response");
+                    if (!ObjectUtils.isEmpty(errorNode)) {
+                        throw new OrderSyncProgressException(500, errorNode.toString());
+                    }
+                })
+                .map(jsonNode -> jsonNode.findValue("data"));
 
     }
 }

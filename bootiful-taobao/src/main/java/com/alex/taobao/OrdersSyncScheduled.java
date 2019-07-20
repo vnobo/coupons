@@ -28,7 +28,7 @@ public class OrdersSyncScheduled {
 
     @EventListener(ApplicationReadyEvent.class)
     public void manualSyncOrder() {
-        LocalDateTime startTime = LocalDateTime.of(2019, 4, 23, 0, 0);
+        LocalDateTime startTime = LocalDateTime.of(2019, 7, 20, 0, 0);
         this.manualSyncOrder(startTime);
     }
 

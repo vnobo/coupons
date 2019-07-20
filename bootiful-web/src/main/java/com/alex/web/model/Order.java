@@ -1,6 +1,6 @@
-package com.alex.taobao.model;
+package com.alex.web.model;
 
-import com.alex.taobao.ObjectNodeConverterJson;
+import com.alex.web.model.converters.ObjectNodeConverterJson;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;

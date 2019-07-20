@@ -1,4 +1,4 @@
-package com.alex.taobao;
+package com.alex.web.model.converters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +12,11 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 import java.io.IOException;
 
+/**
+ * Created by 2019-02-25
+ *
+ * @author Alex bob(https://github.com/vnobo)
+ */
 @Converter
 public class ObjectNodeConverterJson implements AttributeConverter<ObjectNode, String> {
 
@@ -20,10 +25,12 @@ public class ObjectNodeConverterJson implements AttributeConverter<ObjectNode, S
     @Override
     public String convertToDatabaseColumn(ObjectNode attribute) {
 
-        if (ObjectUtils.isEmpty(attribute)) return null;
+        if (ObjectUtils.isEmpty(attribute)) {
+            return "{}";
+        }
 
         try {
-            return objectMapper.writeValueAsString(attribute);
+            return this.objectMapper.writeValueAsString(attribute);
         } catch (JsonProcessingException e) {
             throw new HibernateException("ObjectNodeConverterJson unable to read object from result set", e);
         }
@@ -32,10 +39,12 @@ public class ObjectNodeConverterJson implements AttributeConverter<ObjectNode, S
     @Override
     public ObjectNode convertToEntityAttribute(String dbData) {
 
-        if (StringUtils.isEmpty(dbData)) return null;
+        if (StringUtils.isEmpty(dbData)) {
+            return this.objectMapper.createObjectNode();
+        }
 
         try {
-            return objectMapper.readTree(dbData).deepCopy();
+            return this.objectMapper.readTree(dbData).deepCopy();
         } catch (IOException e) {
             throw new HibernateException("ObjectNodeConverterJson unable to read object from result get", e);
         }

@@ -1,5 +1,6 @@
-package com.alex.taobao.model;
+package com.alex.web.repository;
 
+import com.alex.web.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
@@ -13,5 +14,4 @@ import java.util.Optional;
 public interface OrderRepository extends JpaRepository<Order, String> {
 
     Optional<Order> findByIdAndType(String tid, int type);
-
 }

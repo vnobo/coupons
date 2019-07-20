@@ -1,4 +1,4 @@
-package com.alex.taobao.model;
+package com.alex.web.model;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

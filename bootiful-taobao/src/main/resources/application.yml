@@ -1,20 +1,17 @@
+logging.level.web: debug
+
 spring:
   application:
-    name: qinke-aliance-taobao
-  datasource:
-    platform: mysql
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/coupons?useSSL=NO&serverTimezone=Asia/Shanghai&&useLegacyDatetimeCode=false&allowPublicKeyRetrieval=true
+    name: bootful-taobao
+  rabbitmq:
+    host: localhost
     username: farmer
     password: q1w2e3..
-    initialization-mode: always
-  #jpa
-  jpa:
-    hibernate.ddl-auto: none
-    database-platform: org.hibernate.dialect.MySQL8Dialect
-    database: mysql
-    open-in-view: false
-    show-sql: true
+    template.retry:
+      enabled: true
+      initial-interval: 2s
+  devtools:
+    add-properties: false
 server:
   port: 8081
 
