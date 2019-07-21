@@ -191,17 +191,12 @@ public class TaoBaoServer {
      *
      * @link https://open.taobao.com/api.htm?docId=24527&docType=2
      */
-    public Mono<JsonNode> syncOrders(int page, LocalDateTime startTime, int span, int queryType) {
-        MultiValueMap<String, Object> tbParams = new LinkedMultiValueMap<>();
-        tbParams.set("method", "taobao.tbk.order.details.get");
-        tbParams.set("start_time", startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        tbParams.set("end_time", startTime.plusMinutes(span).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
-        tbParams.set("page_no", String.valueOf(page));
-        tbParams.set("query_type", String.valueOf(queryType));
+    public Mono<JsonNode> syncOrders(MultiValueMap<String, Object> requestParams) {
+        requestParams.set("method", "taobao.tbk.order.details.get");
 
-        log.info("sync orders params is {}", tbParams);
+        log.debug("sync orders params is {}", requestParams);
 
-        Mono<JsonNode> jsonNodeMono = this.taobaoClient.postForEntity(tbParams);
+        Mono<JsonNode> jsonNodeMono = this.taobaoClient.postForEntity(requestParams);
 
         return jsonNodeMono
                 .doOnSuccess(data->{

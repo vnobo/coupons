@@ -9,13 +9,18 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.core.RabbitMessagingTemplate;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Iterator;
 import java.util.Objects;
 
@@ -39,10 +44,28 @@ public class OrdersSyncScheduled {
     }
 
 
-    //@EventListener(ApplicationReadyEvent.class)
-    public void manualSyncOrder() {
-        LocalDateTime startTime = LocalDateTime.of(2019, 7, 20, 0, 0);
-        this.manualSyncOrder(startTime);
+    @EventListener(ApplicationReadyEvent.class)
+    public void beginSyncOrder() {
+        LocalDateTime startTime = LocalDateTime.now().minusMinutes(40);
+
+        while (startTime.isBefore(LocalDateTime.now())) {
+
+            this.startSyncOrder(startTime);
+
+            startTime = startTime.plusMinutes(20);
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Scheduled(cron = "0 */2 * * * ?")
+    public void asyncOrder() {
+        LocalDateTime startTime = LocalDateTime.now().minusMinutes(4);
+        this.startSyncOrder(startTime);
     }
 
     /**
@@ -50,23 +73,25 @@ public class OrdersSyncScheduled {
      *
      * @param startTime 开始时间
      */
-    @Async
-    public void manualSyncOrder(LocalDateTime startTime) {
 
-        while (startTime.isBefore(LocalDateTime.now())) {
-            this.asyncProgress(1, startTime, 20, 2);
-            this.asyncProgress(1, startTime, 20, 3);
-            startTime = startTime.plusMinutes(20);
+    private void startSyncOrder(LocalDateTime startTime) {
+
+        MultiValueMap<String, Object> requestParams = new LinkedMultiValueMap<>();
+        requestParams.set("start_time", startTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        requestParams.set("end_time", startTime.plusMinutes(2).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+        requestParams.set("page_no", "1");
+        requestParams.set("query_type", "2");
+        this.asyncProgress(requestParams);
+        try {
+            Thread.sleep(1000 * 2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-    }
-
-    @Scheduled(cron = "0 */2 * * * ?")
-    public void asyncOrder() {
-        LocalDateTime startTime = LocalDateTime.now().minusMinutes(4);
-        this.asyncProgress(1, startTime, 2, 2);
-        this.asyncProgress(1, startTime, 2, 3);
+        requestParams.set("query_type", "3");
+        this.asyncProgress(requestParams);
 
     }
+
 
     /**
      * 淘宝订单同步器
@@ -82,31 +107,40 @@ public class OrdersSyncScheduled {
      * <p>
      * 订单查询类型，创建时间“create_time”，或结算时间“settle_time”
      */
-    private void asyncProgress(int page, LocalDateTime startTime, int span, int queryType) {
+    private void asyncProgress(MultiValueMap<String, Object> requestParams) {
 
-        Mono<JsonNode> jsonNodeMono = this.taoBaoServer.syncOrders(page, startTime, span, queryType);
+
+        Mono<JsonNode> jsonNodeMono = this.taoBaoServer.syncOrders(requestParams);
 
         jsonNodeMono.subscribe(data -> {
+
             JsonNode results = data.findPath("results");
 
             if (results.size() == 0) {
-                log.info("淘宝数据获取为空。开始时间 {}", startTime);
+
+                log.debug("请求类型 {} ，淘宝数据获取为空。开始时间 {}",requestParams.get("query_type"),
+                        requestParams.get("start_time"));
+
                 return;
             }
+
             Iterator<JsonNode> orders = results.findValue("publisher_order_dto").elements();
 
             while (orders.hasNext()) {
 
                 JsonNode node = orders.next();
 
-                log.info("淘宝 {} 订单同步,订单内容 {}", queryType, node);
+                log.debug("淘宝 {} 订单同步,订单内容 {}", requestParams.get("query_type"), node);
 
                 this.rabbitMessagingTemplate.convertAndSend("order", node.toString());
             }
 
-            if (results.findValue("has_next").asBoolean()) {
-                this.asyncProgress(page + 1, startTime, span, queryType);
+            if (data.findValue("has_next").asBoolean()) {
+                requestParams.set("jump_type", "1");
+                requestParams.set("position_index", data.findValue("position_index").asText());
+                this.asyncProgress(requestParams);
             }
+
         }, error -> log.error("数据请求错误，错误消息：{}", error.getMessage()));
 
     }
