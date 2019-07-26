@@ -40,7 +40,7 @@ subprojects {
 
     ext {
         springCloudVersion = 'Greenwich.SR2'
-        hutoolVersion = '4.5.16'
+        hutoolVersion = '4.5.18'
         queryDslVersion = '4.2.1'
         weixinVersion = "3.4.7.B"
         hanlpVersion = "portable-1.7.4"
