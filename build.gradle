@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.1.6.RELEASE' apply false
+    id 'org.springframework.boot' version '2.1.7.RELEASE' apply false
 }
 
 subprojects {
@@ -39,12 +39,13 @@ subprojects {
     }
 
     ext {
-        springCloudVersion = 'Greenwich.SR2'
-        hutoolVersion = '4.5.18'
+        hutoolVersion = '4.6.1'
         queryDslVersion = '4.2.1'
         weixinVersion = "3.4.7.B"
         hanlpVersion = "portable-1.7.4"
-        springCloudAlibabaVersion = '0.9.0.RELEASE'
+
+        springCloudVersion = 'Greenwich.SR2'
+        springCloudAlibabaVersion = '2.1.0.RELEASE'
     }
 
     dependencies {
@@ -67,7 +68,7 @@ subprojects {
     dependencyManagement {
         imports {
             mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudVersion}"
         }
     }
 

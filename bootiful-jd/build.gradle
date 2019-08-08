@@ -1,18 +1,6 @@
 apply plugin: 'org.springframework.boot'
 
-springBoot {
-
-	buildInfo {
-		properties {
-			artifact = 'jingdong-qinke-service'
-			name = '京东联盟数据同步服务'
-		}
-	}
-	mainClassName = 'com.alex.JDApplication'
-}
-
 bootJar {
-	archivesBaseName = 'jingdong-qinke-service'
 	launchScript()
 }
 
