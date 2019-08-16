@@ -6,7 +6,7 @@ spring:
   datasource:
     platform: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/coupons?serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false
+    url: jdbc:mysql://localhost:3306/coupons?serverTimezone=UTC&useLegacyDatetimeCode=false
     username: farmer
     password: q1w2e3..
     initialization-mode: always
@@ -24,14 +24,12 @@ spring:
     keep-alive: 30S
   #Thymeleaf
   thymeleaf.cache: false
-  #rabbitmq
   rabbitmq:
-    host: localhost
-    username: farmer
+    host: 192.168.1.2
+    username: mspbots
     password: q1w2e3..
-    template.retry:
-      enabled: true
-      initial-interval: 2s
+  redis:
+    host: 192.168.1.2
   #短信配置
   cloud.alicloud:
     access-key: LTAIrI1OfTFGaA43

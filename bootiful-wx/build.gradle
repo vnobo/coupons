@@ -5,7 +5,7 @@ dependencies {
     // 微信公众号API包
     implementation "com.github.binarywang:weixin-java-mp:${weixinVersion}"
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-alicloud-sms'
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alicloud-sms'
 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -22,9 +22,3 @@ dependencies {
 
 }
 
-
-dependencyManagement {
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}")
-    }
-}

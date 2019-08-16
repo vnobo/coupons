@@ -12,10 +12,8 @@ dependencies {
     
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-zuul'
-    /*implementation 'org.springframework.session:spring-session-data-redis'
-    implementation 'org.springframework.cloud:spring-cloud-starter-oauth2'*/
+    implementation 'com.alibaba.cloud:spring-cloud-alibaba-dubbo'
 
-
+    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-discovery'
 
 }
