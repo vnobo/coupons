@@ -2,7 +2,6 @@ apply plugin: 'org.springframework.boot'
 
 dependencies {
 
-
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
 
@@ -11,9 +10,5 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-
-    implementation 'com.alibaba.cloud:spring-cloud-alibaba-dubbo'
-
-    implementation 'org.springframework.cloud:spring-cloud-starter-zookeeper-discovery'
 
 }
