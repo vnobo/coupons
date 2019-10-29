@@ -1,7 +1,7 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    id 'org.springframework.boot' version '2.1.7.RELEASE' apply false
+    id 'org.springframework.boot' version '2.2.0.RELEASE' apply false
 }
 
 subprojects {
@@ -41,8 +41,7 @@ subprojects {
     }
 
     ext {
-        hutoolVersion = '4.6.1'
-        queryDslVersion = '4.2.1'
+        hutoolVersion = '5.0.0'
         weixinVersion = "3.4.7.B"
         hanlpVersion = "portable-1.7.4"
 
