@@ -1,6 +1,6 @@
-package com.alex.web.repository;
+package com.alex.core.repository;
 
-import com.alex.web.model.Order;
+import com.alex.core.model.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

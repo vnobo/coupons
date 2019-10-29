@@ -1,4 +1,4 @@
-package com.alex.web.model.converters;
+package com.alex.core.converters;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

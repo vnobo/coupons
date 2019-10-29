@@ -1,6 +1,6 @@
-package com.alex.web.services;
+package com.alex.core.services;
 
-import com.alex.web.repository.OrderRepository;
+import com.alex.core.repository.OrderRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;

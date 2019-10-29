@@ -1,6 +1,6 @@
-package com.alex.web.model;
+package com.alex.core.model;
 
-import com.alex.web.model.converters.ObjectNodeConverterJson;
+import com.alex.core.converters.ObjectNodeConverterJson;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;

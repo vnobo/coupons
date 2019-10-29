@@ -1,4 +1,4 @@
-package com.alex.web.model;
+package com.alex.core.model;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 

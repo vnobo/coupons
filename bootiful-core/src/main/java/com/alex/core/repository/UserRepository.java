@@ -1,6 +1,6 @@
-package com.alex.web.repository;
+package com.alex.core.repository;
 
-import com.alex.web.model.User;
+import com.alex.core.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

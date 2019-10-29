@@ -1,4 +1,4 @@
-package com.alex.web.config;
+package com.alex.core.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.amqp.core.*;

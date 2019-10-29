@@ -1,4 +1,4 @@
-package com.alex.web.config;
+package com.alex.core.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

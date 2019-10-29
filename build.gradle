@@ -34,18 +34,19 @@ subprojects {
     }
 
     repositories {
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven { url 'http://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'https://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'https://repo.spring.io/libs-snapshot' }
         jcenter()
         mavenCentral()
     }
 
     ext {
-        hutoolVersion = '5.0.0'
+        hutoolVersion = '5.0.2'
         weixinVersion = "3.4.7.B"
         hanlpVersion = "portable-1.7.4"
 
-        springCloudVersion = 'Greenwich.SR2'
+        springCloudVersion = 'Hoxton.RC1'
         springCloudAlibabaVersion = '2.1.0.RELEASE'
     }
 

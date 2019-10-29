@@ -1,4 +1,4 @@
-package com.alex.web.config;
+package com.alex.core.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -13,5 +13,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableAsync
 @EnableTransactionManagement
-public class WebMcvConfiguration {
+public class CoreConfiguration {
 }

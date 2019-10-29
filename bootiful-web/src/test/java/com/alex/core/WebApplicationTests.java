@@ -1,4 +1,4 @@
-package com.alex.web;
+package com.alex.core;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
