@@ -6,6 +6,6 @@ pluginManagement {
 rootProject.name = 'coupons'
 
 include 'bootiful-wx'
-include 'bootiful-taobao'
+include 'bootiful-tb'
 include 'bootiful-jd'
 include 'bootiful-web'
