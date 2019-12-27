@@ -23,7 +23,7 @@ public class UserController {
     private final UserRepository userRepository;
 
     @GetMapping("/search/name/{username}")
-    public Mono<User> findUserByName(@PathVariable String username){
-
+    public Mono<User> findUserByName(@PathVariable String username) {
+        return this.userRepository.findByUsername(username);
     }
 }
