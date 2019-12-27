@@ -1,6 +1,7 @@
 package com.alex.web.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -16,13 +17,13 @@ import org.springframework.context.annotation.Configuration;
  * @date Created by 2019/7/29
  */
 @Configuration
-public class RabbitConfiguration extends RabbitAutoConfiguration {
+@RequiredArgsConstructor
+public class RabbitConfiguration {
 
-    @Autowired
-    private AmqpAdmin amqpAdmin;
+    private final AmqpAdmin amqpAdmin;
 
     @Bean
-    public void declareTicketAi() {
+    public void declareQueue() {
         Exchange coupons = ExchangeBuilder.directExchange("com.coupons.core").build();
         this.amqpAdmin.declareExchange(coupons);
 

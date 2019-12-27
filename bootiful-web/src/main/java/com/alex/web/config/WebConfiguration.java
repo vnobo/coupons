@@ -11,7 +11,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @date Created by 2019/7/14
  */
 @Configuration
-@EnableAsync
-@EnableTransactionManagement
-public class WebMcvConfiguration {
+public class WebConfiguration {
 }

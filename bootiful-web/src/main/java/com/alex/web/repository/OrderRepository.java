@@ -1,9 +1,7 @@
 package com.alex.web.repository;
 
 import com.alex.web.model.Order;
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import java.util.Optional;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
 
 /**
  * rebate-alliance OrderRepository
@@ -11,7 +9,6 @@ import java.util.Optional;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
-public interface OrderRepository extends JpaRepository<Order, String> {
+public interface OrderRepository extends R2dbcRepository<Order, String> {
 
-    Optional<Order> findByIdAndType(String tid, int type);
 }

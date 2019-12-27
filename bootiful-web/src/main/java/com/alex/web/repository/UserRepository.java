@@ -1,7 +1,9 @@
 package com.alex.web.repository;
 
 import com.alex.web.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.r2dbc.repository.Query;
+import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import reactor.core.publisher.Mono;
 
 /**
  * coupons in com.alex.web.model
@@ -9,5 +11,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Alex bob(https://github.com/vnobo)
  * @date Created by 2019/7/14
  */
-public interface UserRepository extends JpaRepository<User, String> {
+public interface UserRepository extends R2dbcRepository<User, Integer> {
+
+    /**
+     * get by username
+     *
+     * @param username user id
+     * @return user model
+     */
+    @Query("select * from users where username = :username")
+    Mono<User> findByUsername(String username);
 }

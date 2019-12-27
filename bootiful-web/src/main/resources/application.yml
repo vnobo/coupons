@@ -1,35 +1,28 @@
-logging.level.web: debug
+logging:
+  level:
+    web: debug
+    org.springframework.data.r2dbc: DEBUG
 
 spring:
   application.name: bootful-web
   #datasource
-  datasource:
-    platform: mysql
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/coupons?serverTimezone=UTC&useLegacyDatetimeCode=false
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/coupons
     username: farmer
     password: q1w2e3..
     initialization-mode: always
-  #jpa
-  jpa:
-    open-in-view: true
-    show-sql: true
-    hibernate.ddl-auto: none
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    platform: pgsql
   #task
   task.execution.pool:
     max-size: 50
     queue-capacity: 100
     keep-alive: 30S
-  #Thymeleaf
-  thymeleaf.cache: false
   rabbitmq:
-    host: 192.168.1.2
-    username: mspbots
-    password: q1w2e3..
+    host: localhost
+    username: guest
+    password: guest
   redis:
-    host: 192.168.1.2
+    host: localhost
   #短信配置
   cloud.alicloud:
     access-key: LTAIrI1OfTFGaA43
@@ -50,8 +43,3 @@ spring:
   #devtools
   devtools:
     add-properties: false
-zuul:
-  routes:
-    tb:
-      path: /tb/**
-      url: http://localhost:8081
