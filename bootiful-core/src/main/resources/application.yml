@@ -1,0 +1,48 @@
+logging.level.web: debug
+
+spring:
+  application.name: coupons-bootful-core
+  #datasource
+  datasource:
+    platform: mysql
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/coupons?serverTimezone=UTC&useLegacyDatetimeCode=false
+    username: farmer
+    password: q1w2e3..
+    initialization-mode: always
+  #task
+  task.execution.pool:
+    max-size: 50
+    queue-capacity: 100
+    keep-alive: 30S
+  #Thymeleaf
+  thymeleaf.cache: false
+  rabbitmq:
+    host: 192.168.1.2
+    username: mspbots
+    password: q1w2e3..
+  redis:
+    host: 192.168.1.2
+  #短信配置
+  cloud:
+    alicloud:
+      access-key: LTAIrI1OfTFGaA43
+      secret-key: CFX0raMd7txvdo7EmqnQpDgZCWFmC5
+  #邮件地址配置
+  mail:
+    host: smtpdm.aliyun.com
+    port: 465
+    username: admin@support.nerchain.com
+    password: lB5GfZZBA8eZSbvG
+    test-connection: true
+    properties:
+      mail.smtp:
+        auth: true
+        socketFactory.class: javax.net.ssl.SSLSocketFactory
+    default-encoding: UTF-8
+    protocol: smtp
+zuul:
+  routes:
+    tb:
+      path: /tb/**
+      url: http://localhost:8081

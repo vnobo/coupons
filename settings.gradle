@@ -9,3 +9,5 @@ include 'bootiful-wx'
 include 'bootiful-tb'
 include 'bootiful-jd'
 include 'bootiful-web'
+include 'bootiful-core'
+
