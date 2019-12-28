@@ -48,7 +48,7 @@ public class R2dbcConfiguration extends AbstractR2dbcConfiguration {
     public CommandLineRunner start(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             User user = User.builder().username("admin").password(passwordEncoder.encode("123456")).authorities(
-                    Set.of("ADMIN")).enabled(true).build();
+                    Set.of("ROLE_ADMIN")).enabled(true).build();
             userRepository.save(user).subscribe();
         };
     }
