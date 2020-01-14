@@ -1,4 +1,17 @@
 apply plugin: 'org.springframework.boot'
+apply plugin: 'com.palantir.docker'
+
+bootJar {
+    launchScript()
+    exclude("bootstrap.yml")
+}
+
+docker {
+    name "alexbob/${project.name}"
+    files(bootJar.archiveFile.get(),file('docker/bootstrap.properties'))
+    dockerfile file('docker/Dockerfile')
+    buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}"])
+}
 
 dependencies {
 

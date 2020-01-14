@@ -2,6 +2,7 @@ import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
     id 'org.springframework.boot' version '2.2.2.RELEASE' apply false
+    id 'com.palantir.docker' version '0.22.1' apply false
 }
 
 subprojects {
