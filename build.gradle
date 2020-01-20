@@ -15,13 +15,20 @@ subprojects {
     version = '0.0.1-dev'
     sourceCompatibility = '11'
 
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
     configurations {
+
+        developmentOnly
+
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+
         compileOnly {
             extendsFrom annotationProcessor
         }
     }
-
-    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
     idea {
         module {
@@ -31,9 +38,11 @@ subprojects {
     }
 
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/central'}
-        maven { url 'https://maven.aliyun.com/repository/jcenter'}
-        maven { url 'https://repo.spring.io/milestone'}
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/libs-snapshot-local' }
+        maven { url 'https://repo.spring.io/plugins-release' }
         jcenter()
         mavenCentral()
     }
@@ -53,16 +62,21 @@ subprojects {
 
         implementation "cn.hutool:hutool-all:${hutoolVersion}"
 
-        compileOnly 'org.projectlombok:lombok'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+        implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+        implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 
         annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
         annotationProcessor 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
 
-        runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+        developmentOnly "org.springframework.boot:spring-boot-devtools"
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
+        testImplementation 'io.projectreactor:reactor-test'
 
     }
 

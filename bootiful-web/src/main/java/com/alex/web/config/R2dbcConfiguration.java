@@ -3,15 +3,17 @@ package com.alex.web.config;
 import com.alex.web.converters.SetReadConverter;
 import com.alex.web.converters.SetWriteConverter;
 import com.alex.web.model.User;
-import com.alex.web.repository.UserRepository;
+import com.alex.web.repositories.UserRepository;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.r2dbc.config.AbstractR2dbcConfiguration;
 import org.springframework.data.r2dbc.convert.R2dbcCustomConversions;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -25,8 +27,10 @@ import java.util.Set;
  * @author Alex bob(https://github.com/vnobo)
  * @date Created by 2019/12/28
  */
+@Order(1)
 @Configuration
 @EnableTransactionManagement
+@EnableR2dbcRepositories("com.alex.web.repositories")
 public class R2dbcConfiguration extends AbstractR2dbcConfiguration {
 
     @Override

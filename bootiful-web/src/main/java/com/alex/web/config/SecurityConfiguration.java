@@ -1,22 +1,21 @@
 package com.alex.web.config;
 
-import com.alex.web.repository.UserRepository;
+import com.alex.web.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.authentication.ReactiveAuthenticationManager;
 import org.springframework.security.authentication.UserDetailsRepositoryReactiveAuthenticationManager;
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.SecurityWebFiltersOrder;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
@@ -36,12 +35,17 @@ import java.util.List;
  * @author Alex bob(https://github.com/vnobo)
  * @date Created by 2019/7/14
  */
+@Order(10)
 @Configuration
-@EnableWebFluxSecurity
-@RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new Pbkdf2PasswordEncoder();
+    }
 
     @Bean
     public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
@@ -52,10 +56,6 @@ public class SecurityConfiguration {
                 .authenticationEntryPoint(new CustomServerAuthenticationEntryPoint())
                 .and()
                 .authorizeExchange()
-                .pathMatchers("/actuator/**", "/sso/**", "/register", "/tenant", "/druid/**", "/api/druid/**", "/teams/message/command/**").permitAll()
-                .pathMatchers("/api/tenant/configuration/**", "/api/report/insertAndSendMail").permitAll()
-                .pathMatchers("/teamsweb/user/add-batch", "/api/teams/user/**").permitAll()
-                .pathMatchers("/wise/notice/**", "/wise/exists/*", "/wise/connect/*", "/wise/manual/*").permitAll()
                 .anyExchange().authenticated();
         return http.build();
     }
@@ -116,8 +116,4 @@ public class SecurityConfiguration {
         }
     }
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new Pbkdf2PasswordEncoder();
-    }
 }

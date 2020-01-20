@@ -1,7 +1,7 @@
 package com.alex.web.controller;
 
 import com.alex.web.model.User;
-import com.alex.web.repository.UserRepository;
+import com.alex.web.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

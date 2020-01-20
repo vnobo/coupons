@@ -1,8 +1,9 @@
-package com.alex.web.repository;
+package com.alex.web.repositories;
 
 import com.alex.web.model.User;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.r2dbc.repository.R2dbcRepository;
+import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Mono;
 
 /**
@@ -11,6 +12,7 @@ import reactor.core.publisher.Mono;
  * @author Alex bob(https://github.com/vnobo)
  * @date Created by 2019/7/14
  */
+@Repository
 public interface UserRepository extends R2dbcRepository<User, Integer> {
 
     /**
