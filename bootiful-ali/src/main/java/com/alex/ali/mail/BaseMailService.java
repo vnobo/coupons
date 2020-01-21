@@ -14,7 +14,6 @@ import javax.mail.internet.MimeMessage;
 import java.io.IOException;
 import java.util.Locale;
 
-
 public abstract class BaseMailService extends BaseGenericService {
 
     private JavaMailSender mailSender;
