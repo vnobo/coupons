@@ -4,10 +4,10 @@ logging:
     org.springframework.data.r2dbc: DEBUG
 
 spring:
-  application.name: bootiful-web
+  application.name: bootiful-wx
   #devtools
   devtools:
-    add-properties: true
+    add-properties: false
   cloud:
     nacos:
       config:

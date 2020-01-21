@@ -7,11 +7,15 @@ bootJar {
 }
 
 docker {
-    name "registry.cn-zhangjiakou.aliyuncs.com/alexbob/${project.name}"
-    files(bootJar.archiveFile.get(),file('docker/bootstrap.properties'))
+    name "alexbob/${project.name}"
+    tag "latest", "registry.cn-zhangjiakou.aliyuncs.com/alexbob/${project.name}:latest"
     dockerfile file('docker/Dockerfile')
+    files(bootJar.archiveFile.get(),file('docker/bootstrap.properties'))
     buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}"])
+    pull true
+    noCache true
 }
+
 
 dependencies {
 
