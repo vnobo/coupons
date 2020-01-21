@@ -36,8 +36,6 @@ public class OrdersSyncScheduled {
         this.rabbitMessagingTemplate = rabbitMessagingTemplate;
     }
 
-
-    @EventListener(ApplicationReadyEvent.class)
     public void beginSyncOrder() {
         LocalDateTime startTime = LocalDateTime.now().minusMinutes(40);
 
@@ -55,7 +53,7 @@ public class OrdersSyncScheduled {
         }
     }
 
-    @Scheduled(cron = "0 */2 * * * ?")
+
     public void asyncOrder() {
         LocalDateTime startTime = LocalDateTime.now().minusMinutes(4);
         this.startSyncOrder(startTime);

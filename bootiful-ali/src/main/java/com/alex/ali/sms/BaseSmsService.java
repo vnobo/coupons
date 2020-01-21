@@ -6,13 +6,14 @@ import com.alibaba.alicloud.sms.ISmsService;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
 import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+@Log4j2
 public abstract class BaseSmsService extends BaseGenericService {
 
     private ISmsService smsService;
-
 
     protected SendSmsResponse sender(SmsOnly smsOnly) {
         // 组装请求对象-具体描述见控制台-文档部分内容
@@ -30,7 +31,7 @@ public abstract class BaseSmsService extends BaseGenericService {
         try {
             sendSmsResponse = this.smsService.sendSmsRequest(request);
         } catch (ClientException e) {
-            this.logger.error("send sms error message is {}", e.getErrMsg());
+           log.error("send sms error message is {}", e.getErrMsg());
             sendSmsResponse = new SendSmsResponse();
         }
         return sendSmsResponse;

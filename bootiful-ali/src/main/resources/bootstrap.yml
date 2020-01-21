@@ -13,3 +13,4 @@ spring:
         namespace: f58a218d-f21e-41d3-9bd3-9e7dfbfbcbda
         server-addr: 192.168.1.2:8848
         file-extension: yaml
+server.port: 9000
