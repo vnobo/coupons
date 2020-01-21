@@ -1,6 +1,6 @@
 package com.alex.wx.wechat;
 
-import com.alex.wx.AbstractGenericController;
+import com.alex.wx.BaseGenericController;
 import com.alex.wx.wechat.service.WxEventService;
 import me.chanjar.weixin.mp.api.WxMpMessageRouter;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/weixin/notice/{appid}")
-public class WxNoticeController extends AbstractGenericController {
+public class WxNoticeController extends BaseGenericController {
 
     @Autowired
     private WxEventService wxEventService;

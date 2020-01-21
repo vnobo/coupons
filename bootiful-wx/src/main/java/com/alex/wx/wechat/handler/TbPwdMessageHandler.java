@@ -1,23 +1,13 @@
 package com.alex.wx.wechat.handler;
 
-import cn.hutool.core.util.NumberUtil;
-import cn.hutool.core.util.ObjectUtil;
-import cn.hutool.core.util.ReUtil;
-import com.alex.wx.config.RateType;
-import com.alex.wx.core.Customer.beans.Customer;
-import com.fasterxml.jackson.databind.JsonNode;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMessage;
-import me.chanjar.weixin.mp.bean.message.WxMpXmlOutNewsMessage;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
-import java.util.List;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 /**
  * boot-cool-alliance TbPwdMessageHandler
@@ -28,17 +18,6 @@ import java.util.regex.Pattern;
 @Component
 public class TbPwdMessageHandler extends AbstractMessageHandler {
 
-    private HighComClient highComClient;
-    private TaoBaoServer taoBaoServer;
-    private JdServer jdServer;
-
-    public TbPwdMessageHandler(HighComClient highComClient,
-                               TaoBaoServer taoBaoServer,
-                               JdServer jdServer) {
-        this.highComClient = highComClient;
-        this.taoBaoServer = taoBaoServer;
-        this.jdServer = jdServer;
-    }
 
     @Override
     public WxMpXmlOutMessage customizeHandle(WxMpXmlMessage wxMessage,
@@ -46,7 +25,7 @@ public class TbPwdMessageHandler extends AbstractMessageHandler {
                                              WxMpService wxMpService,
                                              WxSessionManager sessionManager) throws WxErrorException {
 
-        // 京东
+      /*  // 京东
         if (ReUtil.contains(Pattern.compile("(.*(.jd.com).*)"), wxMessage.getContent())) {
             String reg = ReUtil.get(Pattern.compile("[/](\\d+)[.html]"), wxMessage.getContent(), 0);
             String id = ReUtil.get(Pattern.compile("\\d+"), reg, 0);
@@ -121,10 +100,11 @@ public class TbPwdMessageHandler extends AbstractMessageHandler {
 
         } else {
             return this.pbSearch(wxMessage);
-        }
+        }*/
+        return null;
     }
 
-    private WxMpXmlOutMessage pbSearch(WxMpXmlMessage wxMessage) {
+    /*private WxMpXmlOutMessage pbSearch(WxMpXmlMessage wxMessage) {
         List<String> sentenceList = HanLP.extractKeyword(wxMessage.getContent(), 6);
         String url = "https://" + this.wxMpProperties.getHost() + "/search?q=" + StringUtils.collectionToDelimitedString(sentenceList, "")
                 + "&openid=" + wxMessage.getFromUser();
@@ -137,5 +117,5 @@ public class TbPwdMessageHandler extends AbstractMessageHandler {
                 .addArticle(article)
                 .fromUser(wxMessage.getToUser())
                 .toUser(wxMessage.getFromUser()).build();
-    }
+    }*/
 }

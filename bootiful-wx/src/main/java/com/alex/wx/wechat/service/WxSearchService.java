@@ -1,38 +1,19 @@
 package com.alex.wx.wechat.service;
 
-import com.alex.wx.AbstractGenericService;
-import com.alex.wx.alliance.taobao.TaoBaoServer;
+import com.alex.wx.BaseGenericService;
 import com.alex.wx.core.Customer.CustomerService;
-import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.util.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Map;
 
 @Service
-public class WxSearchService extends AbstractGenericService {
+public class WxSearchService extends BaseGenericService {
 
-    private TaoBaoServer taoBaoServer;
     private CustomerService customerService;
 
-    public WxSearchService(TaoBaoServer taoBaoServer,
-                           CustomerService customerService) {
-        this.taoBaoServer = taoBaoServer;
-        this.customerService = customerService;
-    }
-
-
-    /**
+   /* *//**
      * 淘宝智能超级搜索
      *
      * @link https://open.taobao.com/api.htm?docId=35896&docType=2
-     */
+     *//*
     public Page<JsonNode> taoBaoSearch(Map<String, String> params, Pageable pageable) {
         MultiValueMap<String, String> requestParams = new LinkedMultiValueMap<>();
         //默认值设置
@@ -67,7 +48,7 @@ public class WxSearchService extends AbstractGenericService {
             requestParams.set("start_dsr", params.get("startDsr").trim());
         }
 
-        /* *******************************************************************************
+        *//* *******************************************************************************
         // 商品筛选-淘客佣金比率下限。如：1234表示12.34%
         requestParams.set("start_tk_rate", params.getOrDefault("startTkRate", "0"));
         // 商品筛选-淘客佣金比率上限。如：1234表示12.34%
@@ -81,7 +62,7 @@ public class WxSearchService extends AbstractGenericService {
 
         //商品筛选(特定媒体支持)-退款率是否低于行业均值。True表示大于等于，false或不设置表示不限
         requestParams.set("include_rfd_rate", params.getOrDefault("includeRfdRate", "true"));
-        ******************************************************************************* */
+        ******************************************************************************* *//*
         //商品筛选-是否天猫商品。true表示属于天猫商品，false或不设置表示不限
         requestParams.set("is_tmall", params.getOrDefault("isTmall", "false"));
         //商品筛选(特定媒体支持)-成交转化是否高于行业均值。True表示大于等于，false或不设置表示不限
@@ -112,5 +93,5 @@ public class WxSearchService extends AbstractGenericService {
 
     public JsonNode goodsRecommend(String itemId) {
         return this.taoBaoServer.getRecommend(itemId);
-    }
+    }*/
 }

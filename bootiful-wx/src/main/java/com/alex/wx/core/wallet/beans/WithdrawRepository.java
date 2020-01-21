@@ -1,6 +1,7 @@
 package com.alex.wx.core.wallet.beans;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
 
-public interface WithdrawRepository extends JpaRepository<Withdraw, Long> {
+public interface WithdrawRepository {
+    Optional<Withdraw> findById(long id);
 }

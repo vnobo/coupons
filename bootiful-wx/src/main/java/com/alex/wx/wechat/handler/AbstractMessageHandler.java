@@ -59,7 +59,7 @@ public abstract class AbstractMessageHandler implements WxMpMessageHandler {
                 BeanUtils.copyProperties(wxMpUser, customer);
                 customer.getExtend().putPOJO("info", wxMpUser);
                 customer.setAsyncTime(LocalDateTime.now());
-                this.customerService.save(customer);
+                //this.customerService.save(customer);
             }
         }
 

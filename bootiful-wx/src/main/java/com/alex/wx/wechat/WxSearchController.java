@@ -1,12 +1,9 @@
 package com.alex.wx.wechat;
 
-import com.alex.wx.AbstractGenericController;
+import com.alex.wx.BaseGenericController;
 import com.alex.wx.wechat.service.WxSearchService;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.Link;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -14,33 +11,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Set;
 
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
-import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
-
 @RestController
 @RequestMapping("wx/search")
-public class WxSearchController extends AbstractGenericController {
+@RequiredArgsConstructor
+public class WxSearchController extends BaseGenericController {
 
-    private WxSearchService wxSearchService;
-
-    public WxSearchController(WxSearchService wxSearchService) {
-        this.wxSearchService = wxSearchService;
-    }
+    private final WxSearchService wxSearchService;
 
     @GetMapping("{openid}/{id}")
     public Object getDetail(@PathVariable String openid, @PathVariable String id) {
-        return this.wxSearchService.findGoodsDetail(openid, id);
+        return null;
     }
 
     @GetMapping("recommend/{id}")
     public Object getDetail(@PathVariable String id) {
-        return this.wxSearchService.goodsRecommend(id);
+        return null;
     }
 
     @GetMapping("all")
-    public Object searchAll(@RequestParam Map<String, String> params,
-                            Pageable pageable,
-                            PagedResourcesAssembler<JsonNode> assembler) {
+    public Object searchAll(@RequestParam Map<String, String> params) {
 
         Set<String> keys = params.keySet();
         keys.parallelStream().forEach(k -> {
@@ -50,12 +39,7 @@ public class WxSearchController extends AbstractGenericController {
             }
         });
 
-        Page<JsonNode> bitCoins = this.wxSearchService.taoBaoSearch(params, pageable);
-        Link link = linkTo(methodOn(WxSearchController.class).searchAll(params, pageable, assembler)).withSelfRel();
 
-
-        logger.debug("market callable get end");
-
-        return ResponseEntity.ok(assembler.toResource(bitCoins, link));
+        return null;
     }
 }

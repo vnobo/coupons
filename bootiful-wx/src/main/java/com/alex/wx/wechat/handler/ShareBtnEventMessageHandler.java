@@ -19,6 +19,7 @@ import org.springframework.stereotype.Component;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.*;
 import java.net.URL;
 import java.util.Map;
@@ -43,7 +44,7 @@ public class ShareBtnEventMessageHandler extends AbstractMessageHandler {
                 WxMpQrCodeTicket ticket = wxMpService.getQrcodeService().qrCodeCreateLastTicket(wxMessage.getFromUser());
                 // 保存申请的二维码
                 customer.getExtend().putPOJO("ticket", ticket);
-                this.customerService.asyncSave(customer);
+                //this.customerService.asyncSave(customer);
                 file = wxMpService.getQrcodeService().qrCodePicture(ticket);
             } else {
                 this.logger.info("ticketStr is " + ticketNode.toString());
@@ -86,7 +87,7 @@ public class ShareBtnEventMessageHandler extends AbstractMessageHandler {
                 this.logger.info("file can write {}",file.canWrite());
             }
 
-            if (ImageIO.write(image, "jpg", file)) {
+            if (ImageIO.write((RenderedImage) image, "jpg", file)) {
 
                 WxMediaUploadResult res = wxMpService.getMaterialService().
                         mediaUpload(WxConsts.MaterialType.IMAGE, file);
@@ -94,7 +95,7 @@ public class ShareBtnEventMessageHandler extends AbstractMessageHandler {
 
                 this.logger.info("media id is {}", res.getMediaId());
 
-                this.customerService.asyncSave(customer);
+                //this.customerService.asyncSave(customer);
 
                 return WxMpXmlOutMessage.IMAGE()
                         .fromUser(wxMessage.getToUser())

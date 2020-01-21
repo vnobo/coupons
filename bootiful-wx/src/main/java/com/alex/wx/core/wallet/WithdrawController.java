@@ -1,11 +1,11 @@
 package com.alex.wx.core.wallet;
 
-import com.alex.wx.AbstractGenericController;
+import com.alex.wx.BaseGenericController;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("withdraw")
-public class WithdrawController extends AbstractGenericController {
+public class WithdrawController extends BaseGenericController {
 
 
     private WalletService walletService;

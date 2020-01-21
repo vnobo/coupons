@@ -2,8 +2,8 @@ package com.alex.web.config;
 
 import com.alex.web.converters.SetReadConverter;
 import com.alex.web.converters.SetWriteConverter;
-import com.alex.web.model.User;
-import com.alex.web.repositories.UserRepository;
+import com.alex.web.security.User;
+import com.alex.web.security.UserRepository;
 import io.r2dbc.spi.ConnectionFactories;
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.boot.CommandLineRunner;

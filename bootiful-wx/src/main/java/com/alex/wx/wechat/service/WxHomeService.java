@@ -3,19 +3,13 @@ package com.alex.wx.wechat.service;
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.json.JSONUtil;
-import com.alex.wx.AbstractGenericService;
+import com.alex.wx.BaseGenericService;
 import com.alex.wx.core.Customer.CustomerService;
 import com.alex.wx.core.Customer.beans.Customer;
-import com.alex.wx.core.order.OrderArgumentsException;
-import com.alex.wx.core.order.OrderService;
-import com.alex.wx.core.order.beans.Order;
-import com.alex.wx.core.order.beans.QOrder;
 import com.alex.wx.core.wallet.WalletException;
 import com.alex.wx.core.wallet.WalletService;
 import com.alex.wx.core.wallet.beans.Wallet;
 import com.alex.wx.wechat.WxRestException;
-import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -23,8 +17,6 @@ import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -37,21 +29,18 @@ import java.util.Map;
  * @author Alex bob(https://github.com/vnobo)
  */
 @Service
-public class WxHomeService extends AbstractGenericService {
+public class WxHomeService extends BaseGenericService {
 
     private CustomerService customerService;
     private WxMpService wxMpService;
     private WalletService walletService;
-    private OrderService orderService;
 
     public WxHomeService(CustomerService customerService,
                          WxMpService wxMpService,
-                         WalletService walletService,
-                         OrderService orderService) {
+                         WalletService walletService) {
         this.customerService = customerService;
         this.wxMpService = wxMpService;
         this.walletService = walletService;
-        this.orderService = orderService;
     }
 
 
@@ -63,14 +52,7 @@ public class WxHomeService extends AbstractGenericService {
         }
     }
 
-    public Page<Order> findByOrderPage(Predicate predicate, Pageable pageable) {
 
-        Predicate builder = new BooleanBuilder().and(predicate)
-                .and(QOrder.order.tkStatus.gt(0));
-
-        return this.orderService.loadPageOrder(builder, pageable);
-
-    }
 
     public Wallet getWallet(String openId) {
         Wallet wallet = this.walletService.loadByOpenId(openId);
@@ -92,11 +74,11 @@ public class WxHomeService extends AbstractGenericService {
         return this.walletService.withdraw(openId);
     }
 
-    /**
+   /* *//**
      * 绑定订单
      *
      * @param params 参数
-     */
+     *//*
     public void commitOrder(Map<String, String> params) {
 
         String tradeId = params.getOrDefault("tradeId", null);
@@ -121,13 +103,13 @@ public class WxHomeService extends AbstractGenericService {
         }
 
     }
-
+*/
 
     /**
      * 绑定支付宝
      *
      * @param params 参数
-     */
+     *//*
     public void bindingAli(Map<String, String> params) {
 
         String alipay = params.getOrDefault("alipay", null);
@@ -152,7 +134,7 @@ public class WxHomeService extends AbstractGenericService {
         }
 
     }
-
+*/
 
     /**
      * 第一次登陆页面
@@ -199,7 +181,6 @@ public class WxHomeService extends AbstractGenericService {
         BeanUtils.copyProperties(wxMpUser, customer);
         customer.getExtend().putPOJO("info", wxMpUser);
         customer.setAsyncTime(LocalDateTime.now());
-        this.customerService.save(customer);
     }
 
 }

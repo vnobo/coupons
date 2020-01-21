@@ -1,14 +1,15 @@
 package com.alex.wx.core.wallet;
 
 import cn.hutool.core.util.ObjectUtil;
-import com.alex.wx.AbstractGenericService;
-import com.alex.wx.core.MailService;
-import com.alex.wx.core.SMSService;
-import com.alex.wx.core.wallet.beans.*;
+import com.alex.wx.BaseGenericService;
+import com.alex.wx.core.wallet.beans.Wallet;
+import com.alex.wx.core.wallet.beans.WalletRepository;
+import com.alex.wx.core.wallet.beans.Withdraw;
+import com.alex.wx.core.wallet.beans.WithdrawRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
@@ -18,22 +19,12 @@ import java.util.Optional;
 import java.util.concurrent.Future;
 
 @Service
-public class WalletService extends AbstractGenericService {
+@RequiredArgsConstructor
+public class WalletService extends BaseGenericService {
 
-    private WalletRepository walletRepository;
-    private WithdrawRepository withdrawRepository;
-    private MailService mailService;
-    private SMSService smsService;
+    private final WalletRepository walletRepository;
+    private final WithdrawRepository withdrawRepository;
 
-    public WalletService(WalletRepository walletRepository,
-                         WithdrawRepository withdrawRepository,
-                         MailService mailService,
-                         SMSService smsService) {
-        this.walletRepository = walletRepository;
-        this.withdrawRepository = withdrawRepository;
-        this.mailService = mailService;
-        this.smsService = smsService;
-    }
 
     /**
      * 管理员确认提现申请通知
@@ -41,16 +32,16 @@ public class WalletService extends AbstractGenericService {
      * @param id 提现申请单
      */
     public Withdraw transfer(long id) {
-        Optional<Withdraw> optionalWithdraw = this.withdrawRepository.findById(id);
+        Optional<Withdraw> optionalWithdraw =Optional.empty();//this.withdrawRepository.findById(id);
         if (optionalWithdraw.isPresent()) {
             Withdraw withdraw = optionalWithdraw.get();
             if (withdraw.getStatus() != 0) {
                 throw new WithdrawException(500, "提现申请订单状态不正确");
             }
             withdraw.setStatus(100);
-            withdraw = this.withdrawRepository.save(withdraw);
+           // withdraw = this.withdrawRepository.save(withdraw);
 
-            this.smsService.withdrawSuccess(withdraw.getAlipay(), withdraw.getBalance());
+            // this.smsService.withdrawSuccess(withdraw.getAlipay(), withdraw.getBalance());
 
             return withdraw;
         } else {
@@ -61,7 +52,6 @@ public class WalletService extends AbstractGenericService {
     /**
      * 提取现金
      */
-    @Transactional
     public Wallet withdraw(String openId) {
 
         Wallet wallet = this.loadByOpenId(openId);
@@ -90,9 +80,9 @@ public class WalletService extends AbstractGenericService {
 
         Withdraw withdraw = Withdraw.of(openId, wallet.getAliname(), wallet.getAlipay(), withdrawAmount);
 
-        withdraw = this.withdrawRepository.save(withdraw);
+        //withdraw = this.withdrawRepository.save(withdraw);
 
-        this.mailService.withdrawNotice(withdraw.getId(), withdraw.getAliname(), withdraw.getAlipay(), withdrawAmount);
+        // this.mailService.withdrawNotice(withdraw.getId(), withdraw.getAliname(), withdraw.getAlipay(), withdrawAmount);
 
         return wallet;
     }
@@ -109,7 +99,7 @@ public class WalletService extends AbstractGenericService {
 
 
     public long getSumShardUser(String openid) {
-        return this.walletRepository.count(QWallet.wallet.promoter.equalsIgnoreCase(openid));
+        return 0; //this.walletRepository.count(QWallet.wallet.promoter.equalsIgnoreCase(openid));
     }
 
     public Wallet loadByOpenId(String openid) {
@@ -121,7 +111,6 @@ public class WalletService extends AbstractGenericService {
     /**
      * 增加指定用户余额
      */
-    @Transactional
     public void plusBalance(String orderId, String openId, double commission) {
 
         Wallet wallet = loadByOpenId(openId);
@@ -156,7 +145,6 @@ public class WalletService extends AbstractGenericService {
     /**
      * 增加指定用户收益余额
      */
-    @Transactional
     public void plusBrokerage(String orderId, String openId, double commission) {
 
         Wallet wallet = loadByOpenId(openId);
@@ -187,7 +175,7 @@ public class WalletService extends AbstractGenericService {
 
 
     public Wallet save(Wallet wallet) {
-        return walletRepository.saveAndFlush(wallet);
+        return wallet;
     }
 
     @Async

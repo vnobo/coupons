@@ -4,9 +4,7 @@ pluginManagement {
 	}
 }
 rootProject.name = 'coupons'
-
 include 'bootiful-wx'
 include 'bootiful-ali'
-include 'bootiful-jd'
 include 'bootiful-web'
 

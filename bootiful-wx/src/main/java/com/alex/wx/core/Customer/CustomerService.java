@@ -1,8 +1,9 @@
 package com.alex.wx.core.Customer;
 
-import com.alex.wx.AbstractGenericService;
+import com.alex.wx.BaseGenericService;
 import com.alex.wx.core.Customer.beans.Customer;
 import com.alex.wx.core.Customer.beans.CustomerRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -13,14 +14,10 @@ import java.util.Optional;
 import java.util.concurrent.Future;
 
 @Service
-public class CustomerService extends AbstractGenericService {
+@RequiredArgsConstructor
+public class CustomerService extends BaseGenericService {
 
-    private CustomerRepository customerRepository;
-
-    @Autowired
-    public CustomerService(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
-    }
+    private final CustomerRepository customerRepository;
 
     /**
      * 判断微信用户是否存在
@@ -34,11 +31,6 @@ public class CustomerService extends AbstractGenericService {
         return !ObjectUtils.isEmpty(customer);
     }
 
-    public Customer loadById(int id) {
-        Optional<Customer> optionalCustomer = customerRepository.findById(id);
-        return optionalCustomer.orElse(null);
-    }
-
     public Customer loadByPid(String pid) {
         Optional<Customer> optionalCustomer = customerRepository.findByPid_AdZoneId(pid);
         return optionalCustomer.orElse(null);
@@ -49,18 +41,4 @@ public class CustomerService extends AbstractGenericService {
         return optionalCustomer.orElse(null);
     }
 
-    /**
-     * 同步保存
-     */
-    public Customer save(Customer customer) {
-        return customerRepository.save(customer);
-    }
-
-    /**
-     * 异步保存
-     */
-    @Async
-    public Future<Customer> asyncSave(Customer customer) {
-        return new AsyncResult<>(save(customer));
-    }
 }

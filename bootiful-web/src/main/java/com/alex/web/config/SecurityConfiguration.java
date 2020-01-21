@@ -1,7 +1,6 @@
 package com.alex.web.config;
 
-import com.alex.web.repositories.UserRepository;
-import lombok.RequiredArgsConstructor;
+import com.alex.web.security.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

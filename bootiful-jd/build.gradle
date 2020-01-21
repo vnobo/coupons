@@ -1,9 +1,0 @@
-apply plugin: 'org.springframework.boot'
-
-bootJar {
-	launchScript()
-}
-
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-webflux'
-}

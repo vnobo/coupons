@@ -1,7 +1,7 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    id 'org.springframework.boot' version '2.2.2.RELEASE' apply false
+    id 'org.springframework.boot' version '2.2.4.RELEASE' apply false
     id 'com.palantir.docker' version '0.22.1' apply false
 }
 
@@ -50,7 +50,7 @@ subprojects {
     ext {
         hutoolVersion = '5.1.0'
         queryDslVersion = '4.2.1'
-        weixinVersion = "3.4.7.B"
+        weixinVersion = "3.6.7.B"
         hanlpVersion = "portable-1.7.4"
 
         springCloudVersion = 'Hoxton.SR1'

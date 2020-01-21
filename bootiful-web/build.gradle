@@ -7,7 +7,7 @@ bootJar {
 }
 
 docker {
-    name "alexbob/${project.name}"
+    name "registry.cn-zhangjiakou.aliyuncs.com/alexbob/${project.name}"
     files(bootJar.archiveFile.get(),file('docker/bootstrap.properties'))
     dockerfile file('docker/Dockerfile')
     buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}"])

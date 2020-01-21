@@ -2,7 +2,7 @@ package com.alex.ali.client;
 
 import com.alex.ali.core.SignRequestUtils;
 import com.alex.ali.exceptions.TaoBaoRestException;
-import com.alex.ali.config.TaoBaoProperties;
+import com.alex.ali.config.AliProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
@@ -32,11 +32,11 @@ public class TaobaoClient extends AbstractGenericClient {
 
     public TaobaoClient(WebClient.Builder clientBuilder,
                         ObjectMapper objectMapper,
-                        TaoBaoProperties taoBaoProperties) {
-        super(clientBuilder.baseUrl(taoBaoProperties.getApiUrl()), objectMapper);
-        this.appKey = taoBaoProperties.getAppKey();
-        this.appSecret = taoBaoProperties.getAppSecret();
-        this.signMethod = taoBaoProperties.getSignMethod();
+                        AliProperties aliProperties) {
+        super(clientBuilder.baseUrl(aliProperties.getApiUrl()), objectMapper);
+        this.appKey = aliProperties.getAppKey();
+        this.appSecret = aliProperties.getAppSecret();
+        this.signMethod = aliProperties.getSignMethod();
 
     }
 

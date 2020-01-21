@@ -1,6 +1,6 @@
 package com.alex.wx.wechat.service;
 
-import com.alex.wx.AbstractGenericService;
+import com.alex.wx.BaseGenericService;
 import com.alex.wx.wechat.beans.WxEvent;
 import com.alex.wx.wechat.beans.WxEventRepository;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -16,20 +16,19 @@ import java.util.concurrent.Future;
  * 处理微信通知事件服务
  */
 @Service
-public class WxEventService extends AbstractGenericService {
+public class WxEventService extends BaseGenericService {
 
-    @Autowired
     private WxEventRepository eventRepository;
 
     public void eventSaveAndUpdateUser(WxMpXmlMessage inMessage) {
 
         logger.debug("message manage and user update info.");
 
-        asyncSave(WxEvent.of(inMessage.getMsgType(), objectMapper.convertValue(inMessage, ObjectNode.class)));
+        /*asyncSave(WxEvent.of(inMessage.getMsgType(), objectMapper.convertValue(inMessage, ObjectNode.class)));*/
 
     }
 
-    public WxEvent save(WxEvent event) {
+    /*public WxEvent save(WxEvent event) {
         return eventRepository.save(event);
     }
 
@@ -37,5 +36,6 @@ public class WxEventService extends AbstractGenericService {
     public Future<WxEvent> asyncSave(WxEvent event) {
         return new AsyncResult<>(save(event));
     }
+     */
 
 }

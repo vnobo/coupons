@@ -1,63 +1,26 @@
 package com.alex.wx.core.Customer.beans;
 
-import cn.hutool.core.util.ObjectUtil;
-import com.alex.wx.ObjectNodeConverterJson;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import lombok.Data;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "wx_customers")
-@EntityListeners(AuditingEntityListener.class)
+@Data
 public class Customer {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-    @Column(name = "openid")
     private String openId;
-
-    @OneToOne
-    @JoinColumn(name = "id")
     private TBPid pid;
-
     private String nickname;
-
     private int sex;
-
     private String city;
-
     private String country;
-
     private String province;
-
     private String headImgUrl;
-
-    @Convert(converter = ObjectNodeConverterJson.class)
     private ObjectNode extend;
-
-    @CreatedDate
-    @Column(updatable = false)
     private LocalDateTime createdTime;
-
-    @LastModifiedDate
     private LocalDateTime updateTime;
-
-    @CreatedDate
     private LocalDateTime asyncTime;
-
-
-    public static Customer of(int id) {
-        Customer customer = new Customer();
-        customer.setId(id);
-        return customer;
-    }
 
     public static Customer of(String openid) {
         Customer customer = new Customer();
@@ -92,110 +55,4 @@ public class Customer {
         return customer;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getOpenId() {
-        return openId;
-    }
-
-    public void setOpenId(String openId) {
-        this.openId = openId;
-    }
-
-    public TBPid getPid() {
-        return pid;
-    }
-
-    public void setPid(TBPid pid) {
-        this.pid = pid;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getHeadImgUrl() {
-        return headImgUrl;
-    }
-
-    public void setHeadImgUrl(String headImgUrl) {
-        this.headImgUrl = headImgUrl;
-    }
-    
-    public ObjectNode getExtend() {
-        if (ObjectUtil.isNull(this.extend)) {
-            this.extend = new ObjectMapper().createObjectNode();
-        }
-        return extend;
-    }
-
-    public void setExtend(ObjectNode extend) {
-        this.extend = extend;
-    }
-
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public LocalDateTime getAsyncTime() {
-        return asyncTime;
-    }
-
-    public void setAsyncTime(LocalDateTime asyncTime) {
-        this.asyncTime = asyncTime;
-    }
 }

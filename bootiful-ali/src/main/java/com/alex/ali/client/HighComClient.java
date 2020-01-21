@@ -1,7 +1,7 @@
 package com.alex.ali.client;
 
 import cn.hutool.json.JSONUtil;
-import com.alex.ali.config.TaoBaoProperties;
+import com.alex.ali.config.AliProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
@@ -27,11 +27,11 @@ public class HighComClient extends AbstractGenericClient {
 
     public HighComClient(WebClient.Builder builder,
                          ObjectMapper objectMapper,
-                         TaoBaoProperties taoBaoProperties) {
+                         AliProperties aliProperties) {
         // webClient设置
-        super(builder.baseUrl(taoBaoProperties.getHighApi()), objectMapper);
-        this.appKey = taoBaoProperties.getHighKey();
-        this.sid = taoBaoProperties.getHighUid();
+        super(builder.baseUrl(aliProperties.getHighApi()), objectMapper);
+        this.appKey = aliProperties.getHighKey();
+        this.sid = aliProperties.getHighUid();
     }
 
     /**
