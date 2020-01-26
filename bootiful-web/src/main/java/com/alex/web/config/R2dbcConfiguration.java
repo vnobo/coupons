@@ -30,7 +30,6 @@ import java.util.Set;
 @Order(1)
 @Configuration
 @EnableTransactionManagement
-@EnableR2dbcRepositories("com.alex.web.repositories")
 public class R2dbcConfiguration extends AbstractR2dbcConfiguration {
 
     @Override
