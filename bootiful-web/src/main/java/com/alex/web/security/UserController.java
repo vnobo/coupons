@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.WebSession;
 import reactor.core.publisher.Mono;
 
 /**
@@ -25,5 +26,10 @@ public class UserController {
     @GetMapping("/search/name/{username}")
     public Mono<User> findUserByName(@PathVariable String username) {
         return this.userRepository.findByUsername(username);
+    }
+
+    @GetMapping("oauth")
+    public Mono<String> oauth(WebSession session){
+        return Mono.just(session.getId());
     }
 }
