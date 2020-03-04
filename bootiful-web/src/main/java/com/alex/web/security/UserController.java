@@ -1,13 +1,14 @@
 package com.alex.web.security;
 
-import com.alex.web.security.User;
-import com.alex.web.security.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
+
+import java.time.Duration;
 
 /**
  * com.alex.web.security.UserController
@@ -15,15 +16,21 @@ import reactor.core.publisher.Mono;
  * @author Alex bob(https://github.com/vnobo)
  * @date Created by 2019/12/28
  */
-@RequiredArgsConstructor
 @RestController
 @RequestMapping("users")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserRepository userRepository;
 
     @GetMapping("/search/name/{username}")
-    public Mono<User> findUserByName(@PathVariable String username) {
-        return this.userRepository.findByUsername(username);
+    public Flux findUserByName(@PathVariable String username) {
+        return Flux.interval(Duration.ofSeconds(10))
+                        .flatMap(tick->this.userRepository.findByUsername(username))
+                .map(user -> {
+                    var only = new UserOnly();
+                    BeanUtils.copyProperties(user,only);
+                    return only;
+                });
     }
 }

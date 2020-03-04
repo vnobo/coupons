@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.amqp.RabbitAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import javax.annotation.PostConstruct;
+
 /**
  * com.mspbots.sync.config.RabbitConfigurer
  *
@@ -22,20 +24,16 @@ public class RabbitConfiguration {
 
     private final AmqpAdmin amqpAdmin;
 
-    @Bean
+    @PostConstruct
     public void declareQueue() {
         Exchange coupons = ExchangeBuilder.directExchange("com.coupons.core").build();
         this.amqpAdmin.declareExchange(coupons);
 
-        Queue tickets = QueueBuilder.durable("order").build();
-        this.amqpAdmin.declareQueue(tickets);
+        Queue orders = QueueBuilder.durable("orders").build();
+        this.amqpAdmin.declareQueue(orders);
 
-        this.amqpAdmin.declareBinding(BindingBuilder.bind(tickets)
+        this.amqpAdmin.declareBinding(BindingBuilder.bind(orders)
                 .to(coupons).with("order-save").noargs());
     }
 
-    @Bean
-    public MessageConverter rabbitMessageConverter(ObjectMapper objectMapper) {
-        return new Jackson2JsonMessageConverter(objectMapper);
-    }
 }
