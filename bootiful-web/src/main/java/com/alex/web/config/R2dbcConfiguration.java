@@ -27,10 +27,8 @@ import java.util.Set;
  * @author Alex bob(https://github.com/vnobo)
  * @date Created by 2019/12/28
  */
-@Order(1)
 @Configuration
 @EnableTransactionManagement
-@EnableR2dbcRepositories("com.alex.web.repositories")
 public class R2dbcConfiguration extends AbstractR2dbcConfiguration {
 
     @Override
@@ -41,7 +39,6 @@ public class R2dbcConfiguration extends AbstractR2dbcConfiguration {
     @Bean
     @Override
     public R2dbcCustomConversions r2dbcCustomConversions() {
-
         List<Converter<?, ?>> converterList = new ArrayList<>();
         converterList.add(new SetReadConverter());
         converterList.add(new SetWriteConverter());

@@ -11,7 +11,6 @@ import reactor.core.publisher.Mono;
  * @author Alex bob(https://github.com/vnobo)
  * @date Created by 2019/7/14
  */
-@Repository
 public interface UserRepository extends R2dbcRepository<User, Integer> {
 
     /**

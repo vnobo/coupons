@@ -1,15 +1,53 @@
-import org.springframework.boot.gradle.plugin.SpringBootPlugin
-
 plugins {
     id 'org.springframework.boot' version '2.2.4.RELEASE' apply false
     id 'com.palantir.docker' version '0.22.1' apply false
 }
 
+allprojects {
+
+    ext {
+        hutoolVersion = '5.1.2'
+        weixinVersion = "3.6.7.B"
+        hanlpVersion = "portable-1.7.4"
+
+        springCloudVersion = 'Hoxton.SR1'
+        springCloudAlibabaVersion = '2.1.0.RELEASE'
+        r2dbcVersion = '0.1.0.M3'
+    }
+
+    apply plugin: "idea"
+    apply plugin: 'io.spring.dependency-management'
+
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/libs-snapshot-local' }
+        maven { url 'https://repo.spring.io/plugins-release' }
+        jcenter()
+        mavenCentral()
+    }
+
+    idea {
+        module {
+            outputDir = file("$buildDir/out/")
+            testOutputDir = file("$buildDir/test")
+        }
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+            mavenBom 'org.springframework.boot.experimental:spring-boot-bom-r2dbc:0.1.0.M3'
+        }
+    }
+}
+
 subprojects {
 
     apply plugin: "java"
-    apply plugin: "idea"
-    apply plugin: 'io.spring.dependency-management'
 
     group = 'com.alexbob'
     version = '0.0.1-dev'
@@ -30,38 +68,9 @@ subprojects {
         }
     }
 
-    idea {
-        module {
-            outputDir = file("$buildDir/out/")
-            testOutputDir = file("$buildDir/test")
-        }
-    }
-
-    repositories {
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'https://repo.spring.io/milestone' }
-        maven { url 'https://repo.spring.io/libs-snapshot-local' }
-        maven { url 'https://repo.spring.io/plugins-release' }
-        jcenter()
-        mavenCentral()
-    }
-
-    ext {
-        hutoolVersion = '5.1.0'
-        queryDslVersion = '4.2.1'
-        weixinVersion = "3.6.7.B"
-        hanlpVersion = "portable-1.7.4"
-
-        springCloudVersion = 'Hoxton.SR1'
-        springCloudAlibabaVersion = '2.1.0.RELEASE'
-        r2dbcVersion = '0.1.0.M3'
-    }
-
     dependencies {
 
         implementation "cn.hutool:hutool-all:${hutoolVersion}"
-
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
         implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
@@ -80,16 +89,9 @@ subprojects {
 
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom SpringBootPlugin.BOM_COORDINATES
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
-            mavenBom "org.springframework.boot.experimental:spring-boot-bom-r2dbc:${r2dbcVersion}"
-        }
-    }
-
     test {
         useJUnitPlatform()
     }
 }
+
+
