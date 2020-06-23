@@ -24,16 +24,15 @@ import java.time.format.DateTimeFormatter;
  */
 @Log4j2
 @Service
-public class TaobaoClient extends AbstractGenericClient {
+public class TaobaoClient extends BaseClient {
 
     private final String appKey;
     private final String appSecret;
     private final String signMethod;
 
     public TaobaoClient(WebClient.Builder clientBuilder,
-                        ObjectMapper objectMapper,
                         AliProperties aliProperties) {
-        super(clientBuilder.baseUrl(aliProperties.getApiUrl()), objectMapper);
+        super(clientBuilder.baseUrl(aliProperties.getApiUrl()).build());
         this.appKey = aliProperties.getAppKey();
         this.appSecret = aliProperties.getAppSecret();
         this.signMethod = aliProperties.getSignMethod();
@@ -66,7 +65,7 @@ public class TaobaoClient extends AbstractGenericClient {
 
     }
 
-    public class TaobaoRequestException extends TaoBaoRestException {
+    public static class TaobaoRequestException extends TaoBaoRestException {
         TaobaoRequestException(int code, String msg) {
             super(code, msg);
         }

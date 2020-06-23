@@ -5,6 +5,9 @@ bootJar {
     exclude("bootstrap.yml")
 }
 
+bootBuildImage {
+    imageName = "alexbob/${project.name}:${project.version}"
+}
 
 dependencies {
 

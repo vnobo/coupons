@@ -3,7 +3,6 @@ package com.alex.ali.client;
 import cn.hutool.json.JSONUtil;
 import com.alex.ali.config.AliProperties;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
@@ -20,16 +19,14 @@ import java.io.IOException;
  */
 @Log4j2
 @Service
-public class HighComClient extends AbstractGenericClient {
+public class HighComClient extends BaseClient {
 
     private final String appKey;
     private final String sid;
 
     public HighComClient(WebClient.Builder builder,
-                         ObjectMapper objectMapper,
                          AliProperties aliProperties) {
-        // webClient设置
-        super(builder.baseUrl(aliProperties.getHighApi()), objectMapper);
+        super(builder.baseUrl(aliProperties.getHighApi()).build());
         this.appKey = aliProperties.getHighKey();
         this.sid = aliProperties.getHighUid();
     }

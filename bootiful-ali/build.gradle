@@ -5,12 +5,15 @@ bootJar {
     exclude("bootstrap.yml")
 }
 
-dependencies {
-    
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+bootBuildImage {
+    imageName = "alexbob/${project.name}:${project.version}"
+}
 
-    implementation 'org.springframework.boot:spring-boot-starter-mail'
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+dependencies {
+
+    implementation "org.springframework.boot:spring-boot-starter-webflux"
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
+    implementation "org.springframework.boot:spring-boot-starter-mail"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
 
 }

@@ -4,13 +4,11 @@ logging:
 
 spring:
   application.name: bootiful-ali
-  #devtools
-  devtools:
-    add-properties: false
   cloud:
     nacos:
       config:
         namespace: f58a218d-f21e-41d3-9bd3-9e7dfbfbcbda
-        server-addr: 192.168.0.2:8848
+        server-addr: 127.0.0.1:8848
         file-extension: yaml
+
 server.port: 9000

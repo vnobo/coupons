@@ -2,37 +2,9 @@ plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE' apply false
 }
 
-allprojects {
-
-    apply plugin: "idea"
-
-
-    ext {
-        hutoolVersion = '5.1.2'
-        weixinVersion = "3.6.7.B"
-        hanlpVersion = "portable-1.7.4"
-        springCloudVersion = 'Hoxton.SR4'
-        springCloudAlibabaVersion = '2.2.1.RELEASE'
-    }
-
-    repositories {
-        maven { url 'https://maven.aliyun.com/repository/central' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'https://repo.spring.io/milestone' }
-        mavenCentral()
-    }
-
-    idea {
-        module {
-            outputDir = file("$buildDir/out/")
-            testOutputDir = file("$buildDir/test")
-        }
-    }
-
-}
-
 subprojects {
 
+    apply plugin: "idea"
     apply plugin: "java"
     apply plugin: 'io.spring.dependency-management'
 
@@ -46,6 +18,26 @@ subprojects {
         compileOnly {
             extendsFrom annotationProcessor
         }
+    }
+
+    idea.module {
+        outputDir = file("$buildDir/out/")
+        testOutputDir = file("$buildDir/test")
+    }
+
+    ext {
+        set("hutoolVersion", '5.1.2')
+        set("weixinVersion", "3.6.7.B")
+        set("hanlpVersion", "portable-1.7.4")
+        set("springCloudVersion", 'Hoxton.SR5')
+        set("springCloudAlibabaVersion", '2.2.1.RELEASE')
+    }
+
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://repo.spring.io/milestone' }
+        mavenCentral()
     }
 
     dependencies {
