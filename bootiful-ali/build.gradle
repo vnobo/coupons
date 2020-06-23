@@ -1,27 +1,14 @@
 apply plugin: 'org.springframework.boot'
-apply plugin: 'com.palantir.docker'
 
 bootJar {
     launchScript()
     exclude("bootstrap.yml")
 }
 
-docker {
-    name "alexbob/${project.name}"
-    tag "latest", "registry.cn-zhangjiakou.aliyuncs.com/alexbob/${project.name}:latest"
-    dockerfile file('docker/Dockerfile')
-    files(bootJar.archiveFile.get(),file('docker/bootstrap.properties'))
-    buildArgs(['JAR_FILE': "${bootJar.archiveFileName.get()}"])
-    pull true
-    noCache true
-}
-
 dependencies {
     
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     implementation 'org.springframework.boot:spring-boot-starter-amqp'
-
-    implementation 'com.alibaba.cloud:spring-cloud-starter-alicloud-sms'
 
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'

@@ -1,29 +1,24 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.0.RC1' apply false
-    id 'com.palantir.docker' version '0.25.0' apply false
+    id 'org.springframework.boot' version '2.3.1.RELEASE' apply false
 }
 
 allprojects {
+
+    apply plugin: "idea"
+
 
     ext {
         hutoolVersion = '5.1.2'
         weixinVersion = "3.6.7.B"
         hanlpVersion = "portable-1.7.4"
-
         springCloudVersion = 'Hoxton.SR4'
         springCloudAlibabaVersion = '2.2.1.RELEASE'
     }
-
-    apply plugin: "idea"
-    apply plugin: 'io.spring.dependency-management'
 
     repositories {
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
         maven { url 'https://repo.spring.io/milestone' }
-        maven { url 'https://repo.spring.io/libs-snapshot-local' }
-        maven { url 'https://repo.spring.io/plugins-release' }
-        jcenter()
         mavenCentral()
     }
 
@@ -34,18 +29,12 @@ allprojects {
         }
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
-        }
-    }
 }
 
 subprojects {
 
     apply plugin: "java"
+    apply plugin: 'io.spring.dependency-management'
 
     group = 'com.alexbob'
     version = '0.0.1-dev'
@@ -54,13 +43,6 @@ subprojects {
     [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
     configurations {
-
-        developmentOnly
-
-        runtimeClasspath {
-            extendsFrom developmentOnly
-        }
-
         compileOnly {
             extendsFrom annotationProcessor
         }
@@ -74,17 +56,22 @@ subprojects {
         implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
         implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
 
+        compileOnly 'org.projectlombok:lombok'
         annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
         annotationProcessor 'org.projectlombok:lombok'
-        compileOnly 'org.projectlombok:lombok'
-
-        developmentOnly "org.springframework.boot:spring-boot-devtools"
 
         testImplementation('org.springframework.boot:spring-boot-starter-test') {
             exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
         }
         testImplementation 'io.projectreactor:reactor-test'
 
+    }
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+        }
     }
 
     test {
