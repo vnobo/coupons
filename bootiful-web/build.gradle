@@ -6,7 +6,7 @@ bootJar {
 }
 
 bootBuildImage {
-    imageName = "alexbob/${project.name}:${project.version}"
+    imageName = "alexbob/${project.name}"
 }
 
 dependencies {
