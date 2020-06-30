@@ -1,4 +1,4 @@
-package com.alex.ali.client;
+package com.alex.ali.core.client;
 
 import cn.hutool.json.JSONUtil;
 import com.alex.ali.config.AliProperties;

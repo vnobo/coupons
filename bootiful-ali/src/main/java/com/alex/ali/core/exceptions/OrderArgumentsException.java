@@ -1,4 +1,4 @@
-package com.alex.ali.exceptions;
+package com.alex.ali.core.exceptions;
 
 /**
  * rebate-alliance OrderArgumentsException

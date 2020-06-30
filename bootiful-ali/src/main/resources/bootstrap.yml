@@ -4,11 +4,9 @@ logging:
 
 spring:
   application.name: bootiful-ali
-  cloud:
-    nacos:
-      config:
-        namespace: f58a218d-f21e-41d3-9bd3-9e7dfbfbcbda
-        server-addr: 127.0.0.1:8848
-        file-extension: yaml
+  cloud.nacos.config:
+    server-addr: 127.0.0.1:8848
+    file-extension: yaml
 
-server.port: 9000
+server.port: 9090
+

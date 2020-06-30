@@ -1,4 +1,4 @@
-package com.alex.ali.exceptions;
+package com.alex.ali.core.exceptions;
 
 /**
  * com.alex.taobao.exceptions in  coupons

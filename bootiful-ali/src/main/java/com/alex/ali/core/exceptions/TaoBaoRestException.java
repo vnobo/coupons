@@ -1,7 +1,5 @@
-package com.alex.ali.exceptions;
+package com.alex.ali.core.exceptions;
 
-
-import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.expression.ExpressionException;
 
@@ -10,8 +8,7 @@ import java.io.Serializable;
 /**
  * @author billb
  */
-@Data
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode
 public class TaoBaoRestException extends ExpressionException implements Serializable {
 
     private int code;
@@ -37,5 +34,21 @@ public class TaoBaoRestException extends ExpressionException implements Serializ
         super(message, cause);
         this.code = code;
         this.msg = message;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 }

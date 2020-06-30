@@ -1,10 +1,9 @@
-package com.alex.ali.client;
+package com.alex.ali.core.client;
 
 import com.alex.ali.core.SignRequestUtils;
-import com.alex.ali.exceptions.TaoBaoRestException;
+import com.alex.ali.core.exceptions.TaoBaoRestException;
 import com.alex.ali.config.AliProperties;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

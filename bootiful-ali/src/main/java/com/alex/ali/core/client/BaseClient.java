@@ -1,4 +1,4 @@
-package com.alex.ali.client;
+package com.alex.ali.core.client;
 
 import com.alex.ali.BaseGenericService;
 import lombok.extern.log4j.Log4j2;

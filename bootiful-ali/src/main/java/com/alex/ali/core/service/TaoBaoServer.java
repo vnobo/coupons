@@ -2,11 +2,12 @@ package com.alex.ali.core.service;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.alex.ali.exceptions.OrderSyncProgressException;
-import com.alex.ali.exceptions.TaoBaoRestException;
-import com.alex.ali.client.TaobaoClient;
+import com.alex.ali.BaseGenericService;
+import com.alex.ali.core.client.TaobaoClient;
+import com.alex.ali.core.exceptions.OrderSyncProgressException;
+import com.alex.ali.core.exceptions.TaoBaoRestException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -26,16 +27,10 @@ import java.util.Map;
  */
 @Log4j2
 @Service
-public class TaoBaoServer {
-
-    private final ObjectMapper objectMapper;
+@RequiredArgsConstructor
+public class TaoBaoServer extends BaseGenericService {
 
     private final TaobaoClient taobaoClient;
-
-    public TaoBaoServer(ObjectMapper objectMapper, TaobaoClient taobaoClient) {
-        this.objectMapper = objectMapper;
-        this.taobaoClient = taobaoClient;
-    }
 
     /**
      * 根据商品ID 获取商品详情
@@ -197,7 +192,7 @@ public class TaoBaoServer {
         Mono<JsonNode> jsonNodeMono = this.taobaoClient.postForEntity(requestParams);
 
         return jsonNodeMono
-                .doOnSuccess(data->{
+                .doOnSuccess(data -> {
                     JsonNode errorNode = data.findValue("error_response");
                     if (!ObjectUtils.isEmpty(errorNode)) {
                         throw new OrderSyncProgressException(500, errorNode.toString());
