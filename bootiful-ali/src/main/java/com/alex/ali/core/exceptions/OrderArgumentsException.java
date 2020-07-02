@@ -6,7 +6,7 @@ package com.alex.ali.core.exceptions;
  *
  * @author Alex bob(https://github.com/vnobo)
  */
-public class OrderArgumentsException extends TaoBaoRestException {
+public class OrderArgumentsException extends AliRestException {
 
     public OrderArgumentsException(int code, String msg) {
         super(code, msg);

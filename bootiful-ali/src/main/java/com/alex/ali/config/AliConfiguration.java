@@ -2,8 +2,8 @@ package com.alex.ali.config;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 /**
  * boot-cool-alliance TbKeConfiguration
@@ -13,9 +13,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  */
 @Configuration
 @EnableScheduling
-@EnableAsync
 @EnableConfigurationProperties({AliProperties.class})
-public class AliConfiguration {
+public class AliConfiguration implements WebFluxConfigurer {
 
 
 }

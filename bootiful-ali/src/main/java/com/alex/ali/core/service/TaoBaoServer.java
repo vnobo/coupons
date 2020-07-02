@@ -3,9 +3,9 @@ package com.alex.ali.core.service;
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.alex.ali.BaseGenericService;
-import com.alex.ali.core.client.TaobaoClient;
+import com.alex.ali.core.client.TaoBaoClient;
 import com.alex.ali.core.exceptions.OrderSyncProgressException;
-import com.alex.ali.core.exceptions.TaoBaoRestException;
+import com.alex.ali.core.exceptions.AliRestException;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -30,7 +30,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class TaoBaoServer extends BaseGenericService {
 
-    private final TaobaoClient taobaoClient;
+    private final TaoBaoClient taobaoClient;
 
     /**
      * 根据商品ID 获取商品详情
@@ -79,7 +79,7 @@ public class TaoBaoServer extends BaseGenericService {
         JsonNode tbData = jsonNodeMono.block();
         Iterator<JsonNode> elements = tbData.findPath("map_data").elements();
         if (!elements.hasNext()) {
-            throw new TaoBaoRestException(500, "获取淘宝商品信息错误!");
+            throw new AliRestException(500, "获取淘宝商品信息错误!");
         }
 
         JsonNode tbGoods = elements.next();

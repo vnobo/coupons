@@ -1,5 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.3.1.RELEASE' apply false
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
 
 subprojects {
@@ -31,18 +32,20 @@ subprojects {
         set("hanlpVersion", "portable-1.7.4")
         set("springCloudVersion", 'Hoxton.SR5')
         set("springCloudAlibabaVersion", '2.2.1.RELEASE')
+        set("springfoxSwagger2Version", "3.0.0-SNAPSHOT")
     }
 
     repositories {
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' }
         mavenCentral()
     }
 
     dependencies {
-
+        implementation "io.springfox:springfox-boot-starter:${springfoxSwagger2Version}"
         implementation "cn.hutool:hutool-all:${hutoolVersion}"
+
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
         implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'

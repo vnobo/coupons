@@ -31,13 +31,13 @@ public abstract class BaseMailService extends BaseGenericService {
                     new InternetAddress(mailOnly.getEmail()));
             mimeMessage.setFrom(new InternetAddress("admin@support.alexbob.net", mailOnly.getName()));
             mimeMessage.setSubject(mailOnly.getSubject());
-            Context context = new Context(Locale.US);
+            Context context = new Context(Locale.CHINA);
             context.setVariables(mailOnly.getVariables());
             String process = this.templateEngine.process(mailOnly.getTemplate(), context);
             mimeMessage.setText(process, "Utf-8", "html");
             this.mailSender.send(mimeMessage);
         } catch (MailException | MessagingException | IOException e) {
-            log.error("邮件发送失败,错误信息: {}",e.getMessage());
+            log.error("邮件发送失败,错误信息: {}", e.getMessage());
         }
     }
 

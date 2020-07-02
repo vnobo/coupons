@@ -14,7 +14,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class MailServiceImpl extends BaseMailService implements MailService {
 
-    private final AliProperties wxMpProperties;
+    private final AliProperties properties;
 
     @Override
     public void withdrawNotice(long withdrawId, String username, String aliPay, double amount) {
@@ -25,7 +25,7 @@ public class MailServiceImpl extends BaseMailService implements MailService {
                         "aliPay", aliPay,
                         "amount", amount,
                         "time", LocalDateTime.now().toString(),
-                        "url", "http://" + wxMpProperties.getHost() + "/api/withdraw/transfer/" + withdrawId),
+                        "url", "http://" + properties.getHost() + "/api/withdraw/transfer/" + withdrawId),
                 "withdraw-notice.html"));
     }
 
