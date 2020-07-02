@@ -1,6 +1,8 @@
 package com.alex.ali.core.exceptions;
 
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.expression.ExpressionException;
 
 import java.io.Serializable;
@@ -8,7 +10,9 @@ import java.io.Serializable;
 /**
  * @author billb
  */
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = false)
 public class AliRestException extends ExpressionException implements Serializable {
 
     private int code;
