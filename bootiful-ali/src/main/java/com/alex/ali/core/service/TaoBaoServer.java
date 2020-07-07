@@ -9,6 +9,7 @@ import com.alex.ali.core.exceptions.AliRestException;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
@@ -31,6 +32,7 @@ import java.util.Map;
 public class TaoBaoServer extends BaseGenericService {
 
     private final TaoBaoClient taobaoClient;
+    private final ReactorLoadBalancerExchangeFilterFunction lbfunction;
 
     /**
      * 根据商品ID 获取商品详情

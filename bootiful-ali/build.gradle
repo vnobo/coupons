@@ -1,10 +1,5 @@
 apply plugin: 'org.springframework.boot'
 
-bootJar {
-    launchScript()
-    exclude("bootstrap.yml")
-}
-
 bootBuildImage {
     imageName = "alexbob/${project.name}"
 }
