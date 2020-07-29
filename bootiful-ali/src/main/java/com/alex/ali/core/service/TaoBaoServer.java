@@ -2,12 +2,14 @@ package com.alex.ali.core.service;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.core.util.ObjectUtil;
-import com.alex.ali.exceptions.OrderSyncProgressException;
-import com.alex.ali.exceptions.TaoBaoRestException;
-import com.alex.ali.client.TaobaoClient;
+import com.alex.ali.BaseGenericService;
+import com.alex.ali.core.client.TaoBaoClient;
+import com.alex.ali.core.exceptions.OrderSyncProgressException;
+import com.alex.ali.core.exceptions.AliRestException;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.cloud.client.loadbalancer.reactive.ReactorLoadBalancerExchangeFilterFunction;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,16 +28,11 @@ import java.util.Map;
  */
 @Log4j2
 @Service
-public class TaoBaoServer {
+@RequiredArgsConstructor
+public class TaoBaoServer extends BaseGenericService {
 
-    private final ObjectMapper objectMapper;
-
-    private final TaobaoClient taobaoClient;
-
-    public TaoBaoServer(ObjectMapper objectMapper, TaobaoClient taobaoClient) {
-        this.objectMapper = objectMapper;
-        this.taobaoClient = taobaoClient;
-    }
+    private final TaoBaoClient taobaoClient;
+    private final ReactorLoadBalancerExchangeFilterFunction lbfunction;
 
     /**
      * 根据商品ID 获取商品详情
@@ -84,7 +81,7 @@ public class TaoBaoServer {
         JsonNode tbData = jsonNodeMono.block();
         Iterator<JsonNode> elements = tbData.findPath("map_data").elements();
         if (!elements.hasNext()) {
-            throw new TaoBaoRestException(500, "获取淘宝商品信息错误!");
+            throw new AliRestException(500, "获取淘宝商品信息错误!");
         }
 
         JsonNode tbGoods = elements.next();
@@ -197,7 +194,7 @@ public class TaoBaoServer {
         Mono<JsonNode> jsonNodeMono = this.taobaoClient.postForEntity(requestParams);
 
         return jsonNodeMono
-                .doOnSuccess(data->{
+                .doOnSuccess(data -> {
                     JsonNode errorNode = data.findValue("error_response");
                     if (!ObjectUtils.isEmpty(errorNode)) {
                         throw new OrderSyncProgressException(500, errorNode.toString());
