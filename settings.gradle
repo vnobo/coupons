@@ -1,5 +1,0 @@
-rootProject.name = 'coupons'
-include 'bootiful-wx'
-include 'bootiful-ali'
-include 'bootiful-web'
-

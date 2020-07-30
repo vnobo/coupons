@@ -32,13 +32,12 @@ subprojects {
         set("hanlpVersion", "portable-1.7.4")
         set("springCloudVersion", 'Hoxton.SR6')
         set("springCloudAlibabaVersion", '2.2.1.RELEASE')
-        set("springfoxSwagger2Version", "3.0.0-SNAPSHOT")
+        set("springfoxSwagger2Version", "3.0.0")
     }
 
     repositories {
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'https://oss.jfrog.org/artifactory/oss-snapshot-local/' }
         mavenCentral()
     }
 
