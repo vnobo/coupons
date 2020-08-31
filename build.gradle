@@ -1,5 +1,5 @@
 plugins {
-    id 'org.springframework.boot' version '2.3.1.RELEASE' apply false
+    id 'org.springframework.boot' version '2.3.3.RELEASE' apply false
     id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 }
 
@@ -30,7 +30,7 @@ subprojects {
         set("hutoolVersion", '5.1.2')
         set("weixinVersion", "3.6.7.B")
         set("hanlpVersion", "portable-1.7.4")
-        set("springCloudVersion", 'Hoxton.SR6')
+        set("springCloudVersion", 'Hoxton.SR7')
         set("springCloudAlibabaVersion", '2.2.1.RELEASE')
         set("springfoxSwagger2Version", "3.0.0")
     }
