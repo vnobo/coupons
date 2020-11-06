@@ -1,10 +1,5 @@
 apply plugin: 'org.springframework.boot'
 
-bootJar {
-    launchScript()
-    exclude("bootstrap.yml")
-}
-
 bootBuildImage {
     imageName = "alexbob/${project.name}"
 }
@@ -13,8 +8,6 @@ dependencies {
 
     // 微信公众号API包
     implementation "com.github.binarywang:weixin-java-mp:${weixinVersion}"
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
 }

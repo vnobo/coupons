@@ -27,12 +27,12 @@ subprojects {
     }
 
     ext {
-        set("hutoolVersion", '5.4.10')
-        set("weixinVersion", "3.6.7.B")
-        set("hanlpVersion", "portable-1.7.4")
+        set("hutoolVersion", '5.4.+')
+        set("weixinVersion", "3.6.+")
+        set("hanlpVersion", "portable-1.7.+")
         set("springCloudVersion", 'Hoxton.SR8')
-        set("springCloudAlibabaVersion", '2.2.3.RELEASE')
-        set("springfoxSwagger2Version", "3.0.0")
+        set("springCloudAlibabaVersion", '2.2.+')
+        set("springfoxSwagger2Version", "3.0.+")
     }
 
     repositories {
@@ -41,13 +41,21 @@ subprojects {
     }
 
     dependencies {
+
         implementation "io.springfox:springfox-boot-starter:${springfoxSwagger2Version}"
         implementation "cn.hutool:hutool-all:${hutoolVersion}"
 
         implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+        implementation "org.springframework.boot:spring-boot-starter-webflux"
+        implementation "org.springframework.boot:spring-boot-starter-amqp"
+        implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+
         implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
         implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+        implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+        implementation 'com.github.ben-manes.caffeine:caffeine'
 
         compileOnly 'org.projectlombok:lombok'
         annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"

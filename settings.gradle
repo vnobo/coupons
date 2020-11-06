@@ -1,0 +1,6 @@
+rootProject.name = 'coupons'
+
+include 'bootiful-ali'
+include 'bootiful-web'
+include 'bootiful-wx'
+
