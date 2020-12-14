@@ -45,13 +45,6 @@ subprojects {
         set("springfoxSwagger2Version", "3.0.+")
     }
 
-    repositories {
-        maven { url "https://maven.aliyun.com/repository/public" }
-        maven { url 'https://repo.spring.io/milestone' }
-        jcenter()
-        mavenCentral()
-    }
-
     dependencies {
 
         implementation "io.springfox:springfox-boot-starter:${springfoxSwagger2Version}"

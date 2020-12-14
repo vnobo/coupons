@@ -11,9 +11,9 @@ import com.alex.wx.core.wallet.WalletService;
 import com.alex.wx.core.wallet.beans.Wallet;
 import com.alex.wx.wechat.WxRestException;
 import me.chanjar.weixin.common.bean.WxJsapiSignature;
+import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -69,7 +69,9 @@ public class WxHomeService extends BaseGenericService {
      */
     public Wallet withdraw(String openId) {
 
-        if (ObjectUtil.isNull(openId)) throw new WalletException(500, "openId 参数不能为空.");
+        if (ObjectUtil.isNull(openId)) {
+            throw new WalletException(500, "openId 参数不能为空.");
+        }
 
         return this.walletService.withdraw(openId);
     }
@@ -143,11 +145,12 @@ public class WxHomeService extends BaseGenericService {
      */
     public Map loadByCode(String code) throws WxErrorException {
 
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken = this.wxMpService.oauth2getAccessToken(code);
+        WxOAuth2AccessToken wxMpOAuth2AccessToken = this.wxMpService.getOAuth2Service().getAccessToken(code);
 
         this.logger.debug("customer is {} ", JSONUtil.toJsonStr(wxMpOAuth2AccessToken));
 
-        WxMpUser wxMpUser = this.wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, "zh_CN");
+        WxMpUser wxMpUser = this.wxMpService.getUserService().userInfo(wxMpOAuth2AccessToken.getOpenId(),
+                "zh_CN");
 
         // 更新用户信息
         Customer customer = this.customerService.loadByOpenId(wxMpUser.getOpenId());
