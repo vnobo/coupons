@@ -1,7 +1,7 @@
 apply plugin: 'org.springframework.boot'
 
 bootBuildImage {
-    imageName = "docker.pkg.github.com/vnobo/${rootProject.name}/${project.name}-${version}"
+    imageName = "docker.pkg.github.com/vnobo/${rootProject.name}/${project.name}:${version}"
     publish = true
     docker {
         publishRegistry {
