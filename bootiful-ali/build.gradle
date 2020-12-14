@@ -6,7 +6,6 @@ bootBuildImage {
     docker {
         publishRegistry {
             url = "https://docker.pkg.github.com/vnobo"
-            token="df21088032dbb5a1960ba6df82167036ec48a419"
         }
     }
 }
