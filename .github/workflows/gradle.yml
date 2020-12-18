@@ -25,4 +25,6 @@ jobs:
       - name: Build with docker
         run: ./gradlew bootBuildImage
         with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ secrets.PACKAGES_TOKEN }}
+      - name: Docker with images
+        run: docker images
