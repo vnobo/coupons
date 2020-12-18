@@ -5,7 +5,7 @@ bootBuildImage {
     publish = true
     docker {
         publishRegistry {
-            url = "https://ghcr.io"
+            url = "https://ghcr.io/vnobo/${rootProject.name}"
         }
     }
 }
