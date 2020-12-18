@@ -24,3 +24,5 @@ jobs:
         run: ./gradlew build bootjar
       - name: Build with docker
         run: ./gradlew bootBuildImage
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

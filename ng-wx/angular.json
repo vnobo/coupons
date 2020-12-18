@@ -39,7 +39,6 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/jquery/dist/jquery.slim.js",
               "node_modules/bootstrap/js/dist/index.js"
             ]
           },
