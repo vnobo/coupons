@@ -2,12 +2,6 @@ apply plugin: 'org.springframework.boot'
 
 bootBuildImage {
     imageName = "ghcr.io/vnobo/${rootProject.name}/${project.name}:${version}"
-    publish = true
-    docker {
-        publishRegistry {
-            url = "ghcr.io/vnobo/${rootProject.name}/${project.name}:${version}"
-        }
-    }
 }
 
 dependencies {
