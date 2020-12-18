@@ -28,3 +28,5 @@ jobs:
         run: ./gradlew bootBuildImage
       - name: Docker with images
         run: docker images
+      - name: Docker push images https://ghcr.io/vnobo/${rootProject.name}
+        run: docker push ghcr.io/vnobo/coupons
