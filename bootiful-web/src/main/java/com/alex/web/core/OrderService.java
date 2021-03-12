@@ -2,6 +2,7 @@ package com.alex.web.core;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,8 +16,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    /*@RabbitListener(queues = "order")*/
+
+    @RabbitListener(queues = "order")
     public void processMessage(String content) {
-        log.info("tao bao order listener {}",content);
+        log.info("tao bao order listener {}", content);
     }
 }

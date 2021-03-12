@@ -1,0 +1,30 @@
+/**
+ custom Bootstrap 4 includes the  variables values, and remove the !
+ $body-bg: #000;
+ $body-color: #111;
+ */
+
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap";
+
+/**
+Printing
+Even in some modern browsers, printing can be quirky.
+As of Safari v8.0, use of the fixed-width .container class can cause Safari to use an unusually small font size when printing.
+See issue #14868 and WebKit bug #138192 for more details.
+One potential workaround is the following CSS
+ */
+@media print {
+  .container {
+    width: auto;
+  }
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

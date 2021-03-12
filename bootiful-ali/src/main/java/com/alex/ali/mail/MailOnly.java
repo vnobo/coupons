@@ -1,7 +1,10 @@
 package com.alex.ali.mail;
 
+import lombok.Data;
+
 import java.util.Map;
 
+@Data
 public class MailOnly {
 
     // 显示名
@@ -32,48 +35,7 @@ public class MailOnly {
                               Map<String, Object> variables,
                               String template) {
 
-        return new MailOnly(name,email,subject,variables,template);
+        return new MailOnly(name, email, subject, variables, template);
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-
-    public Map<String, Object> getVariables() {
-        return variables;
-    }
-
-    public void setVariables(Map<String, Object> variables) {
-        this.variables = variables;
-    }
-
-    public String getTemplate() {
-        return template;
-    }
-
-    public void setTemplate(String template) {
-        this.template = template;
-    }
 }
