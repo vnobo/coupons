@@ -42,8 +42,8 @@ subprojects {
         set("hutoolVersion", "5.5.+")
         set("weixinVersion", "4.0.+")
         set("hanlpVersion", "portable-1.7.+")
-        set("springCloudVersion", "2020.")
-        set("springCloudAlibabaVersion", "2020.")
+        set("springCloudVersion", "2020.+")
+        set("springCloudAlibabaVersion", "2020.+")
         set("springfoxSwagger2Version", "3.0.+")
     }
 
