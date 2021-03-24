@@ -39,12 +39,12 @@ subprojects {
     }
 
     ext {
-        set("hutoolVersion", "5.5.+")
-        set("weixinVersion", "4.0.+")
+        set("hutoolVersion", "5.+")
+        set("weixinVersion", "4.+")
         set("hanlpVersion", "portable-1.7.+")
         set("springCloudVersion", "2020.+")
         set("springCloudAlibabaVersion", "2020.+")
-        set("springfoxSwagger2Version", "3.0.+")
+        set("springfoxSwagger2Version", "3.+")
     }
 
     dependencies {
