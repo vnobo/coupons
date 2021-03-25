@@ -9,8 +9,8 @@ allprojects {
     version = "0.0.1-dev"
 
     repositories {
-        //maven {url "https://maven.aliyun.com/repository/central"}
-        //maven {url "https://maven.aliyun.com/repository/public"}
+        maven {url "https://maven.aliyun.com/repository/central"}
+        maven {url "https://maven.aliyun.com/repository/public"}
         maven { url 'https://repo.spring.io/milestone' }
         jcenter()
         mavenCentral()

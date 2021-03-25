@@ -27,6 +27,6 @@ jobs:
       - name: Docker with push
         run: |
           echo ${{ secrets.GIT_HUB_PACKAGES_TOKEN }} | docker login https://ghcr.io -u $GITHUB_ACTOR --password-stdin
-          docker ghcr.io/vnobo/coupons/bootiful-wx
-          docker ghcr.io/vnobo/coupons/bootiful-web
-          docker ghcr.io/vnobo/coupons/bootiful-ali
+          docker push ghcr.io/vnobo/coupons/bootiful-wx
+          docker push ghcr.io/vnobo/coupons/bootiful-web
+          docker push ghcr.io/vnobo/coupons/bootiful-ali
