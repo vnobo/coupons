@@ -26,7 +26,6 @@ public class User implements Serializable, Persistable<Integer> {
 
     @Id
     private Integer id;
-    private Integer tenantId;
     private String username;
     private String password;
     private Boolean enabled;
