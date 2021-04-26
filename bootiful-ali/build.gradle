@@ -1,15 +1,20 @@
 plugins {
     id 'org.springframework.boot'
 }
-
 bootBuildImage {
     imageName = "ghcr.io/vnobo/${rootProject.name}/${project.name}:${version}"
 }
-
 dependencies {
 
-    implementation "org.springframework.boot:spring-boot-starter-mail"
+    implementation "cn.hutool:hutool-crypto:${hutoolVersion}"
+    implementation "cn.hutool:hutool-json:${hutoolVersion}"
+
     implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+
+    implementation "org.springframework.boot:spring-boot-starter-mail"
+    implementation "org.springframework.boot:spring-boot-starter-amqp"
+    implementation "org.springframework.boot:spring-boot-starter-data-redis-reactive"
+
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 

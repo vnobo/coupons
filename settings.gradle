@@ -4,6 +4,3 @@ include 'bootiful-ali'
 include 'bootiful-web'
 include 'bootiful-wx'
 include 'bootiful-oauth'
-include 'bootiful-gateway'
-include 'bootiful-commons'
-

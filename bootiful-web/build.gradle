@@ -1,11 +1,9 @@
 plugins {
     id 'org.springframework.boot'
 }
-
 bootBuildImage {
     imageName = "ghcr.io/vnobo/${rootProject.name}/${project.name}:${version}"
 }
-
 dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'

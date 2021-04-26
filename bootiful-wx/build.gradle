@@ -1,4 +1,6 @@
-apply plugin: 'org.springframework.boot'
+plugins {
+    id 'org.springframework.boot'
+}
 
 bootBuildImage {
     imageName = "ghcr.io/vnobo/${rootProject.name}/${project.name}:${version}"
@@ -6,9 +8,7 @@ bootBuildImage {
 
 dependencies {
 
-    // 微信公众号API包
     implementation "com.github.binarywang:weixin-java-mp:${weixinVersion}"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
 }
-
