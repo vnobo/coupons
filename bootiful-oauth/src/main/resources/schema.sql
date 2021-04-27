@@ -5,15 +5,17 @@ create table se_authority_dict
     authority    varchar(128) not null,
     description  varchar(2048),
     path         varchar(2048),
-    permissions  json,
-    created_time timestamp default current_timestamp,
-    updated_time timestamp default current_timestamp,
+    permissions  jsonb,
+    pid          int          not null default 0,
+    created_time timestamp             default current_timestamp,
+    updated_time timestamp             default current_timestamp,
     unique (authority)
 );
 comment on column se_authority_dict.authority is '定义权限,如: ROLE_USER';
 comment on column se_authority_dict.description is '描述';
 comment on column se_authority_dict.path is '权限控制路径,如: /user';
 comment on column se_authority_dict.permissions is '定义权限子权限,比如按钮权限,读写,如: ROLE_USER_ADD,ROLE_USER_READ,ROLE_USER_DELETE';
+comment on column se_authority_dict.pid is '权限树父节点ID,根节点为0';
 comment on table se_authority_dict is '权限字典,主要生成用户认证权限的基础表,所有权限在这里定义.';
 
 drop table if exists se_users;
@@ -39,6 +41,7 @@ create table se_authorities
     id           serial primary key,
     username     varchar(128) not null,
     authority    varchar(256) not null,
+    permissions  jsonb,
     created_time timestamp default current_timestamp,
     updated_time timestamp default current_timestamp,
     unique (username, authority)
@@ -66,6 +69,7 @@ create table se_group_authorities
     id           serial primary key,
     tenant_id    int          not null,
     authority    varchar(256) not null,
+    permissions  jsonb        not null,
     created_time timestamp default current_timestamp,
     updated_time timestamp default current_timestamp,
     unique (tenant_id, authority)

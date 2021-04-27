@@ -4,7 +4,7 @@ logging.level:
   org.springframework.r2dbc: debug
 
 server:
-  port: 0
+  port: 8080
   shutdown: graceful
 
 spring:

@@ -1,6 +1,6 @@
 package com.alex.oauth.security;
 
-import lombok.Data;
+import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.domain.Persistable;
@@ -22,6 +22,9 @@ import java.time.LocalDateTime;
 @Data
 @Entity
 @Table("se_users")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements Serializable, Persistable<Integer> {
 
     @Id

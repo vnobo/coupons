@@ -1,9 +1,11 @@
 package com.alex.oauth.config;
 
-import com.alex.oauth.security.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
@@ -18,15 +20,15 @@ import static org.springframework.security.config.Customizer.withDefaults;
  */
 @Configuration
 @RequiredArgsConstructor
+@EnableWebFluxSecurity
 public class SecurityConfiguration {
-
-    private final UserRepository userRepository;
 
     @Bean
     public SecurityWebFilterChain securityFilterChain(ServerHttpSecurity http) {
         http.authorizeExchange(exchanges ->
                 exchanges.anyExchange().authenticated())
                 .httpBasic(withDefaults())
+                .formLogin(withDefaults())
                 .csrf(csrf -> csrf.csrfTokenRepository(CookieServerCsrfTokenRepository.withHttpOnlyFalse()));
         return http.build();
     }
