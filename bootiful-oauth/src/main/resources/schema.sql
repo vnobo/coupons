@@ -3,6 +3,7 @@ create table se_authority_dict
 (
     id           serial primary key,
     authority    varchar(128) not null,
+    name         varchar(128),
     description  varchar(2048),
     path         varchar(2048),
     permissions  jsonb,
@@ -12,6 +13,7 @@ create table se_authority_dict
     unique (authority)
 );
 comment on column se_authority_dict.authority is '定义权限,如: ROLE_USER';
+comment on column se_authority_dict.name is '定义权限显示名,如: 用户管理';
 comment on column se_authority_dict.description is '描述';
 comment on column se_authority_dict.path is '权限控制路径,如: /user';
 comment on column se_authority_dict.permissions is '定义权限子权限,比如按钮权限,读写,如: ROLE_USER_ADD,ROLE_USER_READ,ROLE_USER_DELETE';

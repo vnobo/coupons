@@ -32,7 +32,7 @@ subprojects {
         weixinVersion = "4.+"
         hanlpVersion = "portable-1.7.+"
         springCloudVersion = "2020.+"
-        springCloudAlibabaVersion = "2020.+"
+        springCloudAlibabaVersion = "2021.+"
         springfoxSwagger2Version = "3.+"
     }
 
@@ -40,8 +40,6 @@ subprojects {
         maven { url "https://maven.aliyun.com/repository/public" }
         maven { url "https://maven.aliyun.com/repository/spring" }
         maven { url "https://maven.aliyun.com/repository/google" }
-        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
-        maven { url "https://maven.aliyun.com/repository/spring-plugin" }
         mavenLocal()
         mavenCentral()
     }
