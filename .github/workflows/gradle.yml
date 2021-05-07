@@ -24,4 +24,4 @@ jobs:
           echo ${{ secrets.GIT_HUB_PACKAGES_TOKEN }} | docker login https://ghcr.io -u $GITHUB_ACTOR --password-stdin
           ./gradlew clean bootBuildImage
       - name: Docker with images
-        run: docker images|
+        run: docker images
