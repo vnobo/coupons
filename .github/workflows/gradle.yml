@@ -21,9 +21,7 @@ jobs:
       - name: Build with docker run
         run: |
           chmod +x gradlew
+          echo ${{ secrets.GIT_HUB_PACKAGES_TOKEN }} | docker login https://ghcr.io -u $GITHUB_ACTOR --password-stdin
           ./gradlew bootBuildImage
       - name: Docker with images
-        run: docker images
-      - name: Docker with push
-        run: |
-          echo ${{ secrets.GIT_HUB_PACKAGES_TOKEN }} | docker login https://ghcr.io -u $GITHUB_ACTOR --password-stdin
+        run: docker images|
