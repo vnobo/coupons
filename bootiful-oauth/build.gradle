@@ -4,6 +4,14 @@ plugins {
 
 bootBuildImage {
     imageName = "ghcr.io/vnobo/${rootProject.name}/${project.name}:${version}"
+    publish = true
+    docker {
+        publishRegistry {
+            token = "user"
+            url = "https://ghcr.io"
+            email = "billbob.dong@gmail.com"
+        }
+    }
 }
 
 dependencies {
