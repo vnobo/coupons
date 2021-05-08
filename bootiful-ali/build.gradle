@@ -3,7 +3,7 @@ plugins {
 }
 
 bootBuildImage {
-    imageName = "${rootProject.name}/${project.name}:${version}"
+    imageName = "alexbob/${rootProject.name}/${project.name}:${version}"
     publish = true
     pullPolicy = "IF_NOT_PRESENT"
     docker {
