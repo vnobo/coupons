@@ -3,7 +3,7 @@ plugins {
 }
 
 bootBuildImage {
-    imageName = "ghcr.io/vnobo/${rootProject.name}/${project.name}:${version}"
+    imageName = "${rootProject.name}/${project.name}:${version}"
     publish = true
     pullPolicy = "IF_NOT_PRESENT"
     docker {
