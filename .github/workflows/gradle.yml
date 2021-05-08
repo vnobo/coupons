@@ -20,6 +20,8 @@ jobs:
           java-version: 11
       - name: Build with docker run
         run: |
+          echo ${{ secrets.HUB_DOCKER_TOKEN }}
+          echo ${{ secrets.HUB_DOCKER_USERNAME }}
           chmod +x gradlew
           ./gradlew clean bootBuildImage
         env:
