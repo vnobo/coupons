@@ -3,20 +3,14 @@ plugins {
 }
 
 bootBuildImage {
-    imageName = "alexbob/${rootProject.name}/${project.name}:${version}"
-    publish = true
-    pullPolicy = "IF_NOT_PRESENT"
-    docker {
-        publishRegistry {
-            username =project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
-            password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-            url = "https://ghcr.io"
-            email = "billbob.dong@gmail.com"
-        }
-    }
+    imageName = "${rootProject.name}/${project.name}:${version}"
 }
 
 dependencies {
+
+    implementation "cn.hutool:hutool-crypto:${hutoolVersion}"
+    implementation "cn.hutool:hutool-json:${hutoolVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
 
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     implementation 'io.r2dbc:r2dbc-postgresql'

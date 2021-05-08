@@ -3,17 +3,7 @@ plugins {
 }
 
 bootBuildImage {
-    imageName = "alexbob/${rootProject.name}-${project.name}:${version}"
-    publish = true
-    pullPolicy = "IF_NOT_PRESENT"
-    docker {
-        publishRegistry {
-            username =project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
-            password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
-            url = "https://ghcr.io"
-            email = "billbob.dong@gmail.com"
-        }
-    }
+    imageName = "${rootProject.name}/${project.name}:${version}"
 }
 
 dependencies {
