@@ -23,11 +23,3 @@ jobs:
           echo ${{ secrets.GIT_HUB_PACKAGES_TOKEN }}
           chmod +x gradlew
           ./gradlew clean bootBuildImage
-      - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ghcr.io
-          repository: vnobo
-          tag_with_ref: true

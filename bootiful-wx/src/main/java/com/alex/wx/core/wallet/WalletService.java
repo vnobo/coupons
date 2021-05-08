@@ -32,21 +32,8 @@ public class WalletService extends BaseGenericService {
      * @param id 提现申请单
      */
     public Withdraw transfer(long id) {
-        Optional<Withdraw> optionalWithdraw =Optional.empty();//this.withdrawRepository.findById(id);
-        if (optionalWithdraw.isPresent()) {
-            Withdraw withdraw = optionalWithdraw.get();
-            if (withdraw.getStatus() != 0) {
-                throw new WithdrawException(500, "提现申请订单状态不正确");
-            }
-            withdraw.setStatus(100);
-           // withdraw = this.withdrawRepository.save(withdraw);
-
-            // this.smsService.withdrawSuccess(withdraw.getAlipay(), withdraw.getBalance());
-
-            return withdraw;
-        } else {
-            throw new WithdrawException(500, "提现申请订单不存在!");
-        }
+        Optional<Withdraw> optionalWithdraw =this.withdrawRepository.findById(id);
+        throw new WithdrawException(500, "提现申请订单不存在!");
     }
 
     /**
