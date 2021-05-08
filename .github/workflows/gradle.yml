@@ -20,12 +20,14 @@ jobs:
           java-version: 11
       - name: Build with docker run
         run: |
-          echo ${{ secrets.HUB_DOCKER_TOKEN }}
-          echo ${{ secrets.HUB_DOCKER_USERNAME }}
+          echo ${{ secrets.GIT_HUB_PACKAGES_TOKEN }}
           chmod +x gradlew
           ./gradlew clean bootBuildImage
-        env:
-          HUB_DOCKER_TOKEN: ${{ secrets.HUB_DOCKER_TOKEN }}
-          HUB_DOCKER_USERNAME: ${{ secrets.HUB_DOCKER_USERNAME }}
-      - name: Docker with images
-        run: docker images
+      - name: Push to GitHub Packages
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: ghcr.io
+          repository: vnobo
+          tag_with_ref: true

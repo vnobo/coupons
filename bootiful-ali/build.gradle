@@ -3,17 +3,7 @@ plugins {
 }
 
 bootBuildImage {
-    imageName = "alexbob/${rootProject.name}-${project.name}:${version}"
-    publish = true
-    pullPolicy = "IF_NOT_PRESENT"
-    docker {
-        publishRegistry {
-            username = System.getenv("HUB_DOCKER_USERNAME")
-            password = System.getenv("HUB_DOCKER_TOKEN")
-            url = "https://hub.docker.com/vnobo"
-            email = "billbob.dong@gmail.com"
-        }
-    }
+    imageName = "${rootProject.name}/${project.name}:${version}"
 }
 
 dependencies {
