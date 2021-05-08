@@ -23,7 +23,7 @@ jobs:
           chmod +x gradlew
           ./gradlew clean bootBuildImage
         env:
-          GITHUB_TOKEN: ${{ secrets.HUB_DOCKER_TOKEN }}
-          GITHUB_ACTOR: ${{ secrets.HUB_DOCKER_USERNAME }}
+          HUB_DOCKER_TOKEN: ${{ secrets.HUB_DOCKER_TOKEN }}
+          HUB_DOCKER_USERNAME: ${{ secrets.HUB_DOCKER_USERNAME }}
       - name: Docker with images
         run: docker images

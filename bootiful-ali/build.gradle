@@ -8,8 +8,8 @@ bootBuildImage {
     pullPolicy = "IF_NOT_PRESENT"
     docker {
         publishRegistry {
-            username =project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
-            password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+            username = System.getenv("HUB_DOCKER_USERNAME")
+            password = System.getenv("HUB_DOCKER_TOKEN")
             url = "https://ghcr.io"
             email = "billbob.dong@gmail.com"
         }
