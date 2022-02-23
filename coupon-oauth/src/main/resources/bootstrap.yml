@@ -1,0 +1,14 @@
+logging.level:
+  web: debug
+  com.alex.oauth.*: debug
+  org.springframework.r2dbc: debug
+
+server:
+  port: 8080
+  shutdown: graceful
+
+spring:
+  application.name: coupon-oauth
+  cloud.nacos.config:
+    server-addr: 192.168.1.2:8848
+    file-extension: yaml

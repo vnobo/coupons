@@ -1,0 +1,111 @@
+<style type="text/css">
+    a {
+        color: #467fcf;
+        text-decoration: none;
+        background-color: transparent;
+        -webkit-text-decoration-skip: objects;
+    }
+
+    a:hover {
+        color: #295a9f;
+        text-decoration: underline;
+    }
+
+    a:not([href]):not([tabindex]) {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    a:not([href]):not([tabindex]):hover, a:not([href]):not([tabindex]):focus {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    a:not([href]):not([tabindex]):focus {
+        outline: 0;
+    }
+
+    .lead {
+        font-size: 1.171875rem;
+        font-weight: 300;
+    }
+
+    .display-4 {
+        font-size: 1.5rem;
+        font-weight: 100;
+        line-height: 1;
+    }
+
+    .container {
+        width: 100%;
+        padding-right: 0.75rem;
+        padding-left: 0.75rem;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    @media (min-width: 576px) {
+        .container {
+            max-width: 540px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .container {
+            max-width: 720px;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .container {
+            max-width: 960px;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        .container {
+            max-width: 1200px;
+        }
+    }
+
+    .jumbotron {
+        padding: 2rem 1rem;
+        margin-bottom: 2rem;
+        background-color: #e9ecef;
+        border-radius: 3px;
+    }
+
+    .align-items-center {
+        -ms-flex-align: center !important;
+        align-items: center !important;
+    }
+
+    .text-center {
+        text-align: center !important;
+    }
+</style>
+<div class="container">
+    <div class="jumbotron" style="background-color: #55efd6">
+        <h4 class="display-4">用户:<span th:text="${username}"></span> 正在提现..请及时处理</h4>
+        <hr class="my-4">
+        <p class="lead">转账完成请点击下面链接确认通知用户:</p>
+        <p class="lead">
+            用户名:<span th:text="${aliName}"></span>
+            <br>
+            支付宝:<span th:text="${aliPay}"></span>
+            <br>
+            提现金额:<span th:text="${amount}"></span>元
+            <br>
+            提现时间:<span th:text="${time}"></span>
+        </p>
+        <p class="lead">
+            <a target="_blank" th:href="${url}"><span>点击这里确认提现成功</span></a><br>
+            如果无法点击请复制链接在浏览器打开:<br>
+            <span th:text="${url}"></span>
+        </p>
+    </div>
+    <hr class="my-4">
+    <div class="align-items-center">
+        <p class="footer-text text-center">版权所有&copy;AlexBob 2018-2019 备案号－ 陕ICP备18000480号</p>
+    </div>
+</div>

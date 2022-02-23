@@ -1,0 +1,5 @@
+spring:
+  application.name: coupon-ali
+  cloud.nacos.config:
+    server-addr: 192.168.1.2:8848
+    file-extension: yaml

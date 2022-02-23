@@ -1,0 +1,42 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+bootBuildImage {
+    buildCache {
+        volume {
+            name = "cache-${rootProject.name}-${project.name}.build"
+        }
+    }
+    launchCache {
+        volume {
+            name = "cache-${rootProject.name}-${project.name}.launch"
+        }
+    }
+    tags = ["${rootProject.name}/${project.name}:latest"]
+    imageName = "${rootProject.name}/${project.name}:${version}"
+    publish = true
+    pullPolicy = "IF_NOT_PRESENT"
+    environment = [
+            "BPE_DELIM_JAVA_TOOL_OPTIONS" : " ",
+            "BPE_APPEND_JAVA_TOOL_OPTIONS": "-Dfile.encoding=UTF-8"
+    ]
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis-reactive'
+    implementation 'org.springframework.session:spring-session-data-redis'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation 'io.r2dbc:r2dbc-postgresql'
+
+    // QueryDSL must have
+    implementation("com.querydsl:querydsl-jpa")
+    annotationProcessor "com.querydsl:querydsl-apt:4.4.0:jpa"
+    annotationProcessor "javax.annotation:javax.annotation-api"
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+}

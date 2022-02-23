@@ -1,8 +1,11 @@
 plugins {
-    id "org.springframework.boot" version "2.4.5" apply false
+    id "org.springframework.boot" version "2.6.3" apply false
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
 }
 
+description = "Spring Boot Coupons Build"
+
+defaultTasks 'build'
 
 subprojects {
 
@@ -10,9 +13,8 @@ subprojects {
     apply plugin: "idea"
     apply plugin: "io.spring.dependency-management"
 
-    group = "com.alex"
-    version = "0.0.1"
-    sourceCompatibility = "11"
+    group = "com.alex.coupons"
+    sourceCompatibility = "17"
 
     [compileJava, compileTestJava]*.options*.encoding = "UTF-8"
 
@@ -28,22 +30,25 @@ subprojects {
     }
 
     ext {
-        hutoolVersion = "5.+"
+        hutoolVersion = "5.7.+"
         weixinVersion = "4.+"
         hanlpVersion = "portable-1.7.+"
-        springCloudVersion = "2020.+"
+        springCloudVersion = "2021.0.+"
         springCloudAlibabaVersion = "2021.+"
-        springfoxSwagger2Version = "3.+"
+        springdocVersion = "1.6.+"
     }
 
     repositories {
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://maven.aliyun.com/repository/spring" }
+        maven { url "https://maven.aliyun.com/repository/google" }
         mavenLocal()
         mavenCentral()
     }
 
     dependencies {
 
-        implementation "io.springfox:springfox-boot-starter:${springfoxSwagger2Version}"
+        implementation "org.springdoc:springdoc-openapi-webflux-ui:${springdocVersion}"
 
         implementation "org.springframework.boot:spring-boot-starter-actuator"
         implementation "org.springframework.boot:spring-boot-starter-webflux"

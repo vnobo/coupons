@@ -1,0 +1,10 @@
+logging:
+  level:
+    web: debug
+    org.springframework.data.r2dbc: DEBUG
+
+spring:
+  application.name: bootiful-wx
+  cloud.nacos.config:
+    server-addr: 192.168.1.2:8848
+    file-extension: yaml

@@ -1,0 +1,32 @@
+plugins {
+    id 'org.springframework.boot'
+}
+
+bootBuildImage {
+    buildCache {
+        volume {
+            name = "cache-${rootProject.name}-${project.name}.build"
+        }
+    }
+    launchCache {
+        volume {
+            name = "cache-${rootProject.name}-${project.name}.launch"
+        }
+    }
+    tags = ["${rootProject.name}/${project.name}:latest"]
+    imageName = "${rootProject.name}/${project.name}:${version}"
+    publish = true
+    pullPolicy = "IF_NOT_PRESENT"
+    environment = [
+            "BPE_DELIM_JAVA_TOOL_OPTIONS" : " ",
+            "BPE_APPEND_JAVA_TOOL_OPTIONS": "-Dfile.encoding=UTF-8"
+    ]
+}
+
+dependencies {
+    implementation "cn.hutool:hutool-crypto:${hutoolVersion}"
+    implementation "cn.hutool:hutool-json:${hutoolVersion}"
+    implementation "com.github.binarywang:weixin-java-mp:${weixinVersion}"
+
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+}
